@@ -1,0 +1,2729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0f1923">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- v20260528-112412 -->
+    <title>VALORANT · 夜市皮肤 PK 大作战</title>
+    <style>
+/* ======== VALORANT 风格 全局 ======== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+    --val-red: #ff4655;
+    --val-red-dark: #bd3944;
+    --val-bg: #0f1923;
+    --val-bg-2: #1a2733;
+    --val-bg-3: #22323f;
+    --val-text: #ece8e1;
+    --val-text-dim: #8b9aa8;
+    --val-gold: #f9a826;
+    --val-cyan: #54c8ff;
+    --val-purple: #b388eb;
+    --val-green: #5dd39e;
+    --tier-select: #5dd39e;
+    --tier-deluxe: #54c8ff;
+    --tier-premium: #b388eb;
+    --tier-exclusive: #f9a826;
+    --tier-ultra: #ff4655;
+}
+
+html, body {
+    background: var(--val-bg);
+    color: var(--val-text);
+    font-family: 'DIN', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body { position: relative; }
+
+/* 背景效果 */
+.bg-grid {
+    position: fixed; inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 70, 85, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 70, 85, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0; pointer-events: none;
+}
+.bg-glow {
+    position: fixed; border-radius: 50%; filter: blur(120px);
+    z-index: 0; pointer-events: none; opacity: 0.4;
+}
+.glow-1 { top: -10%; left: -5%; width: 400px; height: 400px; background: var(--val-red); }
+.glow-2 { bottom: -10%; right: -5%; width: 500px; height: 500px; background: #2d8cdb; }
+.glow-3 { top: 40%; left: 50%; width: 300px; height: 300px; background: var(--val-gold); opacity: 0.18; }
+
+.app {
+    position: relative; z-index: 1;
+    max-width: 1400px; margin: 0 auto;
+    padding: 24px 32px 60px;
+}
+
+/* ===== 顶部 ===== */
+.top-bar {
+    display: flex; align-items: center; gap: 32px;
+    padding: 16px 24px;
+    background: rgba(15, 25, 35, 0.65); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 70, 85, 0.3);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+    width: 44px; height: 44px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+}
+.logo-mark::before, .logo-mark::after {
+    content: ''; position: absolute; background: var(--val-red);
+}
+.logo-mark::before { top: 0; left: 0; width: 12px; height: 12px; }
+.logo-mark::after  { bottom: 0; right: 0; width: 12px; height: 12px; }
+.logo-mark span:nth-child(1) { position: absolute; top: 0; right: 0; width: 4px; height: 24px; background: var(--val-red); }
+.logo-mark span:nth-child(2) { position: absolute; bottom: 0; left: 0; width: 4px; height: 24px; background: var(--val-red); }
+.logo-mark span:nth-child(3) { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: #fff; transform: translate(-50%, -50%); }
+.logo-text h1 {
+    font-size: 22px; letter-spacing: 4px; font-weight: 900;
+    background: linear-gradient(180deg, #fff 0%, var(--val-red) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.logo-text p { font-size: 11px; letter-spacing: 2px; color: var(--val-text-dim); }
+
+.top-nav { flex: 1; display: flex; gap: 6px; }
+.top-nav a {
+    color: var(--val-text-dim); padding: 8px 16px;
+    font-size: 13px; letter-spacing: 1px; cursor: pointer;
+    border: 1px solid transparent; border-radius: 2px;
+    transition: all .2s;
+    display: inline-flex; align-items: center; gap: 6px;
+}
+.top-nav a:hover { color: var(--val-text); border-color: rgba(255,70,85,.3); }
+.top-nav a.active {
+    color: var(--val-text); background: var(--val-red);
+    box-shadow: 0 0 16px rgba(255,70,85,.5);
+}
+
+.user-info { display: flex; align-items: center; gap: 10px; }
+.user-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--val-red), var(--val-red-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff;
+    border: 2px solid rgba(255,255,255,.2);
+}
+.user-meta .uname { font-size: 13px; font-weight: 700; }
+.user-meta .urank { font-size: 11px; color: var(--val-gold); letter-spacing: 1px; }
+
+/* ===== 通用 ===== */
+.section-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 24px; gap: 16px; flex-wrap: wrap;
+}
+.section-title {
+    font-size: 28px; font-weight: 900;
+    letter-spacing: 2px; color: #fff;
+    position: relative; padding-left: 16px;
+}
+.section-title::before {
+    content: ''; position: absolute;
+    left: 0; top: 6px; bottom: 6px; width: 4px;
+    background: var(--val-red);
+    box-shadow: 0 0 12px var(--val-red);
+}
+.section-sub { color: var(--val-text-dim); font-size: 13px; margin-top: 6px; padding-left: 16px; }
+.section-actions { display: flex; gap: 10px; }
+
+.btn {
+    border: none; padding: 10px 20px;
+    font-size: 13px; letter-spacing: 1px; font-weight: 700;
+    cursor: pointer; border-radius: 2px;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all .2s;
+    font-family: inherit;
+}
+.btn-primary {
+    background: var(--val-red); color: #fff;
+    box-shadow: 0 4px 16px rgba(255,70,85,.4);
+}
+.btn-primary:hover { background: var(--val-red-dark); transform: translateY(-1px); }
+.btn-ghost {
+    background: transparent; color: var(--val-text);
+    border: 1px solid rgba(255,255,255,.2);
+}
+.btn-ghost:hover { border-color: var(--val-red); color: var(--val-red); }
+.btn-block { display: flex; width: 100%; justify-content: center; padding: 14px; margin-top: 16px; }
+.btn:disabled { opacity: .35; cursor: not-allowed; transform: none !important; }
+
+/* 页面切换 */
+.page { display: none; animation: fadeIn .35s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ===== 夜市卡片 ===== */
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+}
+.skin-card {
+    position: relative;
+    background: linear-gradient(160deg, var(--val-bg-2) 0%, var(--val-bg-3) 100%);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 6px; overflow: hidden;
+    transition: all .3s;
+    cursor: pointer;
+}
+.skin-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, var(--tier-color, var(--val-red)) 200%);
+    opacity: .35; pointer-events: none;
+}
+.skin-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--tier-color, var(--val-red));
+    box-shadow: 0 12px 36px rgba(0,0,0,.5), 0 0 24px var(--tier-color-soft, rgba(255,70,85,.3));
+}
+.skin-tier-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: 3px 8px; font-size: 10px; letter-spacing: 1px;
+    background: var(--tier-color); color: #fff;
+    border-radius: 2px; font-weight: 800; z-index: 2;
+}
+.skin-discount {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--val-red); color: #fff;
+    padding: 4px 8px; font-size: 12px; font-weight: 900;
+    border-radius: 2px; z-index: 2;
+    box-shadow: 0 2px 8px rgba(255,70,85,.4);
+}
+.skin-art {
+    height: 130px; padding: 30px 20px 10px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse at center, var(--tier-color-soft, rgba(255,70,85,.2)) 0%, transparent 60%);
+}
+.skin-weapon {
+    width: 100%; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    transform: rotate(-15deg);
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+}
+.skin-weapon svg { width: 90%; height: 100%; }
+.skin-info { padding: 12px 16px 16px; position: relative; z-index: 1; }
+.skin-name {
+    font-size: 16px; font-weight: 800; letter-spacing: 1px;
+    color: #fff; margin-bottom: 2px;
+}
+.skin-weapon-name { font-size: 11px; color: var(--val-text-dim); letter-spacing: 1px; margin-bottom: 12px; }
+
+.skin-price-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.08);
+}
+.price-now { font-size: 18px; font-weight: 900; color: var(--val-gold); }
+.price-now i { font-style: normal; font-size: 12px; opacity: .7; margin-right: 2px; }
+.price-old { font-size: 12px; color: var(--val-text-dim); text-decoration: line-through; }
+
+.skin-wish {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 8px;
+}
+.skin-wish .wish-bar {
+    flex: 1; height: 5px; background: rgba(255,255,255,.08);
+    border-radius: 3px; overflow: hidden;
+}
+.skin-wish .wish-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--val-red), var(--val-gold));
+    transition: width .6s;
+}
+.skin-wish span { font-size: 11px; color: var(--val-text-dim); letter-spacing: 1px; }
+.skin-wish b { color: var(--val-red); font-size: 12px; }
+
+.skin-power {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,.4); padding: 4px 16px;
+    font-size: 10px; color: var(--val-text-dim); letter-spacing: 1px;
+    display: flex; justify-content: space-between;
+}
+.skin-power b { color: var(--val-cyan); font-size: 13px; }
+
+/* 选中态 */
+.skin-card.selected {
+    border-color: var(--val-red);
+    box-shadow: 0 0 0 2px var(--val-red), 0 12px 36px rgba(0,0,0,.5);
+}
+.skin-card.selected::after {
+    content: '✓'; position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    background: var(--val-red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-weight: 900;
+    z-index: 3;
+}
+
+/* 夜市汇总 */
+.market-summary {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+.summary-item {
+    background: rgba(26,39,51,.7); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.06);
+    padding: 14px 18px; border-radius: 4px;
+    display: flex; align-items: center; gap: 14px;
+}
+.summary-item i { font-size: 28px; color: var(--val-red); }
+.summary-item .lbl { font-size: 11px; color: var(--val-text-dim); letter-spacing: 1px; }
+.summary-item .val { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; }
+
+/* ===== 战术配置 ===== */
+.strategy-wrap {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+}
+@media (max-width: 1100px) { .strategy-wrap { grid-template-columns: 1fr; } }
+
+.block-title {
+    font-size: 14px; letter-spacing: 2px; color: #fff;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+}
+.block-title i { color: var(--val-red); }
+.block-title span { margin-left: auto; font-size: 12px; color: var(--val-text-dim); font-weight: 400; }
+
+.pick-pool {
+    background: rgba(26,39,51,.6); padding: 18px;
+    border: 1px solid rgba(255,255,255,.06); border-radius: 4px;
+}
+.pick-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.horse-board {
+    background: rgba(26,39,51,.6);
+    border: 1px solid rgba(255,70,85,.25); border-radius: 4px;
+    padding: 18px;
+    height: max-content;
+}
+.horse-pos {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+    background: rgba(15,25,35,.5);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px;
+    padding: 10px;
+}
+.pos-tag {
+    width: 64px; flex-shrink: 0;
+    text-align: center;
+    font-weight: 800; font-size: 13px;
+    border-right: 1px solid rgba(255,255,255,.08);
+    padding-right: 10px;
+}
+.pos-tag small { display: block; font-size: 10px; color: var(--val-text-dim); font-weight: 400; margin-top: 2px; }
+.pos-slot { flex: 1; min-height: 56px; display: flex; align-items: center; }
+.pos-empty { color: var(--val-text-dim); font-size: 12px; }
+.pos-actions { display: flex; flex-direction: column; gap: 4px; }
+.pos-actions button {
+    width: 28px; height: 22px; border: 1px solid rgba(255,255,255,.15);
+    background: transparent; color: var(--val-text); cursor: pointer;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+}
+.pos-actions button:hover:not(:disabled) { border-color: var(--val-red); color: var(--val-red); }
+.pos-actions button:disabled { opacity: .25; cursor: not-allowed; }
+
+.slot-skin {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+}
+.slot-skin .mini-art {
+    width: 50px; height: 36px; border-radius: 3px;
+    background: linear-gradient(135deg, var(--tier-color), rgba(0,0,0,.4));
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.slot-skin .mini-art svg { width: 80%; height: 70%; }
+.slot-skin .mini-info { flex: 1; min-width: 0; }
+.slot-skin .mini-info p { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slot-skin .mini-info span { font-size: 10px; color: var(--val-text-dim); }
+.slot-skin .horse-tag {
+    font-size: 10px; padding: 2px 6px; border-radius: 2px;
+    font-weight: 800; letter-spacing: 1px;
+}
+.horse-tag.top { background: var(--val-red); color: #fff; }
+.horse-tag.mid { background: var(--val-gold); color: #000; }
+.horse-tag.low { background: var(--val-cyan); color: #000; }
+
+.horse-meta {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px dashed rgba(255,255,255,.1);
+}
+.rate-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--val-text-dim); margin-bottom: 6px;
+}
+.rate-row b { color: #fff; font-size: 13px; }
+
+/* ===== 对战中心 ===== */
+.battle-arena {
+    display: grid;
+    grid-template-columns: 1fr 320px 1fr;
+    gap: 18px;
+    align-items: stretch;
+}
+@media (max-width: 1100px) {
+    .battle-arena { grid-template-columns: 1fr; }
+}
+
+.player-side {
+    background: rgba(26,39,51,.6);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 4px;
+    padding: 18px;
+    display: flex; flex-direction: column;
+}
+.player-self { border-left: 3px solid var(--val-cyan); }
+.player-rival { border-left: 3px solid var(--val-red); }
+
+.player-head {
+    display: flex; align-items: center; gap: 12px;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px dashed rgba(255,255,255,.1);
+}
+.player-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--val-cyan), #2d8cdb);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #fff;
+    box-shadow: 0 0 12px rgba(84,200,255,.4);
+}
+.player-avatar.rival { background: linear-gradient(135deg, var(--val-red), #6f1c25); box-shadow: 0 0 12px rgba(255,70,85,.4); }
+.player-head .pname { font-size: 15px; font-weight: 800; color: #fff; }
+.player-head .prank { font-size: 11px; color: var(--val-gold); letter-spacing: 1px; }
+.score-box {
+    margin-left: auto; width: 50px; height: 50px;
+    background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 900; color: #fff;
+}
+
+.lineup { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.lineup-card {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(15,25,35,.6);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px;
+    padding: 10px 12px;
+    position: relative;
+    transition: all .3s;
+}
+.lineup-card.fighting {
+    border-color: var(--val-red);
+    box-shadow: 0 0 20px rgba(255,70,85,.5);
+    transform: scale(1.02);
+}
+.lineup-card.win { border-color: var(--val-green); }
+.lineup-card.win::before {
+    content: 'WIN'; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--val-green); font-weight: 900; letter-spacing: 1px; font-size: 14px;
+}
+.lineup-card.lose { opacity: .5; border-color: var(--val-text-dim); }
+.lineup-card.lose::before {
+    content: 'LOSE'; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--val-text-dim); font-weight: 900; letter-spacing: 1px; font-size: 14px;
+}
+
+.lineup-pos {
+    width: 26px; height: 26px;
+    background: var(--val-bg); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 13px;
+    border: 1px solid rgba(255,255,255,.15);
+    flex-shrink: 0;
+}
+.lineup-art {
+    width: 56px; height: 38px;
+    background: linear-gradient(135deg, var(--tier-color), rgba(0,0,0,.4));
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.lineup-art svg { width: 80%; height: 70%; }
+.lineup-meta { flex: 1; min-width: 0; }
+.lineup-meta p { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lineup-meta .stats { font-size: 11px; color: var(--val-text-dim); margin-top: 3px; }
+.lineup-meta .stats b { color: var(--val-cyan); font-size: 12px; }
+
+/* 对手隐藏战力（开战前） */
+.lineup-card.hidden-power .lineup-meta p { filter: blur(4px); }
+.lineup-card.hidden-power .lineup-meta .stats b { filter: blur(3px); }
+
+/* VS 中央 */
+.vs-board {
+    background: rgba(26,39,51,.6);
+    border: 1px solid rgba(255,70,85,.25);
+    border-radius: 4px;
+    padding: 20px 18px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 18px;
+}
+.vs-circle {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--val-red) 0%, var(--val-red-dark) 70%, transparent 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 900; letter-spacing: 4px; color: #fff;
+    box-shadow: 0 0 32px rgba(255,70,85,.6);
+    position: relative;
+}
+.vs-circle::before, .vs-circle::after {
+    content: ''; position: absolute;
+    border: 2px solid rgba(255,70,85,.3);
+    border-radius: 50%;
+}
+.vs-circle::before { inset: -10px; animation: pulse 2s infinite; }
+.vs-circle::after  { inset: -20px; animation: pulse 2s infinite .5s; }
+@keyframes pulse { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(1.2);opacity:0} }
+
+.round-track {
+    display: flex; gap: 16px;
+}
+.round-dot {
+    text-align: center;
+}
+.round-dot span {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+    border: 2px solid rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; color: var(--val-text-dim);
+    margin: 0 auto;
+}
+.round-dot p { font-size: 10px; color: var(--val-text-dim); margin-top: 4px; letter-spacing: 1px; }
+.round-dot.win span { background: var(--val-green); color: #000; border-color: var(--val-green); }
+.round-dot.lose span { background: var(--val-red); color: #fff; border-color: var(--val-red); }
+.round-dot.win p, .round-dot.lose p { color: #fff; }
+
+.battle-log {
+    width: 100%; flex: 1;
+    background: rgba(0,0,0,.3); border-radius: 4px;
+    padding: 12px;
+    font-size: 12px; color: var(--val-text-dim);
+    max-height: 280px; overflow-y: auto;
+    line-height: 1.7;
+    border: 1px solid rgba(255,255,255,.05);
+}
+.battle-log p { margin-bottom: 4px; }
+.battle-log .log-empty { text-align: center; padding: 20px 0; }
+.battle-log .log-time { color: var(--val-red); margin-right: 6px; }
+.battle-log .log-win { color: var(--val-green); font-weight: 700; }
+.battle-log .log-lose { color: var(--val-red); font-weight: 700; }
+
+/* ===== 规则 ===== */
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+.rule-card {
+    background: rgba(26,39,51,.6);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 6px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+}
+.rule-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--val-red), transparent);
+}
+.rule-icon {
+    width: 48px; height: 48px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--val-red), var(--val-red-dark));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(255,70,85,.3);
+}
+.rule-card h3 { font-size: 18px; color: #fff; margin-bottom: 10px; letter-spacing: 1px; }
+.rule-card p { color: var(--val-text-dim); font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+.rule-card ul { list-style: none; margin: 8px 0; }
+.rule-card li {
+    color: var(--val-text); font-size: 13px; padding: 4px 0;
+    padding-left: 16px; position: relative;
+}
+.rule-card li::before {
+    content: ''; position: absolute; left: 0; top: 12px;
+    width: 6px; height: 6px; background: var(--val-red);
+}
+.formula {
+    background: rgba(0,0,0,.3); border-left: 3px solid var(--val-gold);
+    padding: 10px 14px; font-size: 13px; color: var(--val-gold);
+    margin: 10px 0; font-family: 'Courier New', monospace; border-radius: 2px;
+}
+
+/* 弹窗 */
+.modal {
+    position: fixed; inset: 0;
+    z-index: 100;
+    display: none; align-items: center; justify-content: center;
+}
+.modal.show { display: flex; animation: fadeIn .25s; }
+.modal-mask { position: absolute; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(6px); }
+.modal-body {
+    position: relative;
+    background: linear-gradient(160deg, var(--val-bg-2) 0%, var(--val-bg-3) 100%);
+    border: 1px solid var(--val-red);
+    border-radius: 6px;
+    padding: 32px 40px;
+    width: 460px; max-width: 90vw;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(255,70,85,.3);
+}
+.modal-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--val-red), var(--val-red-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; color: #fff;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 32px rgba(255,70,85,.4);
+}
+.modal-icon.lose { background: linear-gradient(135deg, #475669, #2c3845); box-shadow: none; }
+.modal h2 {
+    font-size: 36px; letter-spacing: 6px; font-weight: 900;
+    margin-bottom: 8px;
+    background: linear-gradient(180deg, #fff, var(--val-red));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.modal h2.lose { background: linear-gradient(180deg, #fff, #8b9aa8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.modal p { color: var(--val-text-dim); font-size: 14px; }
+.modal-detail {
+    margin: 20px 0;
+    background: rgba(0,0,0,.3);
+    border-radius: 4px;
+    padding: 14px;
+    font-size: 13px;
+    text-align: left;
+    color: var(--val-text);
+    line-height: 1.8;
+}
+.modal-detail .row { display: flex; justify-content: space-between; padding: 4px 0; }
+.modal-actions { display: flex; gap: 10px; justify-content: center; }
+
+/* Toast */
+.toast {
+    position: fixed; top: 32px; left: 50%; transform: translateX(-50%) translateY(-50px);
+    background: rgba(15,25,35,.95);
+    color: #fff;
+    border: 1px solid var(--val-red);
+    padding: 12px 24px;
+    border-radius: 4px;
+    z-index: 200;
+    opacity: 0; pointer-events: none;
+    transition: all .3s;
+    font-size: 14px; letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* footer */
+.footer {
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    text-align: center;
+}
+.footer p { color: var(--val-text-dim); font-size: 13px; }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,70,85,.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--val-red); }
+
+/* ====== 分享按钮 ====== */
+.btn-share {
+    background: linear-gradient(135deg, var(--val-gold), #d97706);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(249,168,38,.4);
+}
+.btn-share:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(249,168,38,.6); }
+
+/* ====== 分享弹窗 ====== */
+.modal-share {
+    width: 480px; max-width: 92vw;
+    padding: 22px 22px 24px;
+    max-height: 92vh;
+    overflow-y: auto;
+}
+.share-title {
+    font-size: 32px; letter-spacing: 8px; font-weight: 900;
+    margin-bottom: 4px;
+    background: linear-gradient(180deg, #fff, var(--val-gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.share-sub {
+    color: var(--val-text-dim); font-size: 12px; letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+.share-canvas-wrap {
+    width: 100%;
+    background: rgba(0,0,0,.4);
+    border: 1px solid rgba(255,70,85,.25);
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+.share-canvas-wrap canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+}
+.share-actions { margin-top: 8px; }
+
+/* ============================================================
+   ==================== 响应式（平板/手机） ====================
+   ============================================================ */
+
+/* 平板 */
+@media (max-width: 1100px) {
+    .app { padding: 18px 18px 40px; }
+    .battle-arena { grid-template-columns: 1fr; gap: 14px; }
+    .strategy-wrap { grid-template-columns: 1fr; }
+    .vs-board { padding: 16px; }
+    .vs-circle { width: 80px; height: 80px; font-size: 22px; }
+    .battle-log { max-height: 200px; }
+}
+
+/* 移动端 768px 以下 */
+@media (max-width: 768px) {
+    .app { padding: 12px 12px 36px; }
+
+    /* 背景光晕缩小 */
+    .glow-1, .glow-2 { width: 240px; height: 240px; filter: blur(80px); }
+    .glow-3 { width: 180px; height: 180px; filter: blur(70px); }
+
+    /* 顶部导航 */
+    .top-bar {
+        flex-wrap: wrap; gap: 10px;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+    }
+    .logo { gap: 8px; }
+    .logo-mark { width: 32px; height: 32px; }
+    .logo-text h1 { font-size: 16px; letter-spacing: 2px; }
+    .logo-text p { font-size: 9px; letter-spacing: 1px; }
+    .user-info { margin-left: auto; gap: 6px; }
+    .user-avatar { width: 32px; height: 32px; font-size: 14px; }
+    .user-meta .uname { font-size: 11px; }
+    .user-meta .urank { font-size: 9px; }
+    .top-nav {
+        order: 3; width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 4px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .top-nav a {
+        font-size: 11px; padding: 6px 10px;
+        flex-shrink: 0;
+        letter-spacing: 0;
+    }
+
+    /* section 标题与操作区 */
+    .section-head {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px; margin-bottom: 16px;
+    }
+    .section-title { font-size: 20px; letter-spacing: 1px; padding-left: 12px; }
+    .section-title::before { width: 3px; }
+    .section-sub { font-size: 12px; padding-left: 12px; }
+    .section-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .section-actions .btn { padding: 9px 10px; font-size: 11px; justify-content: center; letter-spacing: 0; }
+
+    /* 卡片网格：手机 1 列 */
+    .market-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .pick-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .pick-pool { padding: 12px; }
+    .market-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .summary-item { padding: 10px 12px; gap: 10px; }
+    .summary-item i { font-size: 22px; }
+    .summary-item .lbl { font-size: 10px; }
+    .summary-item .val { font-size: 14px; }
+
+    /* 皮肤卡 */
+    .skin-card { border-radius: 4px; }
+    .skin-art { height: 110px; padding: 26px 14px 6px; }
+    .skin-weapon { height: 70px; }
+    .skin-info { padding: 10px 14px 14px; }
+    .skin-name { font-size: 14px; }
+    .price-now { font-size: 16px; }
+
+    /* 战术配置 */
+    .horse-board { padding: 14px; }
+    .horse-pos { padding: 8px; gap: 6px; margin-bottom: 8px; }
+    .pos-tag { width: 52px; font-size: 11px; padding-right: 8px; }
+    .pos-tag small { font-size: 9px; }
+    .pos-actions button { width: 26px; height: 20px; }
+    .slot-skin .mini-art { width: 42px; height: 30px; }
+    .slot-skin .mini-info p { font-size: 11px; }
+    .slot-skin .mini-info span { font-size: 9px; }
+    .horse-tag { font-size: 9px !important; padding: 1px 4px !important; }
+
+    /* 对战中心 */
+    .battle-arena { gap: 10px; }
+    .player-side { padding: 12px; }
+    .player-head { padding-bottom: 10px; margin-bottom: 10px; gap: 8px; }
+    .player-avatar { width: 36px; height: 36px; font-size: 16px; }
+    .player-head .pname { font-size: 13px; }
+    .player-head .prank { font-size: 10px; }
+    .score-box { width: 40px; height: 40px; font-size: 22px; }
+    .lineup-card { padding: 8px; gap: 8px; }
+    .lineup-pos { width: 22px; height: 22px; font-size: 11px; }
+    .lineup-art { width: 46px; height: 32px; }
+    .lineup-meta p { font-size: 12px; }
+    .lineup-meta .stats { font-size: 10px; }
+    .lineup-card.win::before, .lineup-card.lose::before { font-size: 12px; right: 8px; }
+
+    .vs-board { padding: 14px 12px; gap: 12px; }
+    .vs-circle { width: 70px; height: 70px; font-size: 18px; letter-spacing: 2px; }
+    .round-track { gap: 12px; }
+    .round-dot span { width: 30px; height: 30px; font-size: 12px; }
+    .round-dot p { font-size: 9px; }
+    .battle-log { font-size: 11px; max-height: 160px; padding: 10px; }
+
+    /* 规则卡 */
+    .rules-grid { grid-template-columns: 1fr; gap: 12px; }
+    .rule-card { padding: 16px; }
+    .rule-card h3 { font-size: 16px; }
+
+    /* 弹窗 */
+    .modal-body { padding: 22px 18px; width: auto; max-width: 92vw; }
+    .modal-icon { width: 60px; height: 60px; font-size: 28px; margin-bottom: 12px; }
+    .modal h2 { font-size: 24px; letter-spacing: 4px; }
+    .modal p { font-size: 12px; }
+    .modal-detail { font-size: 11px; padding: 10px; }
+    .modal-actions { flex-direction: column; }
+    .modal-actions .btn { width: 100%; justify-content: center; }
+
+    /* 分享弹窗 */
+    .modal-share { padding: 16px 14px 18px; }
+    .share-title { font-size: 24px; letter-spacing: 4px; }
+    .share-sub { font-size: 11px; margin-bottom: 12px; }
+
+    /* footer */
+    .footer { margin-top: 28px; padding-top: 18px; }
+    .footer p { font-size: 11px; }
+}
+
+/* 超小屏 480px 以下 */
+@media (max-width: 480px) {
+    .section-actions {
+        grid-template-columns: 1fr;
+    }
+    .market-summary { grid-template-columns: 1fr 1fr; }
+    .top-nav a { font-size: 10px; padding: 5px 8px; }
+    .top-nav a i { font-size: 12px; }
+    .vs-circle { width: 60px; height: 60px; font-size: 16px; }
+    .player-head { flex-wrap: wrap; }
+    .score-box { margin-left: auto; }
+}
+
+/* ============================================================
+   ============== 历史战绩 + 喷漆奖励（对战中心底部） ===========
+   ============================================================ */
+.battle-foot {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+}
+
+/* 通用迷你按钮 */
+.btn-mini { padding: 6px 12px; font-size: 11px; letter-spacing: 0; }
+
+/* ====== 历史战绩 ====== */
+.history-panel {
+    background: rgba(26,39,51,.6);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 4px;
+    padding: 18px;
+}
+.hp-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+}
+.hp-head .block-title { margin-bottom: 0; }
+.hp-sub {
+    font-size: 12px; letter-spacing: 1px; color: var(--val-text-dim);
+    margin: 14px 0 8px; padding-bottom: 6px;
+    border-bottom: 1px dashed rgba(255,255,255,.08);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.stat-card {
+    background: rgba(15,25,35,.6);
+    border: 1px solid rgba(255,255,255,.06);
+    border-left: 3px solid var(--val-red);
+    border-radius: 3px;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    transition: all .25s;
+}
+.stat-card:hover { transform: translateY(-2px); border-left-color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+.stat-card i { font-size: 24px; color: var(--val-red); flex-shrink: 0; }
+.stat-card .lbl { font-size: 10px; color: var(--val-text-dim); letter-spacing: 1px; }
+.stat-card .val { font-size: 22px; font-weight: 900; color: #fff; line-height: 1.1; margin-top: 2px; }
+.stat-win { border-left-color: var(--val-green); }
+.stat-win i { color: var(--val-green); }
+.stat-lose { border-left-color: var(--val-text-dim); }
+.stat-lose i { color: var(--val-text-dim); }
+.stat-rate { border-left-color: var(--val-cyan); }
+.stat-rate i { color: var(--val-cyan); }
+.stat-streak { border-left-color: var(--val-gold); }
+.stat-streak i { color: var(--val-gold); }
+.stat-best { border-left-color: var(--val-purple); }
+.stat-best i { color: var(--val-purple); }
+
+.history-list {
+    display: flex; flex-direction: column; gap: 6px;
+    max-height: 220px; overflow-y: auto;
+}
+.history-empty {
+    text-align: center; padding: 20px 0;
+    color: var(--val-text-dim); font-size: 12px;
+}
+.history-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 10px; align-items: center;
+    padding: 8px 12px;
+    background: rgba(15,25,35,.5);
+    border: 1px solid rgba(255,255,255,.05);
+    border-left: 3px solid transparent;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.history-row.win { border-left-color: var(--val-green); }
+.history-row.lose { border-left-color: var(--val-red); }
+.history-row .h-tag {
+    font-size: 10px; font-weight: 900;
+    padding: 2px 8px; border-radius: 2px;
+    letter-spacing: 1px;
+}
+.history-row.win .h-tag { background: var(--val-green); color: #000; }
+.history-row.lose .h-tag { background: var(--val-red); color: #fff; }
+.history-row .h-rival { color: #fff; font-weight: 700; }
+.history-row .h-score { color: var(--val-gold); font-weight: 800; font-family: 'Courier New', monospace; }
+.history-row .h-time { color: var(--val-text-dim); font-size: 10px; }
+
+/* ====== 喷漆奖励 ====== */
+.reward-panel {
+    background:
+      linear-gradient(160deg, rgba(255,70,85,.08) 0%, rgba(249,168,38,.04) 100%),
+      rgba(26,39,51,.6);
+    border: 1px solid rgba(255,70,85,.3);
+    border-radius: 4px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+}
+.reward-panel::before {
+    content: ''; position: absolute;
+    top: -60px; right: -60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,70,85,.25) 0%, transparent 70%);
+    pointer-events: none;
+}
+.reward-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+}
+.reward-head .block-title { margin-bottom: 0; }
+.reward-tag {
+    font-size: 10px; letter-spacing: 1px; font-weight: 800;
+    padding: 3px 10px; border-radius: 2px;
+    background: rgba(255,70,85,.2); color: var(--val-red);
+    border: 1px solid rgba(255,70,85,.4);
+}
+.reward-tag.unlocked {
+    background: var(--val-gold); color: #000; border-color: var(--val-gold);
+    box-shadow: 0 0 12px rgba(249,168,38,.5);
+}
+.reward-tag.claimed {
+    background: var(--val-green); color: #000; border-color: var(--val-green);
+}
+
+.reward-card {
+    position: relative; z-index: 1;
+}
+.reward-spray {
+    width: 140px; height: 140px;
+    margin: 6px auto 14px;
+    background: radial-gradient(circle, rgba(255,70,85,.18) 0%, transparent 70%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: sprayFloat 4s ease-in-out infinite;
+}
+.reward-spray svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 16px rgba(255,70,85,.4)); }
+@keyframes sprayFloat {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-6px) rotate(3deg); }
+}
+.reward-card.locked .reward-spray { filter: grayscale(.6) brightness(.7); }
+.reward-card.unlocked .reward-spray svg { filter: drop-shadow(0 4px 22px rgba(249,168,38,.7)); }
+
+.reward-name {
+    font-size: 16px; font-weight: 900; color: #fff;
+    letter-spacing: 1px; text-align: center;
+    margin-bottom: 6px;
+}
+.reward-desc {
+    font-size: 12px; color: var(--val-text-dim);
+    line-height: 1.7; text-align: center;
+    margin-bottom: 14px;
+}
+.reward-desc b { color: var(--val-gold); }
+
+.reward-progress { margin-bottom: 14px; }
+.rp-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--val-text-dim); letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.rp-head b { color: var(--val-red); font-size: 13px; }
+.rp-bar {
+    width: 100%; height: 8px;
+    background: rgba(0,0,0,.4);
+    border-radius: 4px; overflow: hidden;
+    position: relative;
+}
+.rp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--val-red), var(--val-gold));
+    border-radius: 4px;
+    transition: width .6s ease;
+    box-shadow: 0 0 12px rgba(249,168,38,.5);
+}
+.rp-dots {
+    display: flex; justify-content: space-between;
+    margin-top: 6px;
+}
+.rp-dot {
+    width: 10px; height: 10px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50%;
+    transition: all .3s;
+}
+.rp-dot.filled {
+    background: var(--val-gold);
+    border-color: var(--val-gold);
+    box-shadow: 0 0 8px var(--val-gold);
+}
+
+.reward-claim { margin-top: 8px !important; }
+.reward-claim.ready {
+    background: linear-gradient(135deg, var(--val-gold), #d97706) !important;
+    box-shadow: 0 4px 18px rgba(249,168,38,.5) !important;
+    animation: rewardPulse 1.6s infinite;
+}
+.reward-claim.claimed {
+    background: rgba(93,211,158,.2) !important;
+    color: var(--val-green) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--val-green) !important;
+    animation: none;
+}
+@keyframes rewardPulse {
+    0%, 100% { transform: translateY(0); box-shadow: 0 4px 18px rgba(249,168,38,.5); }
+    50% { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(249,168,38,.8); }
+}
+
+/* battle-foot 响应式 */
+@media (max-width: 1100px) {
+    .battle-foot { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+    .battle-foot { margin-top: 16px; gap: 12px; }
+    .history-panel, .reward-panel { padding: 14px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .stat-card { padding: 10px; gap: 8px; }
+    .stat-card i { font-size: 20px; }
+    .stat-card .val { font-size: 18px; }
+    .history-row { grid-template-columns: auto 1fr auto; font-size: 11px; padding: 7px 10px; }
+    .history-row .h-time { display: none; }
+    .reward-spray { width: 110px; height: 110px; }
+    .reward-name { font-size: 14px; }
+    .reward-desc { font-size: 11px; }
+}
+@media (max-width: 480px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- 背景动效 -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
+
+    <div class="app">
+        <!-- 顶部导航 -->
+        <header class="top-bar">
+            <div class="logo">
+                <div class="logo-mark">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="logo-text">
+                    <h1>VALORANT</h1>
+                    <p>NIGHT.MARKET / 夜市 PK</p>
+                </div>
+            </div>
+            <nav class="top-nav">
+                <a class="active" data-tab="market"><i class="ri-store-2-line"></i> 我的夜市</a>
+                <a data-tab="strategy"><i class="ri-sword-line"></i> 战术配置</a>
+                <a data-tab="battle"><i class="ri-vidicon-line"></i> 对战中心</a>
+                <a data-tab="rules"><i class="ri-book-open-line"></i> 玩法规则</a>
+            </nav>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="ri-user-3-fill"></i>
+                </div>
+                <div class="user-meta">
+                    <p class="uname">特工 · 你</p>
+                    <p class="urank">RADIANT 辉煌</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main">
+            <!-- 1. 我的夜市 -->
+            <section class="page page-market active" data-page="market">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">今日夜市 · 你的 6 件皮肤</h2>
+                        <p class="section-sub">每日刷新，仅限 24 小时。来自不同武器系列的命运抽选。</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn btn-ghost" id="btnReroll"><i class="ri-refresh-line"></i> 重新抽取夜市</button>
+                        <button class="btn btn-primary" id="btnGoStrategy"><i class="ri-arrow-right-line"></i> 进入战术配置</button>
+                    </div>
+                </div>
+
+                <div class="market-grid" id="marketGrid"></div>
+
+                <!-- 夜市信息汇总 -->
+                <div class="market-summary">
+                    <div class="summary-item">
+                        <i class="ri-vip-crown-2-line"></i>
+                        <div>
+                            <p class="lbl">最高品级</p>
+                            <p class="val" id="sumTopTier">--</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="ri-money-cny-circle-line"></i>
+                        <div>
+                            <p class="lbl">夜市总价</p>
+                            <p class="val" id="sumTotal">--</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="ri-coupon-3-line"></i>
+                        <div>
+                            <p class="lbl">平均折扣</p>
+                            <p class="val" id="sumDiscount">--</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="ri-heart-pulse-line"></i>
+                        <div>
+                            <p class="lbl">心愿值之和</p>
+                            <p class="val" id="sumWish">--</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 战术配置 -->
+            <section class="page page-strategy" data-page="strategy">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">田忌赛马 · 战术配置</h2>
+                        <p class="section-sub">从 6 件皮肤中挑选 3 件出战，根据综合战力分为 上等马 / 中等马 / 下等马，并自定义出场顺序。</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn btn-ghost" id="btnAutoPick"><i class="ri-magic-line"></i> 智能选 3 件</button>
+                        <button class="btn btn-ghost" id="btnClearPick"><i class="ri-eraser-line"></i> 清空选择</button>
+                        <button class="btn btn-share" id="btnShareLineup" disabled><i class="ri-share-forward-line"></i> 分享挑战</button>
+                    </div>
+                </div>
+
+                <div class="strategy-wrap">
+                    <!-- 左侧：6件皮肤选择池 -->
+                    <div class="pick-pool">
+                        <h3 class="block-title"><i class="ri-checkbox-multiple-line"></i> 选择 3 件出战皮肤 <span id="pickedCount">0/3</span></h3>
+                        <div class="pick-grid" id="pickGrid"></div>
+                    </div>
+
+                    <!-- 右侧：上中下马排兵 -->
+                    <div class="horse-board">
+                        <h3 class="block-title"><i class="ri-flag-line"></i> 出场顺序 · 拖拽或点击调整</h3>
+
+                        <div class="horse-pos" data-pos="0">
+                            <div class="pos-tag">一号位<small>首发</small></div>
+                            <div class="pos-slot" id="slot-0">
+                                <span class="pos-empty">点击下方皮肤选择 3 件</span>
+                            </div>
+                            <div class="pos-actions">
+                                <button data-act="up" data-pos="0" disabled><i class="ri-arrow-up-line"></i></button>
+                                <button data-act="down" data-pos="0"><i class="ri-arrow-down-line"></i></button>
+                            </div>
+                        </div>
+                        <div class="horse-pos" data-pos="1">
+                            <div class="pos-tag">二号位<small>中军</small></div>
+                            <div class="pos-slot" id="slot-1">
+                                <span class="pos-empty">--</span>
+                            </div>
+                            <div class="pos-actions">
+                                <button data-act="up" data-pos="1"><i class="ri-arrow-up-line"></i></button>
+                                <button data-act="down" data-pos="1"><i class="ri-arrow-down-line"></i></button>
+                            </div>
+                        </div>
+                        <div class="horse-pos" data-pos="2">
+                            <div class="pos-tag">三号位<small>压轴</small></div>
+                            <div class="pos-slot" id="slot-2">
+                                <span class="pos-empty">--</span>
+                            </div>
+                            <div class="pos-actions">
+                                <button data-act="up" data-pos="2"><i class="ri-arrow-up-line"></i></button>
+                                <button data-act="down" data-pos="2" disabled><i class="ri-arrow-down-line"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="horse-meta">
+                            <div class="rate-row">
+                                <span>上等马</span>
+                                <i class="ri-arrow-right-line"></i>
+                                <b id="tagTop">--</b>
+                            </div>
+                            <div class="rate-row">
+                                <span>中等马</span>
+                                <i class="ri-arrow-right-line"></i>
+                                <b id="tagMid">--</b>
+                            </div>
+                            <div class="rate-row">
+                                <span>下等马</span>
+                                <i class="ri-arrow-right-line"></i>
+                                <b id="tagLow">--</b>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" id="btnGoBattle"><i class="ri-sword-fill"></i> 锁定阵容 · 进入对战</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 对战中心 -->
+            <section class="page page-battle" data-page="battle">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">夜市对决 · 三局两胜</h2>
+                        <p class="section-sub">系统将匹配一名对手，双方皮肤依次按出场顺序对决，综合战力高者胜出。</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn btn-ghost" id="btnRematch"><i class="ri-refresh-line"></i> 重新匹配对手</button>
+                        <button class="btn btn-ghost" id="btnReconfig"><i class="ri-settings-3-line"></i> 重新配置阵容</button>
+                        <button class="btn btn-primary" id="btnStartBattle"><i class="ri-flashlight-line"></i> 开始对决</button>
+                    </div>
+                </div>
+
+                <div class="battle-arena">
+                    <!-- 你 -->
+                    <div class="player-side player-self">
+                        <div class="player-head">
+                            <div class="player-avatar"><i class="ri-user-3-fill"></i></div>
+                            <div>
+                                <p class="pname">特工 · 你</p>
+                                <p class="prank">RADIANT 辉煌</p>
+                            </div>
+                            <div class="score-box"><span id="scoreSelf">0</span></div>
+                        </div>
+                        <div class="lineup" id="lineupSelf"></div>
+                    </div>
+
+                    <!-- 中央 PK 区 -->
+                    <div class="vs-board">
+                        <div class="vs-circle">
+                            <span>VS</span>
+                        </div>
+                        <div class="round-track">
+                            <div class="round-dot" data-round="0"><span>1</span><p>--</p></div>
+                            <div class="round-dot" data-round="1"><span>2</span><p>--</p></div>
+                            <div class="round-dot" data-round="2"><span>3</span><p>--</p></div>
+                        </div>
+                        <div class="battle-log" id="battleLog">
+                            <p class="log-empty">点击「开始对决」开始这场夜市赛马……</p>
+                        </div>
+                    </div>
+
+                    <!-- 对手 -->
+                    <div class="player-side player-rival">
+                        <div class="player-head">
+                            <div class="player-avatar rival"><i class="ri-ghost-2-fill"></i></div>
+                            <div>
+                                <p class="pname" id="rivalName">--</p>
+                                <p class="prank" id="rivalRank">--</p>
+                            </div>
+                            <div class="score-box"><span id="scoreRival">0</span></div>
+                        </div>
+                        <div class="lineup" id="lineupRival"></div>
+                    </div>
+                </div>
+
+                <!-- 战绩与奖励区 -->
+                <div class="battle-foot">
+                    <!-- 历史战绩统计 -->
+                    <div class="history-panel">
+                        <div class="hp-head">
+                            <h3 class="block-title"><i class="ri-bar-chart-2-line"></i> 历史战绩</h3>
+                            <button class="btn btn-ghost btn-mini" id="btnClearHistory"><i class="ri-delete-bin-line"></i> 清空</button>
+                        </div>
+                        <div class="stat-grid">
+                            <div class="stat-card stat-total">
+                                <i class="ri-swap-box-line"></i>
+                                <div>
+                                    <p class="lbl">总场次</p>
+                                    <p class="val" id="statTotal">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-win">
+                                <i class="ri-trophy-fill"></i>
+                                <div>
+                                    <p class="lbl">胜场</p>
+                                    <p class="val" id="statWin">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-lose">
+                                <i class="ri-skull-2-line"></i>
+                                <div>
+                                    <p class="lbl">败场</p>
+                                    <p class="val" id="statLose">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-rate">
+                                <i class="ri-percent-line"></i>
+                                <div>
+                                    <p class="lbl">胜率</p>
+                                    <p class="val" id="statRate">0%</p>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-streak">
+                                <i class="ri-fire-fill"></i>
+                                <div>
+                                    <p class="lbl">当前连胜</p>
+                                    <p class="val" id="statStreak">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card stat-best">
+                                <i class="ri-medal-2-fill"></i>
+                                <div>
+                                    <p class="lbl">最高连胜</p>
+                                    <p class="val" id="statBest">0</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="history-list-wrap">
+                            <h4 class="hp-sub">最近 5 场对局</h4>
+                            <div class="history-list" id="historyList">
+                                <p class="history-empty">暂无对局记录</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 喷漆奖励 -->
+                    <div class="reward-panel">
+                        <div class="reward-head">
+                            <h3 class="block-title"><i class="ri-paint-brush-fill"></i> 限定喷漆奖励</h3>
+                            <span class="reward-tag" id="rewardTag">未解锁</span>
+                        </div>
+
+                        <div class="reward-card" id="rewardCard">
+                            <div class="reward-spray">
+                                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <radialGradient id="sprayGrad" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" stop-color="#ff4655"/>
+                                            <stop offset="60%" stop-color="#f9a826"/>
+                                            <stop offset="100%" stop-color="#0f1923"/>
+                                        </radialGradient>
+                                        <linearGradient id="sprayBody" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0" stop-color="#ff4655"/>
+                                            <stop offset="1" stop-color="#7a1c25"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- 喷漆痕迹 -->
+                                    <circle cx="100" cy="100" r="70" fill="url(#sprayGrad)" opacity="0.85"/>
+                                    <circle cx="80" cy="85" r="6" fill="#ff4655" opacity="0.8"/>
+                                    <circle cx="125" cy="115" r="4" fill="#f9a826" opacity="0.9"/>
+                                    <circle cx="60" cy="130" r="3" fill="#fff" opacity="0.6"/>
+                                    <circle cx="140" cy="70" r="3" fill="#fff" opacity="0.6"/>
+                                    <!-- 中心标志 -->
+                                    <path d="M100 70 L115 100 L100 130 L85 100 Z" fill="#fff"/>
+                                    <text x="100" y="106" text-anchor="middle" font-size="14" font-weight="900" fill="#0f1923" font-family="Arial">V</text>
+                                </svg>
+                            </div>
+                            <div class="reward-info">
+                                <p class="reward-name">VICTORY · 胜利印记喷漆</p>
+                                <p class="reward-desc">夜市赛季限定 · 累计取得 <b>5 次</b> 胜利后可领取，并永久装备至你的对局个人档案。</p>
+
+                                <div class="reward-progress">
+                                    <div class="rp-head">
+                                        <span>解锁进度</span>
+                                        <b><span id="rewardProgress">0</span> / 5 胜</b>
+                                    </div>
+                                    <div class="rp-bar">
+                                        <div class="rp-fill" id="rewardFill" style="width:0%"></div>
+                                    </div>
+                                    <div class="rp-dots">
+                                        <span class="rp-dot" data-i="1"></span>
+                                        <span class="rp-dot" data-i="2"></span>
+                                        <span class="rp-dot" data-i="3"></span>
+                                        <span class="rp-dot" data-i="4"></span>
+                                        <span class="rp-dot" data-i="5"></span>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary btn-block reward-claim" id="btnClaimReward" disabled>
+                                    <i class="ri-lock-line"></i> 还需 5 胜可领取
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 规则 -->
+            <section class="page page-rules" data-page="rules">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">玩法规则 · Night Market PK</h2>
+                        <p class="section-sub">基于无畏契约官方夜市机制 + 田忌赛马策略玩法</p>
+                    </div>
+                </div>
+
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="ri-store-2-fill"></i></div>
+                        <h3>1. 夜市开启</h3>
+                        <p>玩家进入夜市后，系统会从全部武器皮肤池中随机生成 <b>6 件</b>皮肤，每件皮肤包含：</p>
+                        <ul>
+                            <li><b>名称</b>（武器系列名）</li>
+                            <li><b>品级</b>（精选 / 豪华 / 高级 / 至尊 / 典藏）</li>
+                            <li><b>原价</b> 与 <b>折扣力度</b>（10%-50%）</li>
+                            <li><b>心愿值</b>（玩家个人喜爱度 0-100）</li>
+                        </ul>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="ri-medal-fill"></i></div>
+                        <h3>2. 品级与战力</h3>
+                        <p>品级越高，皮肤基础战力越高。综合战力计算公式：</p>
+                        <div class="formula">
+                            战力 = 品级权重 × 50 + 折后价 ÷ 100 + 心愿值 ÷ 2
+                        </div>
+                        <p>不同品级权重：精选(1)、豪华(2)、高级(3)、至尊(4)、典藏(5)。</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="ri-sword-fill"></i></div>
+                        <h3>3. 田忌赛马</h3>
+                        <p>从 6 件皮肤中挑选 <b>3 件</b>参战，根据战力自动分为：</p>
+                        <ul>
+                            <li><b style="color:#ff4655">上等马</b> · 战力最高</li>
+                            <li><b style="color:#f9a826">中等马</b> · 战力居中</li>
+                            <li><b style="color:#54c8ff">下等马</b> · 战力最低</li>
+                        </ul>
+                        <p>玩家可自由调整三者的出场顺序，运用策略制胜。</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <div class="rule-icon"><i class="ri-trophy-fill"></i></div>
+                        <h3>4. 三局两胜</h3>
+                        <p>双方一号位、二号位、三号位依次对决，每场战力高者胜，单局不计平。</p>
+                        <p>累计 <b>2 胜</b>即赢得整场对决，对手将奉上夜市折扣券作为奖励。</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>由 <a href="https://with.woa.com/" style="color: #8A2BE2;" target="_blank">With</a> 通过自然语言生成</p>
+        </footer>
+    </div>
+
+    <!-- 对决结算弹窗 -->
+    <div class="modal" id="modalResult">
+        <div class="modal-mask"></div>
+        <div class="modal-body">
+            <div class="modal-icon" id="resultIcon"><i class="ri-trophy-fill"></i></div>
+            <h2 id="resultTitle">VICTORY</h2>
+            <p id="resultDesc">你以 2:1 击败了对手</p>
+            <div class="modal-detail" id="resultDetail"></div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" id="resultClose">查看战报</button>
+                <button class="btn btn-primary" id="resultAgain"><i class="ri-restart-line"></i> 再来一局</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 分享挑战弹窗 -->
+    <div class="modal" id="modalShare">
+        <div class="modal-mask"></div>
+        <div class="modal-body modal-share">
+            <h2 class="share-title">SHARE</h2>
+            <p class="share-sub">长按下图保存或分享给好友 · 出场顺序已隐藏</p>
+
+            <div class="share-canvas-wrap">
+                <canvas id="shareCanvas" width="720" height="1080"></canvas>
+            </div>
+            <!-- 隐藏的二维码生成容器 -->
+            <div id="qrcodeBox" style="display:none"></div>
+
+            <div class="modal-actions share-actions">
+                <button class="btn btn-ghost" id="shareClose"><i class="ri-close-line"></i> 关闭</button>
+                <button class="btn btn-primary" id="shareDownload"><i class="ri-download-2-line"></i> 下载图片</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+// ============ weapons.js ============
+// 武器 SVG 图标库（无畏契约主流武器外形示意）
+const WEAPON_SVGS = {
+    // 幻象 (Phantom)
+    phantom: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#bbb"/></linearGradient></defs>
+        <path d="M10,30 L40,25 L60,20 L160,22 L185,28 L185,34 L60,38 L40,36 L10,34 Z" fill="url(#g1)" stroke="#222" stroke-width="1"/>
+        <rect x="40" y="36" width="22" height="14" fill="#444"/>
+        <rect x="62" y="38" width="40" height="6" fill="#333"/>
+        <circle cx="170" cy="31" r="3" fill="#ff4655"/>
+    </svg>`,
+    // 幽灵 (Ghost) - 手枪
+    ghost: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eee"/><stop offset="1" stop-color="#888"/></linearGradient></defs>
+        <path d="M70,15 L150,15 L160,22 L160,30 L80,30 L80,42 L72,48 L60,48 L60,30 L65,22 Z" fill="url(#g2)" stroke="#222"/>
+        <rect x="155" y="20" width="20" height="6" fill="#444"/>
+        <circle cx="100" cy="22" r="2" fill="#ff4655"/>
+    </svg>`,
+    // 暴徒 (Vandal)
+    vandal: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9a826"/><stop offset="1" stop-color="#7a4f0a"/></linearGradient></defs>
+        <path d="M5,28 L35,22 L55,18 L165,20 L190,26 L190,34 L55,40 L35,38 L5,34 Z" fill="url(#g3)" stroke="#222"/>
+        <rect x="35" y="38" width="25" height="16" fill="#3a2d1a"/>
+        <rect x="60" y="40" width="50" height="6" fill="#222"/>
+        <path d="M165,20 L188,15 L188,20 Z" fill="#f9a826"/>
+    </svg>`,
+    // 守护者 (Guardian)
+    guardian: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#54c8ff"/><stop offset="1" stop-color="#1e5e7a"/></linearGradient></defs>
+        <path d="M8,28 L30,24 L50,20 L170,22 L195,28 L195,32 L50,36 L30,34 L8,32 Z" fill="url(#g4)"/>
+        <rect x="30" y="32" width="22" height="14" fill="#1a3a4a"/>
+        <rect x="55" y="34" width="35" height="6" fill="#0e2530"/>
+    </svg>`,
+    // 狙击 - 守望者 / 暴风
+    operator: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b388eb"/><stop offset="1" stop-color="#4a2f7a"/></linearGradient></defs>
+        <path d="M2,30 L30,26 L60,18 L165,20 L195,28 L195,32 L60,38 L30,34 L2,32 Z" fill="url(#g5)"/>
+        <circle cx="80" cy="14" r="6" fill="#222"/>
+        <rect x="74" y="14" width="14" height="4" fill="#222"/>
+        <rect x="30" y="32" width="20" height="14" fill="#2a1a4a"/>
+    </svg>`,
+    // 间谍 (Spectre) - 冲锋枪
+    spectre: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5dd39e"/><stop offset="1" stop-color="#1c5a3e"/></linearGradient></defs>
+        <path d="M40,26 L160,22 L175,28 L175,34 L40,38 L25,34 L25,28 Z" fill="url(#g6)"/>
+        <rect x="50" y="38" width="20" height="14" fill="#1a3a2a"/>
+        <rect x="70" y="34" width="30" height="6" fill="#1a3a2a"/>
+    </svg>`,
+    // 法警 (Sheriff) - 大手枪
+    sheriff: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4655"/><stop offset="1" stop-color="#7a1c25"/></linearGradient></defs>
+        <path d="M65,18 L160,18 L165,24 L165,30 L80,32 L80,46 L70,52 L58,52 L58,32 L62,24 Z" fill="url(#g7)" stroke="#222"/>
+        <circle cx="115" cy="24" r="3" fill="#fff"/>
+        <rect x="160" y="22" width="22" height="6" fill="#444"/>
+    </svg>`,
+    // 短管 (Bulldog)
+    bulldog: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g8" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e6e6e6"/><stop offset="1" stop-color="#777"/></linearGradient></defs>
+        <path d="M10,28 L45,22 L155,22 L185,28 L185,34 L45,38 L10,34 Z" fill="url(#g8)"/>
+        <rect x="45" y="36" width="24" height="14" fill="#3a3a3a"/>
+        <rect x="70" y="36" width="40" height="6" fill="#222"/>
+    </svg>`,
+    // 经典款 (Classic)
+    classic: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cccccc"/><stop offset="1" stop-color="#555"/></linearGradient></defs>
+        <path d="M70,18 L155,18 L160,22 L160,28 L82,28 L82,42 L74,48 L62,48 L62,28 L66,22 Z" fill="url(#g9)" stroke="#222"/>
+    </svg>`,
+    // 燃烧者 (Judge) - 霰弹
+    judge: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g10" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f9a826"/><stop offset="1" stop-color="#5a3a0a"/></linearGradient></defs>
+        <path d="M15,28 L40,24 L60,22 L160,22 L185,28 L185,34 L60,38 L40,36 L15,34 Z" fill="url(#g10)"/>
+        <rect x="40" y="36" width="24" height="14" fill="#3a2a0a"/>
+        <circle cx="170" cy="31" r="5" fill="#222" stroke="#f9a826"/>
+    </svg>`,
+    // 近战 - 刀
+    melee: `<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#888"/></linearGradient></defs>
+        <path d="M30,28 L150,22 L165,28 L150,34 L30,32 Z" fill="url(#g11)" stroke="#222"/>
+        <rect x="15" y="26" width="18" height="10" fill="#3a2a1a"/>
+        <rect x="10" y="28" width="6" height="6" fill="#222"/>
+    </svg>`
+};
+function getWeaponSvg(type) {
+    return WEAPON_SVGS[type] || WEAPON_SVGS.phantom;
+}
+
+// ============ data.js ============
+// 无畏契约皮肤数据池
+// 真实皮肤系列 + 武器槽位
+
+// 皮肤系列（基于无畏契约真实系列名）
+const SKIN_SERIES = [
+    { name: '炽天使', en: 'SOVEREIGN', tier: 'premium', color: '#f9a826', themeColor: 'rgba(249,168,38,.35)' },
+    { name: '荣耀典藏', en: 'PRIME', tier: 'premium', color: '#b388eb', themeColor: 'rgba(179,136,235,.35)' },
+    { name: '反应器', en: 'REAVER', tier: 'ultra', color: '#ff4655', themeColor: 'rgba(255,70,85,.35)' },
+    { name: '电浆', en: 'ION', tier: 'premium', color: '#54c8ff', themeColor: 'rgba(84,200,255,.35)' },
+    { name: '元素之力', en: 'ELDERFLAME', tier: 'ultra', color: '#ff7a3d', themeColor: 'rgba(255,122,61,.35)' },
+    { name: '天选', en: 'CHRONOVOID', tier: 'ultra', color: '#9d4edd', themeColor: 'rgba(157,78,221,.35)' },
+    { name: '辛迪加', en: 'GLITCHPOP', tier: 'premium', color: '#ff3ec9', themeColor: 'rgba(255,62,201,.35)' },
+    { name: '机甲战神', en: 'PROTOCOL', tier: 'deluxe', color: '#5dd39e', themeColor: 'rgba(93,211,158,.35)' },
+    { name: '极乐迪斯科', en: 'DISCO', tier: 'deluxe', color: '#ff4eb1', themeColor: 'rgba(255,78,177,.35)' },
+    { name: '阿拉克斯', en: 'ARAXYS', tier: 'ultra', color: '#3aafa9', themeColor: 'rgba(58,175,169,.35)' },
+    { name: '幻光', en: 'PRELUDIUM', tier: 'premium', color: '#7ec8e3', themeColor: 'rgba(126,200,227,.35)' },
+    { name: '火神', en: 'PHOENIX', tier: 'deluxe', color: '#e63946', themeColor: 'rgba(230,57,70,.35)' },
+    { name: '银影', en: 'SILVER', tier: 'select', color: '#c0c0c0', themeColor: 'rgba(192,192,192,.35)' },
+    { name: '夜市限定', en: 'KURONAMI', tier: 'premium', color: '#5a189a', themeColor: 'rgba(90,24,154,.35)' },
+    { name: '暗影绝杀', en: 'OUTRAGE', tier: 'deluxe', color: '#475569', themeColor: 'rgba(71,85,105,.35)' }
+];
+
+// 武器列表
+const WEAPONS = [
+    { name: '幻象', en: 'Phantom', type: 'phantom', basePrice: 1775 },
+    { name: '暴徒', en: 'Vandal', type: 'vandal', basePrice: 1775 },
+    { name: '守护者', en: 'Guardian', type: 'guardian', basePrice: 1700 },
+    { name: '守望者', en: 'Operator', type: 'operator', basePrice: 1775 },
+    { name: '幽灵', en: 'Ghost', type: 'ghost', basePrice: 1275 },
+    { name: '法警', en: 'Sheriff', type: 'sheriff', basePrice: 1275 },
+    { name: '间谍', en: 'Spectre', type: 'spectre', basePrice: 1275 },
+    { name: '短管', en: 'Bulldog', type: 'bulldog', basePrice: 1275 },
+    { name: '经典款', en: 'Classic', type: 'classic', basePrice: 875 },
+    { name: '燃烧者', en: 'Judge', type: 'judge', basePrice: 1275 },
+    { name: '近战', en: 'Melee', type: 'melee', basePrice: 1775 }
+];
+
+// 品级配置
+const TIERS = {
+    select:    { name: '精选', en: 'SELECT EDITION',    weight: 1, priceMul: 0.5, color: 'var(--tier-select)',    soft: 'rgba(93,211,158,.25)' },
+    deluxe:    { name: '豪华', en: 'DELUXE EDITION',    weight: 2, priceMul: 0.7, color: 'var(--tier-deluxe)',    soft: 'rgba(84,200,255,.25)' },
+    premium:   { name: '高级', en: 'PREMIUM EDITION',   weight: 3, priceMul: 1.0, color: 'var(--tier-premium)',   soft: 'rgba(179,136,235,.25)' },
+    exclusive: { name: '至尊', en: 'EXCLUSIVE EDITION', weight: 4, priceMul: 1.3, color: 'var(--tier-exclusive)', soft: 'rgba(249,168,38,.25)' },
+    ultra:     { name: '典藏', en: 'ULTRA EDITION',     weight: 5, priceMul: 1.6, color: 'var(--tier-ultra)',     soft: 'rgba(255,70,85,.25)' }
+};
+
+// 工具：随机
+const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// 生成单个皮肤
+let skinIdSeed = 1;
+function generateSkin(forceTier) {
+    const series = rand(SKIN_SERIES);
+    const weapon = rand(WEAPONS);
+    // 品级：受系列基础品级影响，有概率波动
+    let tierKey = forceTier;
+    if (!tierKey) {
+        const tierKeys = Object.keys(TIERS);
+        // 加权随机：精选/豪华/高级 较常见，至尊/典藏 稀有
+        const weights = [25, 30, 25, 12, 8];
+        const total = weights.reduce((a, b) => a + b, 0);
+        let r = Math.random() * total;
+        for (let i = 0; i < tierKeys.length; i++) {
+            if ((r -= weights[i]) <= 0) { tierKey = tierKeys[i]; break; }
+        }
+    }
+    const tier = TIERS[tierKey];
+
+    // 价格 = 武器基础 × 品级倍率，再做小幅随机
+    const basePrice = Math.round(weapon.basePrice * tier.priceMul * (0.95 + Math.random() * 0.1) / 25) * 25;
+    // 折扣力度：10%-50%（夜市机制）
+    const discount = randInt(10, 50);
+    const finalPrice = Math.round(basePrice * (100 - discount) / 100 / 5) * 5;
+    // 心愿值（玩家个人喜爱度）
+    const wish = randInt(20, 100);
+
+    // 综合战力：品级权重×50 + 折后价÷100 + 心愿值÷2
+    const power = Math.round(tier.weight * 50 + finalPrice / 100 + wish / 2);
+
+    return {
+        id: 'sk_' + (skinIdSeed++) + '_' + Date.now().toString(36),
+        seriesName: series.name,
+        seriesEn: series.en,
+        seriesColor: series.color,
+        seriesTheme: series.themeColor,
+        weaponName: weapon.name,
+        weaponEn: weapon.en,
+        weaponType: weapon.type,
+        weaponSvg: getWeaponSvg(weapon.type),
+        tierKey,
+        tier,
+        basePrice,
+        discount,
+        finalPrice,
+        wish,
+        power
+    };
+}
+
+// 生成 6 件不重复武器的夜市
+function generateNightMarket() {
+    const skins = [];
+    const usedWeapons = new Set();
+    let safety = 0;
+    while (skins.length < 6 && safety++ < 60) {
+        const s = generateSkin();
+        if (!usedWeapons.has(s.weaponType)) {
+            usedWeapons.add(s.weaponType);
+            skins.push(s);
+        }
+    }
+    // 如果武器不够（只有11种），允许少量重复
+    while (skins.length < 6) skins.push(generateSkin());
+    return skins;
+}
+
+// 对手昵称池
+const RIVAL_NAMES = [
+    '幽灵狙击手', '暴徒收割者', '夜市猎人', '炽天使代理人', '反应器王',
+    '机甲先锋', '银影刺客', '辛迪加之王', '黑市玩家', '红线指挥官',
+    '虚空行者', '电浆战士', '钢铁信徒', '末日审判', '暗影使者'
+];
+const RIVAL_RANKS = ['IRON 黄铜', 'BRONZE 青铜', 'SILVER 白银', 'GOLD 黄金', 'PLATINUM 白金', 'DIAMOND 钻石', 'ASCENDANT 超凡', 'IMMORTAL 不朽', 'RADIANT 辉煌'];
+function generateRival() {
+    return {
+        name: rand(RIVAL_NAMES),
+        rank: rand(RIVAL_RANKS),
+        skins: [generateSkin(), generateSkin(), generateSkin()]
+    };
+}
+
+// ============ view.js ============
+// 视图渲染模块
+
+// 渲染皮肤卡片
+function renderSkinCard(skin, options = {}) {
+    const tier = skin.tier;
+    const card = document.createElement('div');
+    card.className = 'skin-card';
+    card.dataset.id = skin.id;
+    card.style.setProperty('--tier-color', tier.color);
+    card.style.setProperty('--tier-color-soft', tier.soft);
+    card.innerHTML = `
+        <div class="skin-tier-badge">${tier.name}</div>
+        <div class="skin-discount">-${skin.discount}%</div>
+        <div class="skin-art">
+            <div class="skin-weapon">${skin.weaponSvg}</div>
+        </div>
+        <div class="skin-info">
+            <div class="skin-name">${skin.seriesName} · ${skin.weaponName}</div>
+            <div class="skin-weapon-name">${skin.seriesEn} · ${skin.weaponEn}</div>
+            <div class="skin-price-row">
+                <div class="price-now"><i>VP</i>${skin.finalPrice}</div>
+                <div class="price-old">原价 ${skin.basePrice}</div>
+            </div>
+            <div class="skin-wish">
+                <span>心愿值</span>
+                <div class="wish-bar"><div class="wish-fill" style="width:${skin.wish}%"></div></div>
+                <b>${skin.wish}</b>
+            </div>
+        </div>
+        <div class="skin-power">
+            <span>综合战力</span>
+            <b>${skin.power}</b>
+        </div>
+    `;
+    if (options.onClick) {
+        card.addEventListener('click', () => options.onClick(skin, card));
+    }
+    return card;
+}
+
+// 简化版（slot/lineup）
+function renderMiniSkin(skin, horseTag) {
+    const tier = skin.tier;
+    const wrap = document.createElement('div');
+    wrap.className = 'slot-skin';
+    wrap.style.setProperty('--tier-color', tier.color);
+    wrap.innerHTML = `
+        <div class="mini-art">${skin.weaponSvg}</div>
+        <div class="mini-info">
+            <p>${skin.seriesName} · ${skin.weaponName}</p>
+            <span>${tier.name} · 战力 ${skin.power}</span>
+        </div>
+        ${horseTag ? `<span class="horse-tag ${horseTag.cls}">${horseTag.text}</span>` : ''}
+    `;
+    return wrap;
+}
+
+// 战斗阵容卡片
+function renderLineupCard(skin, posIndex, opts = {}) {
+    const tier = skin.tier;
+    const card = document.createElement('div');
+    card.className = 'lineup-card';
+    if (opts.hidePower) card.classList.add('hidden-power');
+    card.style.setProperty('--tier-color', tier.color);
+    card.dataset.pos = posIndex;
+    card.innerHTML = `
+        <div class="lineup-pos">${posIndex + 1}</div>
+        <div class="lineup-art">${skin.weaponSvg}</div>
+        <div class="lineup-meta">
+            <p>${skin.seriesName} · ${skin.weaponName}</p>
+            <div class="stats">${tier.name} · 战力 <b>${skin.power}</b></div>
+        </div>
+    `;
+    return card;
+}
+
+// Toast 提示
+function showToast(msg, duration = 2000) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ============ main.js ============
+// 主入口：状态管理 + 业务流程
+
+
+// ====== 持久化历史 ======
+const HISTORY_KEY = 'valorant_nm_history_v1';
+const REWARD_KEY = 'valorant_nm_reward_claimed_v1';
+const REWARD_TARGET = 5;
+
+function loadHistory() {
+    try {
+        const raw = localStorage.getItem(HISTORY_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+}
+function saveHistory(list) {
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); } catch (e) {}
+}
+function loadClaimed() {
+    return localStorage.getItem(REWARD_KEY) === '1';
+}
+function saveClaimed(v) {
+    try { localStorage.setItem(REWARD_KEY, v ? '1' : '0'); } catch (e) {}
+}
+
+// ====== 全局状态 ======
+const state = {
+    market: [],          // 6 件皮肤
+    selectedIds: [],     // 选中3件
+    lineup: [],          // 3件按出场顺序排列（数组index 0=一号位）
+    rival: null,
+    battle: {
+        started: false,
+        rounds: [],      // 每局结果 {self, rival, winner: 'self'|'rival'}
+        scoreSelf: 0,
+        scoreRival: 0
+    },
+    history: loadHistory(),  // [{rivalName, scoreSelf, scoreRival, won, time}]
+    rewardClaimed: loadClaimed()
+};
+
+// ====== Tab 切换 ======
+function switchPage(tab) {
+    document.querySelectorAll('.top-nav a').forEach(a => a.classList.toggle('active', a.dataset.tab === tab));
+    document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.dataset.page === tab));
+    if (tab === 'strategy') renderStrategyPage();
+    if (tab === 'battle')   renderBattlePage();
+}
+document.querySelectorAll('.top-nav a').forEach(a => {
+    a.addEventListener('click', () => switchPage(a.dataset.tab));
+});
+
+// ====== 1. 夜市页 ======
+function rollMarket() {
+    state.market = generateNightMarket();
+    state.selectedIds = [];
+    state.lineup = [];
+    renderMarketPage();
+    showToast('已重新刷新今日夜市', 1600);
+}
+function renderMarketPage() {
+    const grid = document.getElementById('marketGrid');
+    grid.innerHTML = '';
+    state.market.forEach(skin => {
+        const card = renderSkinCard(skin, {
+            onClick: (s, el) => {
+                // 直接进入战术页选择
+                switchPage('strategy');
+            }
+        });
+        grid.appendChild(card);
+    });
+    // 汇总
+    const top = state.market.reduce((a, b) => a.tier.weight > b.tier.weight ? a : b);
+    const total = state.market.reduce((s, x) => s + x.finalPrice, 0);
+    const avgDis = Math.round(state.market.reduce((s, x) => s + x.discount, 0) / state.market.length);
+    const wishSum = state.market.reduce((s, x) => s + x.wish, 0);
+    document.getElementById('sumTopTier').textContent = top.tier.name + ' · ' + top.seriesName;
+    document.getElementById('sumTotal').textContent = total + ' VP';
+    document.getElementById('sumDiscount').textContent = avgDis + ' %';
+    document.getElementById('sumWish').textContent = wishSum;
+}
+
+// ====== 2. 战术配置页 ======
+function renderStrategyPage() {
+    const grid = document.getElementById('pickGrid');
+    grid.innerHTML = '';
+    state.market.forEach(skin => {
+        const card = renderSkinCard(skin, {
+            onClick: (s, el) => togglePick(s)
+        });
+        if (state.selectedIds.includes(skin.id)) card.classList.add('selected');
+        grid.appendChild(card);
+    });
+    refreshLineupView();
+}
+
+function togglePick(skin) {
+    const idx = state.selectedIds.indexOf(skin.id);
+    if (idx >= 0) {
+        state.selectedIds.splice(idx, 1);
+    } else {
+        if (state.selectedIds.length >= 3) {
+            showToast('最多选择 3 件出战皮肤');
+            return;
+        }
+        state.selectedIds.push(skin.id);
+    }
+    rebuildLineup();
+    renderStrategyPage();
+}
+
+// 重建出场顺序：默认按战力排序后初始为 [低, 中, 高] 的顺序（保持用户选择的原始顺序也可）
+function rebuildLineup() {
+    const picked = state.selectedIds
+        .map(id => state.market.find(m => m.id === id))
+        .filter(Boolean);
+    // 保持用户的选择顺序
+    state.lineup = picked;
+}
+
+function refreshLineupView() {
+    document.getElementById('pickedCount').textContent = `${state.selectedIds.length}/3`;
+    // 三个槽位
+    for (let i = 0; i < 3; i++) {
+        const slot = document.getElementById('slot-' + i);
+        slot.innerHTML = '';
+        if (state.lineup[i]) {
+            const horseTag = getHorseTag(state.lineup[i]);
+            slot.appendChild(renderMiniSkin(state.lineup[i], horseTag));
+        } else {
+            const span = document.createElement('span');
+            span.className = 'pos-empty';
+            span.textContent = i === 0 ? '点击下方皮肤选择 3 件' : '--';
+            slot.appendChild(span);
+        }
+    }
+    // 上中下马标记（基于 lineup 三件的战力对比）
+    const ranked = [...state.lineup].sort((a, b) => b.power - a.power);
+    document.getElementById('tagTop').textContent = ranked[0] ? `${ranked[0].seriesName} · ${ranked[0].weaponName}（战力 ${ranked[0].power}）` : '--';
+    document.getElementById('tagMid').textContent = ranked[1] ? `${ranked[1].seriesName} · ${ranked[1].weaponName}（战力 ${ranked[1].power}）` : '--';
+    document.getElementById('tagLow').textContent = ranked[2] ? `${ranked[2].seriesName} · ${ranked[2].weaponName}（战力 ${ranked[2].power}）` : '--';
+
+    // 按钮启用/禁用
+    document.getElementById('btnGoBattle').disabled = state.lineup.length !== 3;
+    const btnShare = document.getElementById('btnShareLineup');
+    if (btnShare) btnShare.disabled = state.lineup.length !== 3;
+    // 上下移动按钮
+    document.querySelectorAll('.pos-actions button').forEach(btn => {
+        const pos = +btn.dataset.pos;
+        const act = btn.dataset.act;
+        if (act === 'up')   btn.disabled = pos === 0 || !state.lineup[pos];
+        if (act === 'down') btn.disabled = pos === 2 || !state.lineup[pos];
+    });
+}
+
+function getHorseTag(skin) {
+    if (state.lineup.length < 3) return null;
+    const ranked = [...state.lineup].sort((a, b) => b.power - a.power);
+    if (skin.id === ranked[0].id) return { cls: 'top', text: '上等马' };
+    if (skin.id === ranked[1].id) return { cls: 'mid', text: '中等马' };
+    if (skin.id === ranked[2].id) return { cls: 'low', text: '下等马' };
+    return null;
+}
+
+// 上下移动出场顺序
+document.querySelectorAll('.pos-actions button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const pos = +btn.dataset.pos;
+        const act = btn.dataset.act;
+        if (!state.lineup[pos]) return;
+        const target = act === 'up' ? pos - 1 : pos + 1;
+        if (target < 0 || target > 2) return;
+        // 交换
+        [state.lineup[pos], state.lineup[target]] = [state.lineup[target], state.lineup[pos]];
+        refreshLineupView();
+    });
+});
+
+// 智能选 3 件 / 清空
+document.getElementById('btnAutoPick').addEventListener('click', () => {
+    if (!state.market.length) return;
+    // 选战力最高的 3 件，并按 下→中→上 的顺序排列
+    const top3 = [...state.market].sort((a, b) => b.power - a.power).slice(0, 3);
+    state.selectedIds = top3.map(s => s.id);
+    // 默认顺序：下等马（低战力）→ 中等马 → 上等马（高战力，压轴）
+    state.lineup = [...top3].sort((a, b) => a.power - b.power);
+    renderStrategyPage();
+    showToast('智能阵容：下等马 → 中等马 → 上等马');
+});
+document.getElementById('btnClearPick').addEventListener('click', () => {
+    state.selectedIds = [];
+    state.lineup = [];
+    renderStrategyPage();
+});
+
+// ====== 3. 对战页 ======
+document.getElementById('btnGoBattle').addEventListener('click', () => {
+    if (state.lineup.length !== 3) {
+        showToast('请先选择 3 件出战皮肤');
+        return;
+    }
+    // 如果是从对战页"重新配置"回来的，则保留原对手；否则生成新对手
+    if (!state.reconfigMode || !state.rival) {
+        state.rival = generateRival();
+    }
+    resetBattle();
+    switchPage('battle');
+});
+
+document.getElementById('btnGoStrategy').addEventListener('click', () => switchPage('strategy'));
+
+// 重新配置阵容（保留当前对手 rival 不变）
+document.getElementById('btnReconfig').addEventListener('click', () => {
+    if (!state.rival) {
+        showToast('暂无对手，请先进入对战');
+        return;
+    }
+    state.reconfigMode = true; // 标记：返回时不要重新生成对手
+    showToast('已保留当前对手，请重新配置阵容');
+    switchPage('strategy');
+});
+
+function resetBattle() {
+    state.battle = { started: false, rounds: [], scoreSelf: 0, scoreRival: 0 };
+}
+
+function renderBattlePage() {
+    if (state.lineup.length !== 3) {
+        showToast('请先在战术页选择 3 件皮肤');
+        switchPage('strategy');
+        return;
+    }
+    // 仅在没有对手时才生成新对手；reconfigMode 下保留原对手
+    if (!state.rival) state.rival = generateRival();
+    // 重置 reconfigMode（已应用一次）
+    state.reconfigMode = false;
+    // 每次回到对战页都重置比分（但 rival 不变）
+    resetBattle();
+
+    // 自身阵容
+    const selfBox = document.getElementById('lineupSelf');
+    selfBox.innerHTML = '';
+    state.lineup.forEach((s, i) => selfBox.appendChild(renderLineupCard(s, i)));
+
+    // 对手阵容（开战前隐藏战力）
+    const rivalBox = document.getElementById('lineupRival');
+    rivalBox.innerHTML = '';
+    state.rival.skins.forEach((s, i) => rivalBox.appendChild(renderLineupCard(s, i, { hidePower: !state.battle.started })));
+
+    document.getElementById('rivalName').textContent = state.rival.name;
+    document.getElementById('rivalRank').textContent = state.rival.rank;
+    document.getElementById('scoreSelf').textContent = state.battle.scoreSelf;
+    document.getElementById('scoreRival').textContent = state.battle.scoreRival;
+
+    // 重置 round 圆点
+    document.querySelectorAll('.round-dot').forEach(dot => {
+        dot.classList.remove('win', 'lose');
+        dot.querySelector('p').textContent = '--';
+    });
+
+    // 战报
+    const log = document.getElementById('battleLog');
+    log.innerHTML = '<p class="log-empty">点击「开始对决」开始这场夜市赛马……</p>';
+
+    document.getElementById('btnStartBattle').disabled = false;
+
+    // 渲染历史 + 奖励
+    renderHistoryPanel();
+}
+
+document.getElementById('btnRematch').addEventListener('click', () => {
+    state.rival = generateRival();
+    resetBattle();
+    renderBattlePage();
+    showToast('已匹配新对手：' + state.rival.name);
+});
+
+document.getElementById('btnStartBattle').addEventListener('click', startBattle);
+
+async function startBattle() {
+    state.battle.started = true;
+    document.getElementById('btnStartBattle').disabled = true;
+    document.getElementById('btnRematch').disabled = true;
+
+    const log = document.getElementById('battleLog');
+    log.innerHTML = '';
+
+    const selfCards = document.querySelectorAll('#lineupSelf .lineup-card');
+    const rivalCards = document.querySelectorAll('#lineupRival .lineup-card');
+    // 解除对手模糊
+    rivalCards.forEach(c => c.classList.remove('hidden-power'));
+
+    appendLog(log, '<span class="log-time">[战前]</span> 双方锁定阵容，对决开始！');
+    await sleep(800);
+    appendLog(log, `<span class="log-time">[情报]</span> 对手「${state.rival.name}（${state.rival.rank}）」已就位`);
+    await sleep(600);
+
+    state.battle.rounds = [];
+    state.battle.scoreSelf = 0;
+    state.battle.scoreRival = 0;
+
+    for (let i = 0; i < 3; i++) {
+        // 标记当前对决
+        clearActive();
+        selfCards[i].classList.add('fighting');
+        rivalCards[i].classList.add('fighting');
+        appendLog(log, `<span class="log-time">[第${i+1}局]</span> 你的「${state.lineup[i].seriesName}·${state.lineup[i].weaponName}」 VS 对手的「${state.rival.skins[i].seriesName}·${state.rival.skins[i].weaponName}」`);
+        await sleep(1100);
+
+        const myPower = state.lineup[i].power + Math.floor(Math.random() * 8 - 4);
+        const rivalPower = state.rival.skins[i].power + Math.floor(Math.random() * 8 - 4);
+        appendLog(log, `&nbsp;&nbsp;&nbsp;⚔️ 战力对决：你 ${myPower} <span style="color:#888"> · </span> 对手 ${rivalPower}`);
+        await sleep(700);
+
+        let winner;
+        if (myPower > rivalPower) winner = 'self';
+        else if (myPower < rivalPower) winner = 'rival';
+        else winner = Math.random() > 0.5 ? 'self' : 'rival'; // 平局微判
+
+        if (winner === 'self') {
+            state.battle.scoreSelf++;
+            selfCards[i].classList.add('win');
+            rivalCards[i].classList.add('lose');
+            appendLog(log, `&nbsp;&nbsp;&nbsp;<span class="log-win">★ 你赢下了第 ${i+1} 局！</span>`);
+            markRound(i, 'win');
+        } else {
+            state.battle.scoreRival++;
+            selfCards[i].classList.add('lose');
+            rivalCards[i].classList.add('win');
+            appendLog(log, `&nbsp;&nbsp;&nbsp;<span class="log-lose">✘ 第 ${i+1} 局对手获胜</span>`);
+            markRound(i, 'lose');
+        }
+        state.battle.rounds.push({ self: state.lineup[i], rival: state.rival.skins[i], myPower, rivalPower, winner });
+
+        document.getElementById('scoreSelf').textContent = state.battle.scoreSelf;
+        document.getElementById('scoreRival').textContent = state.battle.scoreRival;
+        await sleep(700);
+
+        // 早停（已经 2 胜，且不需要展示后续）—— 保留显示但不再继续战斗
+        if (state.battle.scoreSelf === 2 || state.battle.scoreRival === 2) {
+            if (i < 2) {
+                appendLog(log, `<span class="log-time">[结算]</span> 已经分出胜负，对决提前结束。`);
+                // 后续局不再战斗，直接置灰
+                for (let j = i + 1; j < 3; j++) {
+                    selfCards[j].classList.add('lose');
+                    rivalCards[j].classList.add('lose');
+                    selfCards[j].classList.remove('lose');
+                    rivalCards[j].classList.remove('lose');
+                    selfCards[j].style.opacity = '.4';
+                    rivalCards[j].style.opacity = '.4';
+                }
+                break;
+            }
+        }
+    }
+
+    clearActive();
+    await sleep(500);
+
+    // 结算
+    const won = state.battle.scoreSelf > state.battle.scoreRival;
+    appendLog(log, '');
+    appendLog(log, `<span class="log-time">[最终]</span> ${won ? '<span class="log-win">VICTORY · 你赢得了对决！</span>' : '<span class="log-lose">DEFEAT · 你被对手击败</span>'}（${state.battle.scoreSelf}:${state.battle.scoreRival}）`);
+
+    showResultModal(won);
+    document.getElementById('btnRematch').disabled = false;
+
+    // 保存历史
+    const historyEntry = {
+        rivalName: state.rival.name,
+        rivalRank: state.rival.rank,
+        scoreSelf: state.battle.scoreSelf,
+        scoreRival: state.battle.scoreRival,
+        won: won,
+        time: Date.now()
+    };
+    state.history.unshift(historyEntry);
+    if (state.history.length > 100) state.history.length = 100;
+    saveHistory(state.history);
+    renderHistoryPanel();
+}
+
+function clearActive() {
+    document.querySelectorAll('.lineup-card').forEach(c => c.classList.remove('fighting'));
+}
+function markRound(i, status) {
+    const dot = document.querySelector(`.round-dot[data-round="${i}"]`);
+    if (!dot) return;
+    dot.classList.add(status);
+    dot.querySelector('p').textContent = status === 'win' ? '胜' : '负';
+}
+function appendLog(log, html) {
+    const p = document.createElement('p');
+    p.innerHTML = html;
+    log.appendChild(p);
+    log.scrollTop = log.scrollHeight;
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ====== 结算弹窗 ======
+function showResultModal(won) {
+    const modal = document.getElementById('modalResult');
+    const icon = document.getElementById('resultIcon');
+    const title = document.getElementById('resultTitle');
+    const desc = document.getElementById('resultDesc');
+    const detail = document.getElementById('resultDetail');
+
+    if (won) {
+        icon.classList.remove('lose');
+        title.classList.remove('lose');
+        title.textContent = 'VICTORY';
+        icon.innerHTML = '<i class="ri-trophy-fill"></i>';
+        desc.textContent = `你以 ${state.battle.scoreSelf}:${state.battle.scoreRival} 击败了「${state.rival.name}」，赢得本场夜市对决！`;
+    } else {
+        icon.classList.add('lose');
+        title.classList.add('lose');
+        title.textContent = 'DEFEAT';
+        icon.innerHTML = '<i class="ri-emotion-sad-line"></i>';
+        desc.textContent = `你以 ${state.battle.scoreSelf}:${state.battle.scoreRival} 败给了「${state.rival.name}」，再接再厉。`;
+    }
+
+    detail.innerHTML = state.battle.rounds.map((r, i) => `
+        <div class="row">
+            <span>第 ${i+1} 局</span>
+            <span>${r.self.weaponName}(${r.myPower}) vs ${r.rival.weaponName}(${r.rivalPower})</span>
+            <span style="color:${r.winner==='self' ? 'var(--val-green)' : 'var(--val-red)'}">${r.winner==='self' ? '胜' : '负'}</span>
+        </div>
+    `).join('');
+
+    modal.classList.add('show');
+}
+document.getElementById('resultClose').addEventListener('click', () => {
+    document.getElementById('modalResult').classList.remove('show');
+});
+document.getElementById('resultAgain').addEventListener('click', () => {
+    document.getElementById('modalResult').classList.remove('show');
+    state.rival = generateRival();
+    resetBattle();
+    renderBattlePage();
+    showToast('已匹配新对手：' + state.rival.name);
+});
+
+// ====== 重新抽夜市 ======
+document.getElementById('btnReroll').addEventListener('click', rollMarket);
+
+// ====== 分享挑战（生成阵容图片+二维码，隐藏出场顺序） ======
+const shareModal = document.getElementById('modalShare');
+document.getElementById('btnShareLineup').addEventListener('click', async () => {
+    if (state.lineup.length !== 3) {
+        showToast('请先完成 3 件皮肤的阵容配置');
+        return;
+    }
+    shareModal.classList.add('show');
+    await generateShareImage();
+});
+document.getElementById('shareClose').addEventListener('click', () => {
+    shareModal.classList.remove('show');
+});
+document.getElementById('shareDownload').addEventListener('click', () => {
+    const canvas = document.getElementById('shareCanvas');
+    const link = document.createElement('a');
+    link.download = `valorant-night-market-challenge-${Date.now()}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('图片已保存');
+});
+
+// 把 SVG 字符串转换为可绘制的 Image
+function svgToImage(svgStr) {
+    return new Promise((resolve, reject) => {
+        const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const img = new Image();
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = (e) => { URL.revokeObjectURL(url); reject(e); };
+        img.src = url;
+    });
+}
+
+// 生成二维码 dataURL（基于 qrcodejs）
+function makeQRCode(text, size = 220) {
+    return new Promise((resolve) => {
+        const box = document.getElementById('qrcodeBox');
+        box.innerHTML = '';
+        // eslint-disable-next-line no-undef
+        new QRCode(box, {
+            text,
+            width: size,
+            height: size,
+            colorDark: '#0f1923',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+        });
+        // 等待渲染
+        setTimeout(() => {
+            const canvas = box.querySelector('canvas');
+            const img = box.querySelector('img');
+            if (canvas) resolve(canvas.toDataURL('image/png'));
+            else if (img) resolve(img.src);
+            else resolve('');
+        }, 100);
+    });
+}
+
+async function loadImage(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+    });
+}
+
+async function generateShareImage() {
+    const canvas = document.getElementById('shareCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    // 背景
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, '#0f1923');
+    grad.addColorStop(0.5, '#1a2733');
+    grad.addColorStop(1, '#0f1923');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // 顶部红条
+    ctx.fillStyle = '#ff4655';
+    ctx.fillRect(0, 0, W, 8);
+    ctx.fillRect(0, H - 8, W, 8);
+
+    // 网格背景
+    ctx.strokeStyle = 'rgba(255,70,85,0.05)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // 红色光晕
+    const radial = ctx.createRadialGradient(W * 0.2, 200, 50, W * 0.2, 200, 400);
+    radial.addColorStop(0, 'rgba(255,70,85,0.3)');
+    radial.addColorStop(1, 'rgba(255,70,85,0)');
+    ctx.fillStyle = radial;
+    ctx.fillRect(0, 0, W, H);
+
+    // ==== 头部 LOGO 区 ====
+    ctx.fillStyle = '#ff4655';
+    ctx.fillRect(60, 60, 6, 36);
+    ctx.fillRect(80, 60, 18, 6);
+    ctx.fillRect(80, 90, 6, 6);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 38px "PingFang SC", sans-serif';
+    ctx.textBaseline = 'top';
+    ctx.fillText('VALORANT', 120, 60);
+    ctx.fillStyle = '#8b9aa8';
+    ctx.font = '16px "PingFang SC", sans-serif';
+    ctx.fillText('NIGHT MARKET · 夜市挑战书', 120, 105);
+
+    // ==== 标题 ====
+    ctx.fillStyle = '#ff4655';
+    ctx.fillRect(60, 170, 4, 50);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 44px "PingFang SC", sans-serif';
+    ctx.fillText('我的夜市阵容', 80, 175);
+    ctx.fillStyle = '#8b9aa8';
+    ctx.font = '18px "PingFang SC", sans-serif';
+    ctx.fillText('CHALLENGE LINEUP · 来挑战我吧！', 80, 230);
+
+    // ==== 三张阵容卡 ====
+    // 注意：为了"隐藏出场顺序"，对 lineup 做一次随机打乱再绘制
+    const shuffled = [...state.lineup].sort(() => Math.random() - 0.5);
+
+    const cardX = 60, cardY = 290, cardW = W - 120, cardH = 180, cardGap = 18;
+    for (let i = 0; i < shuffled.length; i++) {
+        const skin = shuffled[i];
+        const y = cardY + i * (cardH + cardGap);
+        const tierColor = getTierHex(skin.tierKey);
+
+        // 卡背景
+        ctx.fillStyle = 'rgba(26,39,51,0.85)';
+        roundRect(ctx, cardX, y, cardW, cardH, 8);
+        ctx.fill();
+
+        // 左侧色条
+        ctx.fillStyle = tierColor;
+        ctx.fillRect(cardX, y, 6, cardH);
+
+        // tier 标签
+        ctx.fillStyle = tierColor;
+        roundRect(ctx, cardX + 24, y + 20, 90, 28, 4);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 14px "PingFang SC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(skin.tier.name + '版', cardX + 24 + 45, y + 20 + 14);
+
+        // 武器图标
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        try {
+            const wImg = await svgToImage(skin.weaponSvg);
+            const wx = cardX + 130, wy = y + 60;
+            const ww = 220, wh = 70;
+            ctx.save();
+            ctx.translate(wx + ww / 2, wy + wh / 2);
+            ctx.rotate(-15 * Math.PI / 180);
+            ctx.drawImage(wImg, -ww / 2, -wh / 2, ww, wh);
+            ctx.restore();
+        } catch (e) { /* svg load failed, ignore */ }
+
+        // 文本：系列+武器
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 26px "PingFang SC", sans-serif';
+        ctx.fillText(`${skin.seriesName} · ${skin.weaponName}`, cardX + 380, y + 30);
+        ctx.fillStyle = '#8b9aa8';
+        ctx.font = '14px "PingFang SC", sans-serif';
+        ctx.fillText(`${skin.seriesEn} · ${skin.weaponEn}`, cardX + 380, y + 65);
+
+        // 价格
+        ctx.fillStyle = '#f9a826';
+        ctx.font = 'bold 22px "PingFang SC", sans-serif';
+        ctx.fillText(`VP ${skin.finalPrice}`, cardX + 380, y + 100);
+        ctx.fillStyle = '#8b9aa8';
+        ctx.font = '14px "PingFang SC", sans-serif';
+        ctx.fillText(`原价 ${skin.basePrice} · -${skin.discount}%`, cardX + 500, y + 105);
+
+        // 心愿值条
+        ctx.fillStyle = 'rgba(255,255,255,0.08)';
+        roundRect(ctx, cardX + 380, y + 138, 180, 8, 4); ctx.fill();
+        const wgrad = ctx.createLinearGradient(cardX + 380, 0, cardX + 380 + 180, 0);
+        wgrad.addColorStop(0, '#ff4655'); wgrad.addColorStop(1, '#f9a826');
+        ctx.fillStyle = wgrad;
+        roundRect(ctx, cardX + 380, y + 138, 180 * skin.wish / 100, 8, 4); ctx.fill();
+        ctx.fillStyle = '#8b9aa8';
+        ctx.font = '12px "PingFang SC", sans-serif';
+        ctx.fillText(`心愿值 ${skin.wish}`, cardX + 570, y + 134);
+
+        // 右侧：HIDDEN 出场顺序占位
+        ctx.fillStyle = 'rgba(255,70,85,0.12)';
+        roundRect(ctx, cardX + cardW - 110, y + 30, 90, 90, 8); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,70,85,0.5)';
+        ctx.setLineDash([4, 4]);
+        ctx.strokeRect(cardX + cardW - 110, y + 30, 90, 90);
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#ff4655';
+        ctx.font = 'bold 28px "PingFang SC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('?', cardX + cardW - 110 + 45, y + 50);
+        ctx.font = 'bold 11px "PingFang SC", sans-serif';
+        ctx.fillStyle = '#8b9aa8';
+        ctx.fillText('出场顺序', cardX + cardW - 110 + 45, y + 90);
+        ctx.fillText('已隐藏', cardX + cardW - 110 + 45, y + 105);
+
+        ctx.textAlign = 'left';
+    }
+
+    // ==== 底部信息：二维码 + 提示 ====
+    const footY = cardY + 3 * (cardH + cardGap) + 20;
+
+    // 左侧文字
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 24px "PingFang SC", sans-serif';
+    ctx.fillText('扫码接受挑战', 60, footY + 10);
+    ctx.fillStyle = '#8b9aa8';
+    ctx.font = '14px "PingFang SC", sans-serif';
+    ctx.fillText('SCAN TO ACCEPT THE CHALLENGE', 60, footY + 45);
+    ctx.fillStyle = '#ff4655';
+    ctx.font = 'bold 16px "PingFang SC", sans-serif';
+    ctx.fillText('「田忌赛马」三局两胜 · 谁能猜出我的出场顺序？', 60, footY + 75);
+
+    ctx.fillStyle = '#8b9aa8';
+    ctx.font = '12px "PingFang SC", sans-serif';
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    ctx.fillText('挑战发起 · ' + dateStr, 60, footY + 105);
+
+    // 二维码
+    try {
+        const qrUrl = await makeQRCode(window.location.href, 220);
+        const qrImg = await loadImage(qrUrl);
+        // 白色底
+        ctx.fillStyle = '#fff';
+        roundRect(ctx, W - 240 - 20, footY - 10, 220, 220, 8); ctx.fill();
+        ctx.drawImage(qrImg, W - 240 - 10, footY, 200, 200);
+    } catch (e) { /* qr generate failed */ }
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+}
+
+function getTierHex(tierKey) {
+    return ({
+        select: '#5dd39e',
+        deluxe: '#54c8ff',
+        premium: '#b388eb',
+        exclusive: '#f9a826',
+        ultra: '#ff4655'
+    })[tierKey] || '#ff4655';
+}
+
+// ====== 历史战绩 + 喷漆奖励面板 ======
+function getStats() {
+    const total = state.history.length;
+    const win = state.history.filter(h => h.won).length;
+    const lose = total - win;
+    const rate = total === 0 ? 0 : Math.round(win * 100 / total);
+
+    // 当前连胜（state.history 是「最新在前」，从前往后数连续 won）
+    let streak = 0;
+    for (const h of state.history) {
+        if (h.won) streak++;
+        else break;
+    }
+    // 历史最高连胜（按时间正序遍历：从尾到头）
+    let best = 0, cur = 0;
+    for (let i = state.history.length - 1; i >= 0; i--) {
+        if (state.history[i].won) { cur++; best = Math.max(best, cur); }
+        else cur = 0;
+    }
+    return { total, win, lose, rate, streak, best };
+}
+
+function formatTime(ts) {
+    const d = new Date(ts);
+    const now = new Date();
+    const sameDay = d.toDateString() === now.toDateString();
+    const pad = n => String(n).padStart(2, '0');
+    if (sameDay) return `今天 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return `${pad(d.getMonth()+1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function renderHistoryPanel() {
+    const s = getStats();
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('statTotal', s.total);
+    set('statWin', s.win);
+    set('statLose', s.lose);
+    set('statRate', s.rate + '%');
+    set('statStreak', s.streak);
+    set('statBest', s.best);
+
+    // 最近 5 场
+    const list = document.getElementById('historyList');
+    if (list) {
+        if (state.history.length === 0) {
+            list.innerHTML = '<p class="history-empty">暂无对局记录，先去打一场吧～</p>';
+        } else {
+            list.innerHTML = state.history.slice(0, 5).map(h => {
+                const cls = h.won ? 'win' : 'lose';
+                const tag = h.won ? '胜' : '负';
+                const t = typeof h.time === 'number' ? formatTime(h.time) : '';
+                return `
+                    <div class="history-row ${cls}">
+                        <span class="h-tag">${tag}</span>
+                        <span class="h-rival">VS ${h.rivalName}</span>
+                        <span class="h-score">${h.scoreSelf}:${h.scoreRival}</span>
+                        <span class="h-time">${t}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    updateRewardPanel(s.win);
+}
+
+function updateRewardPanel(winCount) {
+    const target = REWARD_TARGET;
+    const cur = Math.min(winCount, target);
+    const percent = Math.min(100, Math.round(cur * 100 / target));
+
+    const elProgress = document.getElementById('rewardProgress');
+    const elFill = document.getElementById('rewardFill');
+    if (elProgress) elProgress.textContent = cur;
+    if (elFill) elFill.style.width = percent + '%';
+
+    document.querySelectorAll('.rp-dot').forEach(dot => {
+        const i = +dot.dataset.i;
+        dot.classList.toggle('filled', i <= cur);
+    });
+
+    const card = document.getElementById('rewardCard');
+    const tag = document.getElementById('rewardTag');
+    const btn = document.getElementById('btnClaimReward');
+    if (!card || !tag || !btn) return;
+
+    card.classList.remove('locked', 'unlocked');
+    tag.classList.remove('unlocked', 'claimed');
+    btn.classList.remove('ready', 'claimed');
+
+    if (state.rewardClaimed) {
+        card.classList.add('unlocked');
+        tag.classList.add('claimed');
+        tag.textContent = '已领取';
+        btn.classList.add('claimed');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ri-check-double-line"></i> 已装备至个人档案';
+    } else if (winCount >= target) {
+        card.classList.add('unlocked');
+        tag.classList.add('unlocked');
+        tag.textContent = '可领取';
+        btn.classList.add('ready');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ri-gift-2-fill"></i> 立即领取喷漆';
+    } else {
+        card.classList.add('locked');
+        tag.textContent = '未解锁';
+        btn.disabled = true;
+        btn.innerHTML = `<i class="ri-lock-line"></i> 还需 ${target - winCount} 胜可领取`;
+    }
+}
+
+// 清空历史按钮
+const _btnClearHistory = document.getElementById('btnClearHistory');
+if (_btnClearHistory) {
+    _btnClearHistory.addEventListener('click', () => {
+        if (state.history.length === 0) {
+            showToast('暂无可清空的记录');
+            return;
+        }
+        if (!confirm('确定要清空所有对局历史吗？此操作不可恢复。')) return;
+        state.history = [];
+        saveHistory(state.history);
+        renderHistoryPanel();
+        showToast('历史战绩已清空');
+    });
+}
+
+// 领取喷漆按钮
+const _btnClaimReward = document.getElementById('btnClaimReward');
+if (_btnClaimReward) {
+    _btnClaimReward.addEventListener('click', () => {
+        const s = getStats();
+        if (state.rewardClaimed) {
+            showToast('已领取，可在个人档案查看');
+            return;
+        }
+        if (s.win < REWARD_TARGET) {
+            showToast(`还需 ${REWARD_TARGET - s.win} 胜才能领取`);
+            return;
+        }
+        state.rewardClaimed = true;
+        saveClaimed(true);
+        renderHistoryPanel();
+        showToast('🎉 限定喷漆已成功领取并装备！');
+    });
+}
+
+// ====== 初始化 ======
+function init() {
+    rollMarket();
+    switchPage('market');
+    renderHistoryPanel();
+}
+init();
+</script>
+</body>
+</html>
