@@ -2,507 +2,560 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>VALORANT 夜市 PK · 玩法 PPT 图</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'PingFang SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;}
-:root{
-  --val-red:#ff4655;
-  --val-red-dim:rgba(255,70,85,0.4);
-  --val-dark:#0f1923;
-  --val-darker:#0a0e13;
-  --val-darkest:#06090d;
-  --val-gold:#f4c542;
-  --val-cyan:#5ce1e6;
-  --val-purple:#bf64ff;
-  --val-orange:#ff8c42;
-  --val-green:#7cff5c;
-  --text-main:#ece8e1;
-  --text-dim:#7b8794;
-  --text-dimer:#4a5568;
-  --border:#1f2b3a;
-}
-html,body{background:#1a1d24;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;overflow-x:auto;}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VALORANT Night Market PK · Rules</title>
 
-/* ============ 16:9 PPT 画布 1600x900 ============ */
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter+Tight:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  /* 三色锁定：VALORANT 红 + 纸感米白 + 墨黑 */
+  --paper:#f4f1ea;
+  --paper-dim:#e8e4da;
+  --paper-line:#d8d2c2;
+  --ink:#15110d;
+  --ink-soft:#3d342a;
+  --ink-mute:#8a7e6e;
+  --val-red:#ff4655;
+  --val-red-deep:#c8323f;
+
+  --serif:'DM Serif Display','Cormorant Garamond','Source Han Serif SC','Songti SC',serif;
+  --sans:'Inter Tight','PingFang SC',-apple-system,sans-serif;
+  --mono:'JetBrains Mono','SF Mono',monospace;
+}
+html,body{
+  background:#1a1815;font-family:var(--sans);color:var(--ink);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+/* =========================================================
+   16:9 海报，1600 × 900
+   ========================================================= */
 .slide{
   width:1600px;height:900px;flex-shrink:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,#1a2332 0%,transparent 70%),
-    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(255,70,85,0.08) 0%,transparent 60%),
-    radial-gradient(ellipse 50% 40% at 0% 100%,rgba(92,225,230,0.05) 0%,transparent 60%),
-    var(--val-darkest);
-  color:var(--text-main);
-  position:relative;overflow:hidden;
-  border:1px solid var(--border);
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px,rgba(21,17,13,0.08) 1px,transparent 0);
+  background-size:24px 24px;
+  background-position:0 0;
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto 1fr auto;
+  grid-template-areas:
+    "top    top"
+    "left   right"
+    "bottom bottom";
+  overflow:hidden;
+  box-shadow:0 80px 120px -40px rgba(0,0,0,0.6);
 }
+
+/* 报纸质感叠层 */
 .slide::before{
-  content:"";position:absolute;inset:0;
+  content:"";position:absolute;inset:0;pointer-events:none;
   background:
-    repeating-linear-gradient(0deg,transparent 0,transparent 50px,rgba(255,70,85,0.02) 50px,rgba(255,70,85,0.02) 51px),
-    repeating-linear-gradient(90deg,transparent 0,transparent 50px,rgba(255,70,85,0.02) 50px,rgba(255,70,85,0.02) 51px);
-  pointer-events:none;
+    linear-gradient(180deg,rgba(244,241,234,0.6) 0%,transparent 12%,transparent 88%,rgba(244,241,234,0.5) 100%);
+  z-index:1;
+}
+/* 红色装饰条：右上角斜切 */
+.slide::after{
+  content:"";position:absolute;top:0;right:0;
+  width:340px;height:6px;background:var(--val-red);
+  z-index:2;
 }
 
-/* ============ 标题区 ============ */
-.header{
-  display:flex;align-items:center;gap:18px;
-  padding:32px 48px 18px;border-bottom:1px solid var(--border);
-  position:relative;
+/* =========================================================
+   TOP MASTHEAD：报头风格
+   ========================================================= */
+.masthead{
+  grid-area:top;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:end;
+  padding:28px 56px 18px;
+  border-bottom:1px solid var(--ink);
+  position:relative;z-index:3;
 }
-.header::after{
-  content:"";position:absolute;left:48px;bottom:-1px;width:120px;height:3px;background:var(--val-red);
+.masthead .ed-mark{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--ink-soft);
 }
-.brand-logo{
-  width:48px;height:48px;background:var(--val-red);
-  display:flex;align-items:center;justify-content:center;
-  clip-path:polygon(0 0,100% 0,100% 65%,65% 100%,0 100%);
-  font-weight:900;font-size:24px;color:#fff;
-  box-shadow:0 0 20px var(--val-red-dim);
+.masthead .ed-mark b{color:var(--val-red);}
+.masthead .ed-title{
+  text-align:center;
 }
-.title-block h1{
-  font-size:30px;font-weight:900;letter-spacing:4px;line-height:1.1;
+.masthead .ed-title .kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.32em;color:var(--val-red);font-weight:700;
+  margin-bottom:6px;
 }
-.title-block h1 .accent{color:var(--val-red);}
-.title-block .sub{
-  color:var(--text-dim);font-size:12px;letter-spacing:5px;margin-top:5px;font-weight:500;
+.masthead .ed-title h1{
+  font-family:var(--serif);font-weight:400;font-size:46px;line-height:0.9;
+  letter-spacing:-0.01em;
 }
-.header-right{
-  margin-left:auto;display:flex;align-items:center;gap:12px;
-  padding:8px 16px;background:linear-gradient(90deg,rgba(255,70,85,0.1),rgba(244,197,66,0.05));
-  border:1px solid var(--val-red-dim);
-  font-size:12px;letter-spacing:3px;color:var(--val-gold);font-weight:700;
+.masthead .ed-title h1 em{
+  font-style:italic;color:var(--val-red);font-family:var(--serif);
+  padding-bottom:4px;
 }
-.header-right .dot{width:8px;height:8px;background:var(--val-green);border-radius:50%;box-shadow:0 0 10px var(--val-green);}
+.masthead .ed-meta{
+  text-align:right;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;
+  color:var(--ink-soft);text-transform:uppercase;
+}
+.masthead .ed-meta b{color:var(--ink);font-weight:700;}
 
-/* ============ 流程主轴 ============ */
-.flow{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  padding:32px 48px 18px;
-  position:relative;
+/* =========================================================
+   LEFT COLUMN：流程叙事
+   ========================================================= */
+.col-left{
+  grid-area:left;
+  padding:36px 32px 24px 56px;
+  border-right:1px solid var(--ink);
+  position:relative;z-index:3;
+  display:flex;flex-direction:column;
 }
-.flow::before{
-  content:"";position:absolute;top:90px;left:140px;right:140px;height:2px;
-  background:repeating-linear-gradient(90deg,var(--val-red) 0,var(--val-red) 8px,transparent 8px,transparent 16px);
-  z-index:0;
+.section-lead{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:8px;
 }
-.flow-step{
-  position:relative;z-index:1;text-align:center;padding:0 12px;
+.section-headline{
+  font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;
+  margin-bottom:24px;letter-spacing:-0.01em;
 }
-.flow-num{
-  width:60px;height:60px;background:var(--val-darker);
-  border:2px solid var(--val-red);
-  margin:0 auto 12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;font-weight:900;color:var(--val-red);
-  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
-  position:relative;
+.section-headline em{font-style:italic;color:var(--val-red);}
+
+.flow-list{display:flex;flex-direction:column;gap:14px;flex:1;}
+.flow-row{
+  display:grid;grid-template-columns:84px 1fr;gap:18px;align-items:start;
+  padding-bottom:14px;border-bottom:1px solid var(--paper-line);
 }
-.flow-step.s1 .flow-num{color:var(--val-cyan);border-color:var(--val-cyan);}
-.flow-step.s2 .flow-num{color:var(--val-gold);border-color:var(--val-gold);}
-.flow-step.s3 .flow-num{color:var(--val-orange);border-color:var(--val-orange);}
-.flow-step.s4 .flow-num{color:var(--val-red);border-color:var(--val-red);}
-.flow-step h3{font-size:18px;font-weight:900;letter-spacing:2px;margin-bottom:6px;}
-.flow-step p{color:var(--text-dim);font-size:12px;line-height:1.7;letter-spacing:0.5px;}
-.flow-step .step-label{
-  font-size:10px;letter-spacing:3px;color:var(--text-dimer);font-weight:700;margin-bottom:4px;
+.flow-row:last-child{border-bottom:none;padding-bottom:0;}
+.flow-row .num{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:64px;line-height:0.85;color:var(--val-red);
+  letter-spacing:-0.04em;
+  padding-bottom:6px; /* descender clearance */
+}
+.flow-row .body h3{
+  font-family:var(--sans);font-weight:900;font-size:18px;letter-spacing:-0.005em;
+  margin-bottom:4px;color:var(--ink);
+}
+.flow-row .body p{
+  font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--ink-soft);
+  max-width:48ch;
+}
+.flow-row .body .kw{
+  font-weight:700;color:var(--ink);
+  background:linear-gradient(180deg,transparent 60%,rgba(255,70,85,0.18) 60%);
+  padding:0 2px;
 }
 
-/* ============ 中部双栏（皮肤示例 + 战力公式）============ */
-.middle{
-  display:grid;grid-template-columns:1.1fr 1fr;gap:18px;
-  padding:0 48px;margin-bottom:18px;
+/* =========================================================
+   RIGHT COLUMN：战力公式 + 对比
+   ========================================================= */
+.col-right{
+  grid-area:right;
+  padding:36px 56px 24px 32px;
+  position:relative;z-index:3;
+  display:flex;flex-direction:column;
 }
-.section-title{
-  font-size:14px;letter-spacing:3px;color:var(--val-red);font-weight:900;
-  margin-bottom:12px;padding-left:10px;border-left:3px solid var(--val-red);
-  display:flex;align-items:center;gap:8px;
-}
-.section-title .icon{font-size:18px;}
 
-/* 皮肤参数示例 */
-.skin-example{
-  background:linear-gradient(145deg,#1a2332,#0f1923);
-  padding:16px;border:1px solid var(--border);
-  position:relative;
-}
-.skin-example::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-purple);
-}
-.skin-example .skin-row{
-  display:flex;align-items:center;gap:12px;margin-bottom:12px;
-  padding-bottom:10px;border-bottom:1px solid var(--border);
-}
-.skin-art-mock{
-  width:64px;height:36px;background:linear-gradient(135deg,var(--val-purple),#5a3a8a);
-  display:flex;align-items:center;justify-content:center;color:#fff;
-  font-size:11px;font-weight:900;letter-spacing:1px;
-  clip-path:polygon(8% 20%,100% 0,100% 80%,8% 100%,0 70%,0 30%);
-}
-.skin-art-mock.gold{background:linear-gradient(135deg,var(--val-gold),#b8941f);}
-.skin-name{font-weight:900;font-size:14px;letter-spacing:1px;}
-.skin-meta{font-size:10px;color:var(--text-dim);letter-spacing:2px;margin-top:2px;}
-
-.skin-attrs{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-}
-.attr-cell{
-  background:#06090d;padding:8px 10px;border:1px solid var(--border);
-  border-left:3px solid var(--attr-c,var(--val-red));
-}
-.attr-cell .lab{font-size:9px;color:var(--text-dim);letter-spacing:2px;font-weight:700;margin-bottom:3px;}
-.attr-cell .val{font-size:16px;font-weight:900;font-family:'Courier New',monospace;color:var(--attr-c,#fff);line-height:1;}
-.attr-cell .val .unit{font-size:10px;color:var(--text-dim);font-weight:400;margin-left:2px;}
-.attr-cell.tier{--attr-c:var(--val-purple);}
-.attr-cell.disc{--attr-c:var(--val-red);}
-.attr-cell.wish{--attr-c:var(--val-cyan);}
-.attr-cell.power{--attr-c:var(--val-gold);}
-
-/* 战力公式 */
-.formula-card{
-  background:linear-gradient(145deg,#1a0e12,#0f0a0d);
-  padding:16px;border:1px solid var(--val-red-dim);
-  position:relative;display:flex;flex-direction:column;
-}
-.formula-card::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-red);
+/* 海报式公式 */
+.formula-poster{
+  margin-bottom:22px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--ink);
 }
 .formula-eq{
-  background:#06090d;padding:14px;text-align:center;
-  font-size:18px;font-weight:900;letter-spacing:1px;color:var(--text-main);
-  margin-bottom:10px;border:1px dashed var(--val-red-dim);
-  font-family:'Courier New','PingFang SC',monospace;
+  font-family:var(--serif);font-weight:400;font-size:38px;line-height:1.05;
+  letter-spacing:-0.015em;
+  margin-bottom:14px;
 }
-.formula-eq .val-red{color:var(--val-red);font-size:22px;}
-.formula-eq .val-cyan{color:var(--val-cyan);}
-.formula-eq .val-purple{color:var(--val-purple);}
-.formula-eq .op{color:var(--text-dim);margin:0 4px;}
+.formula-eq .lhs{color:var(--ink);}
+.formula-eq .eq{color:var(--ink-mute);margin:0 8px;font-style:italic;}
+.formula-eq .rhs-1{color:var(--val-red);}
+.formula-eq .plus{color:var(--ink-mute);margin:0 6px;font-style:italic;}
+.formula-eq .rhs-2{color:var(--ink);}
+.formula-eq .small{font-size:0.55em;color:var(--ink-mute);font-family:var(--sans);font-weight:500;letter-spacing:0;display:inline-block;transform:translateY(-0.4em);}
 
-.formula-bars{display:flex;flex-direction:column;gap:8px;}
-.fbar{display:grid;grid-template-columns:120px 1fr 80px;align-items:center;gap:10px;font-size:11px;}
-.fbar .fb-lab{font-weight:900;letter-spacing:1px;color:var(--fb-c);}
-.fbar .fb-track{height:14px;background:#0a0e13;border:1px solid var(--border);position:relative;overflow:hidden;}
-.fbar .fb-fill{height:100%;background:linear-gradient(90deg,var(--fb-c),transparent);width:var(--fb-w);position:relative;}
-.fbar .fb-range{font-family:'Courier New',monospace;font-weight:900;color:var(--fb-c);font-size:11px;text-align:right;}
-.fbar.disc{--fb-c:var(--val-red);}
-.fbar.wish{--fb-c:var(--val-cyan);}
-.fbar.tier{--fb-c:var(--val-purple);}
-
-.formula-note{
-  margin-top:10px;padding:8px 10px;background:rgba(244,197,66,0.08);
-  border-left:3px solid var(--val-gold);font-size:11px;color:var(--val-gold);
-  letter-spacing:1px;line-height:1.5;
+.formula-derive{
+  font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--ink-soft);
+  letter-spacing:0.02em;
 }
-.formula-note b{color:#fff;}
+.formula-derive .l{display:block;}
+.formula-derive .l b{color:var(--val-red);font-weight:700;}
+.formula-derive .l i{color:var(--ink-mute);font-style:normal;}
 
-/* ============ 田忌赛马规则区 ============ */
-.bottom{
-  display:grid;grid-template-columns:2fr 1.4fr;gap:18px;
-  padding:0 48px 32px;
+/* 枪皮 vs 刀皮 对比 */
+.compare-block{flex:1;}
+.compare-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--ink);background:var(--paper);
+  margin-top:12px;
 }
+.compare-cell{
+  padding:18px 18px 16px;position:relative;
+}
+.compare-cell + .compare-cell{border-left:1px solid var(--ink);}
+.compare-cell .tag{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  padding:2px 8px;background:var(--ink);color:var(--paper);font-weight:700;
+  margin-bottom:12px;
+}
+.compare-cell.knife .tag{background:var(--val-red);}
+.compare-cell .skin-name{
+  font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.05;
+  margin-bottom:2px;
+}
+.compare-cell .skin-name em{font-style:italic;}
+.compare-cell .skin-meta{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--ink-mute);
+  margin-bottom:14px;text-transform:uppercase;
+}
+.compare-stat{
+  display:grid;grid-template-columns:1fr auto;gap:4px 12px;
+  padding-top:12px;border-top:1px solid var(--paper-line);
+}
+.compare-stat dt{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);align-self:end;padding-bottom:4px;}
+.compare-stat dd{font-family:var(--mono);font-size:13px;color:var(--ink-soft);text-align:right;font-weight:700;}
+.compare-stat .power-row dt{color:var(--val-red);font-weight:700;}
+.compare-stat .power-row dd{
+  font-family:var(--serif);font-size:32px;font-weight:400;color:var(--val-red);line-height:0.9;
+  letter-spacing:-0.02em;text-align:right;
+}
+.compare-cell .verdict{
+  position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;
+  background:var(--paper);padding:0 10px;color:var(--ink-mute);text-transform:uppercase;
+}
+.compare-cell.knife .verdict b{color:var(--val-red);font-weight:700;}
+
+/* =========================================================
+   BOTTOM：田忌赛马 + 设计意图
+   ========================================================= */
+.col-bottom{
+  grid-area:bottom;
+  display:grid;grid-template-columns:1.4fr 1fr;
+  border-top:1px solid var(--ink);
+  position:relative;z-index:3;
+  background:var(--ink);color:var(--paper);
+}
+
 .tianji{
-  background:linear-gradient(145deg,#0f1923,#1a2332);
-  padding:16px;border:1px solid var(--border);position:relative;
+  padding:26px 32px 26px 56px;
+  border-right:1px solid rgba(244,241,234,0.15);
 }
-.tianji::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-gold);
+.tianji .lead{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--val-red);margin-bottom:10px;font-weight:700;
 }
-.horse-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;
+.tianji .head{
+  font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;color:var(--paper);
+  margin-bottom:18px;
 }
-.horse{
-  background:#06090d;padding:10px 12px;border:1px solid var(--border);
-  border-left:3px solid var(--h-c);
-  display:flex;align-items:center;gap:10px;
-}
-.horse.up{--h-c:var(--val-gold);}
-.horse.mid{--h-c:var(--val-cyan);}
-.horse.low{--h-c:#838fa2;}
-.horse-tag{
-  font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 8px;
-  background:var(--h-c);color:#0a0e13;
-}
-.horse-info{flex:1;}
-.horse-info .h-name{font-size:13px;font-weight:900;letter-spacing:1px;}
-.horse-info .h-desc{font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;}
+.tianji .head em{font-style:italic;}
 
-.battle-flow{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:14px;padding:12px 14px;background:#06090d;border:1px solid var(--border);
+.match-board{
+  display:grid;grid-template-columns:auto 1fr;gap:14px 24px;align-items:center;
 }
-.battle-side{flex:1;}
-.battle-side .bs-lab{
-  font-size:10px;letter-spacing:2px;color:var(--text-dim);font-weight:700;margin-bottom:6px;
+.match-side-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(244,241,234,0.55);
+  text-align:right;padding-right:4px;
+  font-weight:700;
 }
-.battle-side .bs-order{display:flex;gap:6px;}
-.battle-side .bs-order .pos{
-  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:900;color:#0a0e13;
+.match-row{
+  display:grid;grid-template-columns:repeat(3,1fr) auto;gap:6px;align-items:center;
 }
-.battle-side.you .bs-order .pos{background:var(--val-red);color:#fff;}
-.battle-side.you .bs-order .pos:nth-child(1){background:var(--val-cyan);color:#0a0e13;}
-.battle-side.you .bs-order .pos:nth-child(2){background:#838fa2;color:#0a0e13;}
-.battle-side.you .bs-order .pos:nth-child(3){background:var(--val-gold);color:#0a0e13;}
-.battle-side.enemy .bs-order .pos{background:#3a4a5e;color:#fff;}
-.battle-side.enemy .bs-order .pos:nth-child(1){background:var(--val-gold);color:#0a0e13;}
-.battle-side.enemy .bs-order .pos:nth-child(2){background:var(--val-cyan);color:#0a0e13;}
-.battle-side.enemy .bs-order .pos:nth-child(3){background:#838fa2;color:#0a0e13;}
-.battle-vs-arrow{font-size:28px;color:var(--val-red);font-weight:900;margin:0 14px;}
-.battle-result{
-  margin-top:8px;display:flex;justify-content:center;gap:6px;font-size:10px;
+.match-row .pos{
+  font-family:var(--serif);font-style:italic;font-size:18px;font-weight:400;
+  padding:8px 0;text-align:center;
+  background:rgba(244,241,234,0.06);
+  border:1px solid rgba(244,241,234,0.18);
+  color:var(--paper);
+  letter-spacing:0.02em;
 }
-.battle-result .r-dot{
-  width:32px;height:24px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:1px;
+.match-row .pos[data-h="up"]::before{content:"上";}
+.match-row .pos[data-h="mid"]::before{content:"中";}
+.match-row .pos[data-h="low"]::before{content:"下";}
+.match-row.you .pos{
+  background:var(--val-red);border-color:var(--val-red);color:var(--paper);
 }
-.battle-result .r-dot.win{background:var(--val-green);color:#0a0e13;}
-.battle-result .r-dot.lose{background:var(--val-red);color:#fff;}
+.match-row .res{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  padding-left:14px;border-left:1px solid rgba(244,241,234,0.18);
+  color:rgba(244,241,234,0.7);min-width:62px;
+}
+.match-row .res b{display:block;font-size:14px;color:var(--paper);font-weight:700;margin-top:1px;}
+.match-row .res.win b{color:#7cff5c;}
+.match-row .res.lose b{color:var(--val-red);}
 
-/* 核心理念卡 */
-.core-card{
-  background:linear-gradient(145deg,#0a1a18,#0e1f1c);
-  padding:16px;border:1px solid var(--val-cyan);position:relative;
+.score-final{
+  margin-top:14px;padding-top:14px;
+  border-top:1px solid rgba(244,241,234,0.15);
+  display:flex;align-items:baseline;gap:14px;
 }
-.core-card::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--val-cyan),var(--val-green));
+.score-final .label{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(244,241,234,0.55);
 }
-.core-card h4{
-  font-size:14px;font-weight:900;letter-spacing:2px;color:var(--val-cyan);margin-bottom:12px;
-  display:flex;align-items:center;gap:6px;
+.score-final .num{
+  font-family:var(--serif);font-style:italic;font-size:32px;line-height:0.9;
+  color:var(--paper);font-weight:400;
 }
-.core-list{display:flex;flex-direction:column;gap:10px;}
-.core-item{
-  display:flex;gap:10px;font-size:11px;line-height:1.5;
+.score-final .num em{color:var(--val-red);font-style:italic;}
+.score-final .verdict{
+  font-family:var(--sans);font-size:13px;color:rgba(244,241,234,0.7);
+  margin-left:auto;font-style:italic;
 }
-.core-item .num{
-  width:22px;height:22px;flex-shrink:0;background:var(--val-cyan);color:#0a0e13;
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;
-}
-.core-item .txt{color:var(--text-main);}
-.core-item .txt b{color:var(--val-gold);}
-.core-item .txt s{color:var(--text-dimer);text-decoration-color:var(--val-red);}
 
-/* 页脚 */
-.footer{
-  position:absolute;bottom:14px;left:48px;right:48px;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:10px;color:var(--text-dimer);letter-spacing:3px;
+/* 设计意图 */
+.intent{
+  padding:26px 56px 26px 32px;
+  background:linear-gradient(180deg,rgba(255,70,85,0.04),transparent 40%);
 }
-.footer .page-num{color:var(--val-red);font-weight:900;}
+.intent .lead{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--val-red);margin-bottom:10px;font-weight:700;
+}
+.intent .pull{
+  font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.2;
+  color:var(--paper);margin-bottom:18px;
+}
+.intent .pull em{font-style:italic;color:var(--val-red);}
+.intent ol{
+  list-style:none;display:flex;flex-direction:column;gap:8px;
+  counter-reset:intent;
+}
+.intent li{
+  counter-increment:intent;
+  font-family:var(--sans);font-size:12.5px;line-height:1.55;
+  color:rgba(244,241,234,0.85);
+  padding-left:30px;position:relative;
+}
+.intent li::before{
+  content:counter(intent,decimal-leading-zero);
+  position:absolute;left:0;top:0;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--val-red);
+  font-weight:700;
+  background:rgba(255,70,85,0.12);padding:1px 5px;
+}
+.intent li b{color:var(--paper);font-weight:700;}
+.intent li s{color:rgba(244,241,234,0.4);text-decoration-color:var(--val-red);}
+
+/* =========================================================
+   边角细节：四角十字标 + 印章
+   ========================================================= */
+.crop{position:absolute;width:14px;height:14px;border-color:var(--ink);z-index:4;pointer-events:none;}
+.crop.tl{top:18px;left:18px;border-top:1px solid;border-left:1px solid;}
+.crop.tr{top:18px;right:18px;border-top:1px solid;border-right:1px solid;}
+.crop.bl{bottom:18px;left:18px;border-bottom:1px solid;border-left:1px solid;}
+.crop.br{bottom:18px;right:18px;border-bottom:1px solid;border-right:1px solid;}
+
+/* 红色 V 印章 */
+.stamp{
+  position:absolute;top:46%;left:calc(50% - 32px);transform:translate(-50%,-50%) rotate(-6deg);
+  width:80px;height:80px;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--val-red);
+  font-family:var(--serif);font-style:italic;font-size:48px;color:var(--val-red);
+  font-weight:400;line-height:0.9;
+  z-index:4;
+  background:var(--paper);
+  box-shadow:0 0 0 4px var(--paper);
+  opacity:0.92;
+}
+.stamp::before{
+  content:"";position:absolute;inset:4px;border:1px solid var(--val-red);
+}
+.stamp .stamp-mini{
+  position:absolute;bottom:-18px;left:50%;transform:translateX(-50%) rotate(6deg);
+  font-family:var(--mono);font-size:8px;letter-spacing:0.18em;color:var(--val-red);
+  white-space:nowrap;font-style:normal;
+}
 
 @media print{
   body{background:#fff;padding:0;}
-  .slide{border:none;}
+  .slide{box-shadow:none;}
 }
 </style>
 </head>
 <body>
 
-<div class="slide" id="slide">
+<article class="slide">
 
-  <!-- ===== Header ===== -->
-  <header class="header">
-    <div class="brand-logo">V</div>
-    <div class="title-block">
-      <h1>VALORANT 夜市 <span class="accent">田忌赛马 PK</span></h1>
-      <div class="sub">NIGHT MARKET · TACTICAL DUEL · 玩法流程与规则</div>
+  <!-- 印刷十字标 -->
+  <span class="crop tl"></span>
+  <span class="crop tr"></span>
+  <span class="crop bl"></span>
+  <span class="crop br"></span>
+
+  <!-- ========== TOP MASTHEAD ========== -->
+  <header class="masthead">
+    <div class="ed-mark">
+      <b>VAL</b> · NIGHT MARKET<br>
+      ISSUE 02 / RULES
     </div>
-    <div class="header-right">
-      <span class="dot"></span>
-      <span>核心创新 · 省 VP 驱动战力</span>
+    <div class="ed-title">
+      <div class="kicker">规 则 与 流 程 · 单 页 总 览</div>
+      <h1>Night Market <em>×</em> 田忌赛马</h1>
+    </div>
+    <div class="ed-meta">
+      战力公式 <b>v3</b><br>
+      省 VP 驱动制
     </div>
   </header>
 
-  <!-- ===== 流程主轴（4 步） ===== -->
-  <div class="flow">
-    <div class="flow-step s1">
-      <div class="step-label">STEP 01</div>
-      <div class="flow-num">1</div>
-      <h3>夜市开箱</h3>
-      <p>玩家进入夜市，<br>系统随机生成 <b style="color:#5ce1e6">6 件</b>皮肤<br>（枪皮 / 刀皮 · 含折扣）</p>
-    </div>
-    <div class="flow-step s2">
-      <div class="step-label">STEP 02</div>
-      <div class="flow-num">2</div>
-      <h3>选 3 件参战</h3>
-      <p>从 6 件中选 <b style="color:#f4c542">3 件</b>，<br>系统按战力自动分为<br><b>上等马 / 中等马 / 下等马</b></p>
-    </div>
-    <div class="flow-step s3">
-      <div class="step-label">STEP 03</div>
-      <div class="flow-num">3</div>
-      <h3>编排出场顺序</h3>
-      <p>玩家自由配置<br><b style="color:#ff8c42">一 / 二 / 三号位</b><br>战术决定胜负</p>
-    </div>
-    <div class="flow-step s4">
-      <div class="step-label">STEP 04</div>
-      <div class="flow-num">4</div>
-      <h3>三局两胜</h3>
-      <p>双方按出场顺序依次对决，<br>战力高者胜，<br><b style="color:#ff4655">2 胜即赢得全场</b></p>
-    </div>
-  </div>
+  <!-- ========== LEFT：流程 ========== -->
+  <section class="col-left">
+    <div class="section-lead">FLOW · 玩 家 路 径</div>
+    <h2 class="section-headline">四步，<em>从开市到决出胜负</em></h2>
 
-  <!-- ===== 中部：皮肤参数 + 战力公式 ===== -->
-  <div class="middle">
+    <ol class="flow-list">
+      <li class="flow-row">
+        <div class="num">01</div>
+        <div class="body">
+          <h3>夜市开市</h3>
+          <p>系统从全部武器皮肤池中随机生成 <span class="kw">6 件</span>专属皮肤，包含名称、武器类型（枪皮 / 刀皮）、品级、原价与折扣力度。</p>
+        </div>
+      </li>
+      <li class="flow-row">
+        <div class="num">02</div>
+        <div class="body">
+          <h3>选 3 件出战</h3>
+          <p>玩家从 6 件中挑出 <span class="kw">3 件</span>。系统按战力自动归类为上等马、中等马、下等马三档，是田忌赛马的牌面。</p>
+        </div>
+      </li>
+      <li class="flow-row">
+        <div class="num">03</div>
+        <div class="body">
+          <h3>编排出场顺序</h3>
+          <p>玩家自由配置一号位、二号位、三号位的出场顺序。<span class="kw">战术决定胜负</span>，下等马也能挑赢对手的上等马。</p>
+        </div>
+      </li>
+      <li class="flow-row">
+        <div class="num">04</div>
+        <div class="body">
+          <h3>三局两胜</h3>
+          <p>双方按出场顺序依次对决，每场战力高者胜出。<span class="kw">2 胜即赢得整场</span>，不计平局。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
 
-    <!-- 左：皮肤参数示例（枪皮 vs 刀皮对比） -->
-    <div>
-      <div class="section-title"><span class="icon">🎴</span>枪皮 vs 刀皮 · 战力对比</div>
-      <div class="skin-example">
-        <!-- 第 1 件：高折扣枪皮 -->
-        <div class="skin-row" style="margin-bottom:8px;padding-bottom:8px;">
-          <div class="skin-art-mock">PHANTOM</div>
-          <div>
-            <div class="skin-name">炽天使 · 幻象（枪）</div>
-            <div class="skin-meta">原价 1775 VP · 高级</div>
-          </div>
-          <div style="margin-left:auto;background:var(--val-red);color:#fff;font-weight:900;padding:4px 10px;font-size:14px;clip-path:polygon(0 0,100% 0,100% 75%,90% 100%,0 100%);">-50%</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
-          <div class="attr-cell disc">
-            <div class="lab">折扣</div>
-            <div class="val">50<span class="unit">%</span></div>
-          </div>
-          <div class="attr-cell wish" style="--attr-c:#7cff5c;">
-            <div class="lab">省下 VP</div>
-            <div class="val">888</div>
-          </div>
-          <div class="attr-cell power">
-            <div class="lab">战力</div>
-            <div class="val">98</div>
-          </div>
-        </div>
+  <!-- ========== RIGHT：战力公式 + 枪 vs 刀 ========== -->
+  <section class="col-right">
 
-        <!-- 第 2 件：中折扣刀皮 -->
-        <div class="skin-row" style="margin-bottom:8px;padding-bottom:8px;border-top:1px dashed var(--border);padding-top:10px;">
-          <div class="skin-art-mock gold">MELEE</div>
-          <div>
-            <div class="skin-name">反应器 · 近战（刀）</div>
-            <div class="skin-meta">原价 4950 VP · 典藏</div>
-          </div>
-          <div style="margin-left:auto;background:var(--val-red);color:#fff;font-weight:900;padding:4px 10px;font-size:14px;clip-path:polygon(0 0,100% 0,100% 75%,90% 100%,0 100%);">-30%</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-          <div class="attr-cell disc">
-            <div class="lab">折扣</div>
-            <div class="val">30<span class="unit">%</span></div>
-          </div>
-          <div class="attr-cell wish" style="--attr-c:#7cff5c;">
-            <div class="lab">省下 VP</div>
-            <div class="val">1485</div>
-          </div>
-          <div class="attr-cell power">
-            <div class="lab">战力</div>
-            <div class="val">164</div>
-          </div>
+    <!-- 公式海报 -->
+    <div class="formula-poster">
+      <div class="section-lead">FORMULA · 战 力 公 式</div>
+
+      <div class="formula-eq">
+        <span class="lhs">战力</span><span class="eq">=</span><span class="rhs-1">省下金额</span><span class="small"> ÷ 10</span><span class="plus">+</span><span class="rhs-2">品级</span><span class="small"> × 3</span>
+      </div>
+
+      <div class="formula-derive">
+        <span class="l"><b>省下金额</b> = 原价 × 折扣%　<i>· 主导项 10–250</i></span>
+        <span class="l"><b>品级权重</b> = 1（精选）… 5（典藏）　<i>· 微调 3–15</i></span>
+      </div>
+    </div>
+
+    <!-- 枪 vs 刀 对比 -->
+    <div class="compare-block">
+      <div class="section-lead">CASE · 枪 皮 与 刀 皮 对 比</div>
+
+      <div class="compare-grid">
+        <!-- 枪皮 -->
+        <div class="compare-cell">
+          <span class="tag">枪皮 / GUN</span>
+          <div class="skin-name">炽天使 <em>· 幻象</em></div>
+          <div class="skin-meta">SOVEREIGN · PHANTOM</div>
+          <dl class="compare-stat">
+            <dt>原价</dt><dd>1,775 VP</dd>
+            <dt>折扣</dt><dd>50%</dd>
+            <dt>省下</dt><dd>888 VP</dd>
+            <div class="power-row" style="display:contents;">
+              <dt>战力</dt><dd>97</dd>
+            </div>
+          </dl>
+          <span class="verdict">折扣大，但原价低</span>
         </div>
 
-        <div style="margin-top:10px;padding:8px 10px;background:#06090d;border:1px solid var(--border);font-size:11px;color:var(--text-dim);font-family:'Courier New',monospace;line-height:1.6;">
-          <b style="color:#7cff5c;">省下越多战力越高</b>：<br>
-          枪皮 50%折扣省 888 → 战力 <b style="color:#f4c542">98</b><br>
-          刀皮 30%折扣省 1485 → 战力 <b style="color:#f4c542">164</b> · 反超
+        <!-- 刀皮 -->
+        <div class="compare-cell knife">
+          <span class="tag">刀皮 / KNIFE</span>
+          <div class="skin-name">反应器 <em>· 近战</em></div>
+          <div class="skin-meta">REAVER · MELEE</div>
+          <dl class="compare-stat">
+            <dt>原价</dt><dd>4,950 VP</dd>
+            <dt>折扣</dt><dd>30%</dd>
+            <dt>省下</dt><dd>1,485 VP</dd>
+            <div class="power-row" style="display:contents;">
+              <dt>战力</dt><dd>164</dd>
+            </div>
+          </dl>
+          <span class="verdict">折扣中等，<b>省更多 → 反超</b></span>
         </div>
       </div>
     </div>
 
-    <!-- 右：战力公式 -->
-    <div>
-      <div class="section-title" style="border-color:var(--val-red);color:var(--val-red);"><span class="icon">⚔</span>战力公式 · 省 VP 驱动</div>
-      <div class="formula-card">
-        <div class="formula-eq">
-          战力 = <span class="val-red">省下金额 ÷ 10</span> <span class="op">+</span> <span class="val-purple">品级 × 3</span>
+  </section>
+
+  <!-- ========== BOTTOM：田忌赛马 + 设计意图 ========== -->
+  <section class="col-bottom">
+
+    <!-- 田忌赛马 -->
+    <div class="tianji">
+      <div class="lead">TACTICS · 田 忌 赛 马 · 实 战 推 演</div>
+      <h3 class="head">用<em>下中上</em>的顺序，破解对手的<em>上中下</em></h3>
+
+      <div class="match-board">
+        <div class="match-side-label">YOU<br>我方</div>
+        <div class="match-row you">
+          <span class="pos" data-h="mid"></span>
+          <span class="pos" data-h="low"></span>
+          <span class="pos" data-h="up"></span>
+          <span class="res lose">R1<b>—</b></span>
         </div>
-        <div style="background:#06090d;padding:8px 12px;margin-bottom:10px;border:1px dashed var(--border);font-size:11px;color:var(--text-dim);font-family:'Courier New',monospace;text-align:center;">
-          省下金额 = <span style="color:#5ce1e6;">原价</span> × <span style="color:#ff4655;">折扣%</span>
+        <div class="match-side-label">RIVAL<br>对手</div>
+        <div class="match-row enemy">
+          <span class="pos" data-h="up"></span>
+          <span class="pos" data-h="mid"></span>
+          <span class="pos" data-h="low"></span>
+          <span class="res"></span>
         </div>
-        <div class="formula-bars">
-          <div class="fbar disc" style="--fb-w:100%;">
-            <span class="fb-lab">省下 VP（主导）</span>
-            <div class="fb-track"><div class="fb-fill" style="--fb-w:100%;"></div></div>
-            <span class="fb-range">10-250</span>
-          </div>
-          <div class="fbar tier" style="--fb-w:18%;">
-            <span class="fb-lab">品级（微调）</span>
-            <div class="fb-track"><div class="fb-fill" style="--fb-w:18%;"></div></div>
-            <span class="fb-range">3-15</span>
-          </div>
-        </div>
-        <div class="formula-note">
-          ▶ <b>三大调整</b>：<br>
-          ① <b>移除心愿值</b>对战力的影响<br>
-          ② <b>品级影响进一步弱化</b>（×3 → 仅 3-15 分）<br>
-          ③ <b>武器原价纳入考量</b>：刀皮原价 ≈ 枪皮 2 倍，省得多
-        </div>
+      </div>
+
+      <div class="score-final">
+        <span class="label">战 报</span>
+        <span class="num"><em>2</em> : 1</span>
+        <span class="verdict">下等马顶住上等马一回合，中、上等马连下两城。</span>
       </div>
     </div>
 
-  </div>
-
-  <!-- ===== 底部：田忌赛马 + 核心理念 ===== -->
-  <div class="bottom">
-
-    <!-- 左：田忌赛马演示 -->
-    <div>
-      <div class="section-title" style="border-color:var(--val-gold);color:var(--val-gold);"><span class="icon">🐎</span>田忌赛马 · 战术对决</div>
-      <div class="tianji">
-        <div class="horse-grid">
-          <div class="horse up">
-            <div class="horse-tag">上等马</div>
-            <div class="horse-info"><div class="h-name">战力最高的 1 件</div><div class="h-desc">通常折扣最大</div></div>
-          </div>
-          <div class="horse mid">
-            <div class="horse-tag">中等马</div>
-            <div class="horse-info"><div class="h-name">战力居中</div><div class="h-desc">战术机动核心</div></div>
-          </div>
-          <div class="horse low">
-            <div class="horse-tag">下等马</div>
-            <div class="horse-info"><div class="h-name">战力最低</div><div class="h-desc">可主动牺牲</div></div>
-          </div>
-        </div>
-
-        <div class="battle-flow">
-          <div class="battle-side you">
-            <div class="bs-lab">▶ 我方出场顺序（自由编排）</div>
-            <div class="bs-order"><div class="pos">中</div><div class="pos">下</div><div class="pos">上</div></div>
-          </div>
-          <div class="battle-vs-arrow">⚔</div>
-          <div class="battle-side enemy" style="text-align:right;">
-            <div class="bs-lab">对手出场顺序（隐藏）</div>
-            <div class="bs-order" style="justify-content:flex-end;"><div class="pos">上</div><div class="pos">中</div><div class="pos">下</div></div>
-          </div>
-        </div>
-        <div class="battle-result">
-          <div class="r-dot lose">R1 输</div>
-          <div class="r-dot win">R2 赢</div>
-          <div class="r-dot win">R3 赢</div>
-          <div style="font-size:11px;color:var(--val-green);font-weight:900;letter-spacing:2px;display:flex;align-items:center;padding:0 8px;">→ 总比分 2:1 胜</div>
-        </div>
-      </div>
+    <!-- 设计意图 -->
+    <div class="intent">
+      <div class="lead">RATIONALE · 设 计 意 图</div>
+      <p class="pull">让<em>折扣</em>，而不是稀有度，决定胜负。</p>
+      <ol>
+        <li><b>夜市的本质是折扣狂欢。</b>战力锚定省下的 VP，强化"捡到大漏"的核心快感。</li>
+        <li><b>枪皮与刀皮天然平衡。</b>刀皮原价约枪皮 2 倍，同折扣下省得更多，战力更高。</li>
+        <li><b>策略大于运气。</b><s>典藏皮肤等于必胜</s>，高折扣枪皮也能反超低折扣刀皮。</li>
+      </ol>
     </div>
 
-    <!-- 右：核心理念 -->
-    <div>
-      <div class="section-title" style="border-color:var(--val-cyan);color:var(--val-cyan);"><span class="icon">💡</span>设计理念</div>
-      <div class="core-card">
-        <h4>为什么"省 VP"驱动？</h4>
-        <div class="core-list">
-          <div class="core-item"><div class="num">1</div><div class="txt"><b>夜市本质 = 折扣狂欢</b><br>战力锚定"省下的金额"，强化玩家"捡到大漏"的核心快感</div></div>
-          <div class="core-item"><div class="num">2</div><div class="txt"><b>枪皮 / 刀皮天然平衡</b><br>刀皮原价 ≈ 枪皮 2 倍 → 同折扣下省得多 → 战力高，符合直觉</div></div>
-          <div class="core-item"><div class="num">3</div><div class="txt"><b>策略 &gt; 运气</b><br><s>典藏皮肤=必胜</s> → 高折扣枪皮也能反超刀皮，会编排田忌赛马的玩家可 2:1 翻盘</div></div>
-        </div>
-      </div>
-    </div>
+  </section>
 
+  <!-- 红色印章（V 字） -->
+  <div class="stamp">
+    V
+    <span class="stamp-mini">VAL · NM × TIANJI</span>
   </div>
 
-  <!-- ===== Footer ===== -->
-  <div class="footer">
-    <span>VALORANT 夜市 PK · 单页 PPT 玩法说明</span>
-    <span class="page-num">01 / 01</span>
-  </div>
-
-</div>
+</article>
 
 <script>
-// 一键截图按钮
+// 按 P 调起打印
 document.addEventListener('keydown',e=>{
   if(e.key==='p'||e.key==='P') window.print();
 });
