@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>VALORANT 夜市 PK · 玩法 PPT 图</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'PingFang SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;}
+:root{
+  --val-red:#ff4655;
+  --val-red-dim:rgba(255,70,85,0.4);
+  --val-dark:#0f1923;
+  --val-darker:#0a0e13;
+  --val-darkest:#06090d;
+  --val-gold:#f4c542;
+  --val-cyan:#5ce1e6;
+  --val-purple:#bf64ff;
+  --val-orange:#ff8c42;
+  --val-green:#7cff5c;
+  --text-main:#ece8e1;
+  --text-dim:#7b8794;
+  --text-dimer:#4a5568;
+  --border:#1f2b3a;
+}
+html,body{background:#1a1d24;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;overflow-x:auto;}
+
+/* ============ 16:9 PPT 画布 1600x900 ============ */
+.slide{
+  width:1600px;height:900px;flex-shrink:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,#1a2332 0%,transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(255,70,85,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 100%,rgba(92,225,230,0.05) 0%,transparent 60%),
+    var(--val-darkest);
+  color:var(--text-main);
+  position:relative;overflow:hidden;
+  border:1px solid var(--border);
+}
+.slide::before{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent 0,transparent 50px,rgba(255,70,85,0.02) 50px,rgba(255,70,85,0.02) 51px),
+    repeating-linear-gradient(90deg,transparent 0,transparent 50px,rgba(255,70,85,0.02) 50px,rgba(255,70,85,0.02) 51px);
+  pointer-events:none;
+}
+
+/* ============ 标题区 ============ */
+.header{
+  display:flex;align-items:center;gap:18px;
+  padding:32px 48px 18px;border-bottom:1px solid var(--border);
+  position:relative;
+}
+.header::after{
+  content:"";position:absolute;left:48px;bottom:-1px;width:120px;height:3px;background:var(--val-red);
+}
+.brand-logo{
+  width:48px;height:48px;background:var(--val-red);
+  display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(0 0,100% 0,100% 65%,65% 100%,0 100%);
+  font-weight:900;font-size:24px;color:#fff;
+  box-shadow:0 0 20px var(--val-red-dim);
+}
+.title-block h1{
+  font-size:30px;font-weight:900;letter-spacing:4px;line-height:1.1;
+}
+.title-block h1 .accent{color:var(--val-red);}
+.title-block .sub{
+  color:var(--text-dim);font-size:12px;letter-spacing:5px;margin-top:5px;font-weight:500;
+}
+.header-right{
+  margin-left:auto;display:flex;align-items:center;gap:12px;
+  padding:8px 16px;background:linear-gradient(90deg,rgba(255,70,85,0.1),rgba(244,197,66,0.05));
+  border:1px solid var(--val-red-dim);
+  font-size:12px;letter-spacing:3px;color:var(--val-gold);font-weight:700;
+}
+.header-right .dot{width:8px;height:8px;background:var(--val-green);border-radius:50%;box-shadow:0 0 10px var(--val-green);}
+
+/* ============ 流程主轴 ============ */
+.flow{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  padding:32px 48px 18px;
+  position:relative;
+}
+.flow::before{
+  content:"";position:absolute;top:90px;left:140px;right:140px;height:2px;
+  background:repeating-linear-gradient(90deg,var(--val-red) 0,var(--val-red) 8px,transparent 8px,transparent 16px);
+  z-index:0;
+}
+.flow-step{
+  position:relative;z-index:1;text-align:center;padding:0 12px;
+}
+.flow-num{
+  width:60px;height:60px;background:var(--val-darker);
+  border:2px solid var(--val-red);
+  margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;color:var(--val-red);
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  position:relative;
+}
+.flow-step.s1 .flow-num{color:var(--val-cyan);border-color:var(--val-cyan);}
+.flow-step.s2 .flow-num{color:var(--val-gold);border-color:var(--val-gold);}
+.flow-step.s3 .flow-num{color:var(--val-orange);border-color:var(--val-orange);}
+.flow-step.s4 .flow-num{color:var(--val-red);border-color:var(--val-red);}
+.flow-step h3{font-size:18px;font-weight:900;letter-spacing:2px;margin-bottom:6px;}
+.flow-step p{color:var(--text-dim);font-size:12px;line-height:1.7;letter-spacing:0.5px;}
+.flow-step .step-label{
+  font-size:10px;letter-spacing:3px;color:var(--text-dimer);font-weight:700;margin-bottom:4px;
+}
+
+/* ============ 中部双栏（皮肤示例 + 战力公式）============ */
+.middle{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:18px;
+  padding:0 48px;margin-bottom:18px;
+}
+.section-title{
+  font-size:14px;letter-spacing:3px;color:var(--val-red);font-weight:900;
+  margin-bottom:12px;padding-left:10px;border-left:3px solid var(--val-red);
+  display:flex;align-items:center;gap:8px;
+}
+.section-title .icon{font-size:18px;}
+
+/* 皮肤参数示例 */
+.skin-example{
+  background:linear-gradient(145deg,#1a2332,#0f1923);
+  padding:16px;border:1px solid var(--border);
+  position:relative;
+}
+.skin-example::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-purple);
+}
+.skin-example .skin-row{
+  display:flex;align-items:center;gap:12px;margin-bottom:12px;
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.skin-art-mock{
+  width:64px;height:36px;background:linear-gradient(135deg,var(--val-purple),#5a3a8a);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  font-size:11px;font-weight:900;letter-spacing:1px;
+  clip-path:polygon(8% 20%,100% 0,100% 80%,8% 100%,0 70%,0 30%);
+}
+.skin-art-mock.gold{background:linear-gradient(135deg,var(--val-gold),#b8941f);}
+.skin-name{font-weight:900;font-size:14px;letter-spacing:1px;}
+.skin-meta{font-size:10px;color:var(--text-dim);letter-spacing:2px;margin-top:2px;}
+
+.skin-attrs{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+}
+.attr-cell{
+  background:#06090d;padding:8px 10px;border:1px solid var(--border);
+  border-left:3px solid var(--attr-c,var(--val-red));
+}
+.attr-cell .lab{font-size:9px;color:var(--text-dim);letter-spacing:2px;font-weight:700;margin-bottom:3px;}
+.attr-cell .val{font-size:16px;font-weight:900;font-family:'Courier New',monospace;color:var(--attr-c,#fff);line-height:1;}
+.attr-cell .val .unit{font-size:10px;color:var(--text-dim);font-weight:400;margin-left:2px;}
+.attr-cell.tier{--attr-c:var(--val-purple);}
+.attr-cell.disc{--attr-c:var(--val-red);}
+.attr-cell.wish{--attr-c:var(--val-cyan);}
+.attr-cell.power{--attr-c:var(--val-gold);}
+
+/* 战力公式 */
+.formula-card{
+  background:linear-gradient(145deg,#1a0e12,#0f0a0d);
+  padding:16px;border:1px solid var(--val-red-dim);
+  position:relative;display:flex;flex-direction:column;
+}
+.formula-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-red);
+}
+.formula-eq{
+  background:#06090d;padding:14px;text-align:center;
+  font-size:18px;font-weight:900;letter-spacing:1px;color:var(--text-main);
+  margin-bottom:10px;border:1px dashed var(--val-red-dim);
+  font-family:'Courier New','PingFang SC',monospace;
+}
+.formula-eq .val-red{color:var(--val-red);font-size:22px;}
+.formula-eq .val-cyan{color:var(--val-cyan);}
+.formula-eq .val-purple{color:var(--val-purple);}
+.formula-eq .op{color:var(--text-dim);margin:0 4px;}
+
+.formula-bars{display:flex;flex-direction:column;gap:8px;}
+.fbar{display:grid;grid-template-columns:120px 1fr 80px;align-items:center;gap:10px;font-size:11px;}
+.fbar .fb-lab{font-weight:900;letter-spacing:1px;color:var(--fb-c);}
+.fbar .fb-track{height:14px;background:#0a0e13;border:1px solid var(--border);position:relative;overflow:hidden;}
+.fbar .fb-fill{height:100%;background:linear-gradient(90deg,var(--fb-c),transparent);width:var(--fb-w);position:relative;}
+.fbar .fb-range{font-family:'Courier New',monospace;font-weight:900;color:var(--fb-c);font-size:11px;text-align:right;}
+.fbar.disc{--fb-c:var(--val-red);}
+.fbar.wish{--fb-c:var(--val-cyan);}
+.fbar.tier{--fb-c:var(--val-purple);}
+
+.formula-note{
+  margin-top:10px;padding:8px 10px;background:rgba(244,197,66,0.08);
+  border-left:3px solid var(--val-gold);font-size:11px;color:var(--val-gold);
+  letter-spacing:1px;line-height:1.5;
+}
+.formula-note b{color:#fff;}
+
+/* ============ 田忌赛马规则区 ============ */
+.bottom{
+  display:grid;grid-template-columns:2fr 1.4fr;gap:18px;
+  padding:0 48px 32px;
+}
+.tianji{
+  background:linear-gradient(145deg,#0f1923,#1a2332);
+  padding:16px;border:1px solid var(--border);position:relative;
+}
+.tianji::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--val-gold);
+}
+.horse-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;
+}
+.horse{
+  background:#06090d;padding:10px 12px;border:1px solid var(--border);
+  border-left:3px solid var(--h-c);
+  display:flex;align-items:center;gap:10px;
+}
+.horse.up{--h-c:var(--val-gold);}
+.horse.mid{--h-c:var(--val-cyan);}
+.horse.low{--h-c:#838fa2;}
+.horse-tag{
+  font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 8px;
+  background:var(--h-c);color:#0a0e13;
+}
+.horse-info{flex:1;}
+.horse-info .h-name{font-size:13px;font-weight:900;letter-spacing:1px;}
+.horse-info .h-desc{font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;}
+
+.battle-flow{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:14px;padding:12px 14px;background:#06090d;border:1px solid var(--border);
+}
+.battle-side{flex:1;}
+.battle-side .bs-lab{
+  font-size:10px;letter-spacing:2px;color:var(--text-dim);font-weight:700;margin-bottom:6px;
+}
+.battle-side .bs-order{display:flex;gap:6px;}
+.battle-side .bs-order .pos{
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;color:#0a0e13;
+}
+.battle-side.you .bs-order .pos{background:var(--val-red);color:#fff;}
+.battle-side.you .bs-order .pos:nth-child(1){background:var(--val-cyan);color:#0a0e13;}
+.battle-side.you .bs-order .pos:nth-child(2){background:#838fa2;color:#0a0e13;}
+.battle-side.you .bs-order .pos:nth-child(3){background:var(--val-gold);color:#0a0e13;}
+.battle-side.enemy .bs-order .pos{background:#3a4a5e;color:#fff;}
+.battle-side.enemy .bs-order .pos:nth-child(1){background:var(--val-gold);color:#0a0e13;}
+.battle-side.enemy .bs-order .pos:nth-child(2){background:var(--val-cyan);color:#0a0e13;}
+.battle-side.enemy .bs-order .pos:nth-child(3){background:#838fa2;color:#0a0e13;}
+.battle-vs-arrow{font-size:28px;color:var(--val-red);font-weight:900;margin:0 14px;}
+.battle-result{
+  margin-top:8px;display:flex;justify-content:center;gap:6px;font-size:10px;
+}
+.battle-result .r-dot{
+  width:32px;height:24px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;letter-spacing:1px;
+}
+.battle-result .r-dot.win{background:var(--val-green);color:#0a0e13;}
+.battle-result .r-dot.lose{background:var(--val-red);color:#fff;}
+
+/* 核心理念卡 */
+.core-card{
+  background:linear-gradient(145deg,#0a1a18,#0e1f1c);
+  padding:16px;border:1px solid var(--val-cyan);position:relative;
+}
+.core-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--val-cyan),var(--val-green));
+}
+.core-card h4{
+  font-size:14px;font-weight:900;letter-spacing:2px;color:var(--val-cyan);margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.core-list{display:flex;flex-direction:column;gap:10px;}
+.core-item{
+  display:flex;gap:10px;font-size:11px;line-height:1.5;
+}
+.core-item .num{
+  width:22px;height:22px;flex-shrink:0;background:var(--val-cyan);color:#0a0e13;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;
+}
+.core-item .txt{color:var(--text-main);}
+.core-item .txt b{color:var(--val-gold);}
+.core-item .txt s{color:var(--text-dimer);text-decoration-color:var(--val-red);}
+
+/* 页脚 */
+.footer{
+  position:absolute;bottom:14px;left:48px;right:48px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:10px;color:var(--text-dimer);letter-spacing:3px;
+}
+.footer .page-num{color:var(--val-red);font-weight:900;}
+
+@media print{
+  body{background:#fff;padding:0;}
+  .slide{border:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="slide" id="slide">
+
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <div class="brand-logo">V</div>
+    <div class="title-block">
+      <h1>VALORANT 夜市 <span class="accent">田忌赛马 PK</span></h1>
+      <div class="sub">NIGHT MARKET · TACTICAL DUEL · 玩法流程与规则</div>
+    </div>
+    <div class="header-right">
+      <span class="dot"></span>
+      <span>核心创新 · 折扣驱动战力</span>
+    </div>
+  </header>
+
+  <!-- ===== 流程主轴（4 步） ===== -->
+  <div class="flow">
+    <div class="flow-step s1">
+      <div class="step-label">STEP 01</div>
+      <div class="flow-num">1</div>
+      <h3>夜市开箱</h3>
+      <p>玩家进入夜市，<br>系统随机生成 <b style="color:#5ce1e6">6 件</b>专属皮肤<br>（名称 / 品级 / 折扣 / 心愿值）</p>
+    </div>
+    <div class="flow-step s2">
+      <div class="step-label">STEP 02</div>
+      <div class="flow-num">2</div>
+      <h3>选 3 件参战</h3>
+      <p>从 6 件中选 <b style="color:#f4c542">3 件</b>，<br>系统按战力自动分为<br><b>上等马 / 中等马 / 下等马</b></p>
+    </div>
+    <div class="flow-step s3">
+      <div class="step-label">STEP 03</div>
+      <div class="flow-num">3</div>
+      <h3>编排出场顺序</h3>
+      <p>玩家自由配置<br><b style="color:#ff8c42">一 / 二 / 三号位</b><br>战术决定胜负，下马也能赢</p>
+    </div>
+    <div class="flow-step s4">
+      <div class="step-label">STEP 04</div>
+      <div class="flow-num">4</div>
+      <h3>三局两胜</h3>
+      <p>双方按出场顺序依次对决，<br>战力高者胜，<br><b style="color:#ff4655">2 胜即赢得全场</b></p>
+    </div>
+  </div>
+
+  <!-- ===== 中部：皮肤参数 + 战力公式 ===== -->
+  <div class="middle">
+
+    <!-- 左：皮肤参数示例 -->
+    <div>
+      <div class="section-title"><span class="icon">🎴</span>单件皮肤参数（夜市生成）</div>
+      <div class="skin-example">
+        <div class="skin-row">
+          <div class="skin-art-mock">PHANTOM</div>
+          <div>
+            <div class="skin-name">炽天使 · 幻象</div>
+            <div class="skin-meta">SOVEREIGN · PHANTOM</div>
+          </div>
+          <div style="margin-left:auto;background:var(--val-red);color:#fff;font-weight:900;padding:4px 10px;font-size:14px;clip-path:polygon(0 0,100% 0,100% 75%,90% 100%,0 100%);">-42%</div>
+        </div>
+        <div class="skin-attrs">
+          <div class="attr-cell tier">
+            <div class="lab">品级</div>
+            <div class="val">高级</div>
+          </div>
+          <div class="attr-cell disc">
+            <div class="lab">折扣</div>
+            <div class="val">42<span class="unit">%</span></div>
+          </div>
+          <div class="attr-cell wish">
+            <div class="lab">心愿值</div>
+            <div class="val">86</div>
+          </div>
+          <div class="attr-cell power">
+            <div class="lab">综合战力</div>
+            <div class="val">142</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:#06090d;border:1px solid var(--border);font-size:11px;color:var(--text-dim);font-family:'Courier New',monospace;line-height:1.5;">
+          代入公式：<b style="color:#ff4655">42×2</b> + <b style="color:#5ce1e6">86÷2</b> + <b style="color:#bf64ff">3×5</b> = <b style="color:#f4c542">142</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：战力公式 -->
+    <div>
+      <div class="section-title" style="border-color:var(--val-red);color:var(--val-red);"><span class="icon">⚔</span>战力公式 · 折扣驱动设计</div>
+      <div class="formula-card">
+        <div class="formula-eq">
+          战力 = <span class="val-red">折扣 × 2</span> <span class="op">+</span> <span class="val-cyan">心愿值 ÷ 2</span> <span class="op">+</span> <span class="val-purple">品级 × 5</span>
+        </div>
+        <div class="formula-bars">
+          <div class="fbar disc" style="--fb-w:100%;">
+            <span class="fb-lab">折扣（主导）</span>
+            <div class="fb-track"><div class="fb-fill" style="--fb-w:100%;"></div></div>
+            <span class="fb-range">20-100</span>
+          </div>
+          <div class="fbar wish" style="--fb-w:50%;">
+            <span class="fb-lab">心愿值</span>
+            <div class="fb-track"><div class="fb-fill" style="--fb-w:50%;"></div></div>
+            <span class="fb-range">10-50</span>
+          </div>
+          <div class="fbar tier" style="--fb-w:25%;">
+            <span class="fb-lab">品级（微调）</span>
+            <div class="fb-track"><div class="fb-fill" style="--fb-w:25%;"></div></div>
+            <span class="fb-range">5-25</span>
+          </div>
+        </div>
+        <div class="formula-note">
+          ▶ <b>核心创新</b>：折扣是战力主因，<b>典藏皮肤未必能赢精选皮肤</b>，让任何人都有翻盘机会。
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== 底部：田忌赛马 + 核心理念 ===== -->
+  <div class="bottom">
+
+    <!-- 左：田忌赛马演示 -->
+    <div>
+      <div class="section-title" style="border-color:var(--val-gold);color:var(--val-gold);"><span class="icon">🐎</span>田忌赛马 · 战术对决</div>
+      <div class="tianji">
+        <div class="horse-grid">
+          <div class="horse up">
+            <div class="horse-tag">上等马</div>
+            <div class="horse-info"><div class="h-name">战力最高的 1 件</div><div class="h-desc">通常折扣最大</div></div>
+          </div>
+          <div class="horse mid">
+            <div class="horse-tag">中等马</div>
+            <div class="horse-info"><div class="h-name">战力居中</div><div class="h-desc">战术机动核心</div></div>
+          </div>
+          <div class="horse low">
+            <div class="horse-tag">下等马</div>
+            <div class="horse-info"><div class="h-name">战力最低</div><div class="h-desc">可主动牺牲</div></div>
+          </div>
+        </div>
+
+        <div class="battle-flow">
+          <div class="battle-side you">
+            <div class="bs-lab">▶ 我方出场顺序（自由编排）</div>
+            <div class="bs-order"><div class="pos">中</div><div class="pos">下</div><div class="pos">上</div></div>
+          </div>
+          <div class="battle-vs-arrow">⚔</div>
+          <div class="battle-side enemy" style="text-align:right;">
+            <div class="bs-lab">对手出场顺序（隐藏）</div>
+            <div class="bs-order" style="justify-content:flex-end;"><div class="pos">上</div><div class="pos">中</div><div class="pos">下</div></div>
+          </div>
+        </div>
+        <div class="battle-result">
+          <div class="r-dot lose">R1 输</div>
+          <div class="r-dot win">R2 赢</div>
+          <div class="r-dot win">R3 赢</div>
+          <div style="font-size:11px;color:var(--val-green);font-weight:900;letter-spacing:2px;display:flex;align-items:center;padding:0 8px;">→ 总比分 2:1 胜</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：核心理念 -->
+    <div>
+      <div class="section-title" style="border-color:var(--val-cyan);color:var(--val-cyan);"><span class="icon">💡</span>设计理念</div>
+      <div class="core-card">
+        <h4>为什么折扣驱动？</h4>
+        <div class="core-list">
+          <div class="core-item"><div class="num">1</div><div class="txt"><b>弱化抽到稀有皮肤就赢</b><br><s>典藏皮肤 = 必胜</s> → 折扣力度才是关键</div></div>
+          <div class="core-item"><div class="num">2</div><div class="txt"><b>策略 &gt; 运气</b><br>会编排田忌赛马的玩家，靠下等马也能 2:1 翻盘</div></div>
+          <div class="core-item"><div class="num">3</div><div class="txt"><b>玩家共鸣</b><br>夜市折扣本就是核心快感，战力锚定折扣 = 强化"捡到大漏"的成就感</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    <span>VALORANT 夜市 PK · 单页 PPT 玩法说明</span>
+    <span class="page-num">01 / 01</span>
+  </div>
+
+</div>
+
+<script>
+// 一键截图按钮
+document.addEventListener('keydown',e=>{
+  if(e.key==='p'||e.key==='P') window.print();
+});
+</script>
+
+</body>
+</html>
