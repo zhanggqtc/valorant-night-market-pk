@@ -1473,15 +1473,16 @@ body { position: relative; }
 
                     <div class="rule-card">
                         <div class="rule-icon"><i class="ri-medal-fill"></i></div>
-                        <h3>2. 战力公式（省 VP 驱动）</h3>
-                        <p>核心理念：<b style="color:#ff4655">省下的 VP 越多，战力越高</b>。刀皮原价高，同折扣下省得更多，战力天然占优；但枪皮拿到大折扣同样能反超。</p>
+                        <h3>2. 战力公式（纯折扣驱动）</h3>
+                        <p>核心理念：<b style="color:#ff4655">折扣是战力的唯一来源</b>。枪皮、刀皮、典藏、精选完全平等，比拼的只有谁折扣更狠。</p>
                         <div class="formula">
-                            战力 = 省下金额 ÷ 10 + 品级 × 3
+                            战力 = 折扣% × 2
                         </div>
                         <ul>
-                            <li><b>省下金额</b>（主导）= 原价 × 折扣%</li>
-                            <li><b>品级权重</b>：仅微调 3-15（精选 1 ~ 典藏 5）</li>
-                            <li><b>已移除</b>：心愿值不再影响战力，仅做收藏标识</li>
+                            <li><b>折扣 10%</b> → 战力 20</li>
+                            <li><b>折扣 30%</b> → 战力 60</li>
+                            <li><b>折扣 50%</b> → 战力 100（封顶）</li>
+                            <li><b>已移除</b>：心愿值、品级、武器原价均不再影响战力</li>
                         </ul>
                     </div>
 
@@ -1716,11 +1717,11 @@ function generateSkin(forceTier) {
     // 心愿值（仅 UI 装饰用，不参与战力计算）
     const wish = randInt(20, 100);
 
-    // 综合战力：以"省下的 VP 金额"为核心（刀皮原价高，省得多 → 战力天然更高）
-    // 省下金额 = 原价 × 折扣%；÷10 收敛到 0~250 区间
-    // 品级 × 3 仅作微调（5-15 分）
-    const savedVP = basePrice * discount / 100;
-    const power = Math.round(savedVP / 10 + tier.weight * 3);
+    // 综合战力：纯粹折扣驱动，枪刀平等、品级零影响
+    // 折扣 10-50% → 战力 20-100（× 2）
+    // 加 ±2 随机抖动避免完全相同折扣时平局，但不改变胜负主导权
+    // 例：30% 折扣的两件皮肤，战力分别在 58-62 区间
+    const power = discount * 2 + randInt(-2, 2);
 
     return {
         id: 'sk_' + (skinIdSeed++) + '_' + Date.now().toString(36),

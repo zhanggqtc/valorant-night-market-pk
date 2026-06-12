@@ -401,8 +401,8 @@ html,body{
       <h1>Night Market <em>×</em> 田忌赛马</h1>
     </div>
     <div class="ed-meta">
-      战力公式 <b>v3</b><br>
-      省 VP 驱动制
+      战力公式 <b>v4</b><br>
+      纯折扣驱动
     </div>
   </header>
 
@@ -451,18 +451,18 @@ html,body{
       <div class="section-lead">FORMULA · 战 力 公 式</div>
 
       <div class="formula-eq">
-        <span class="lhs">战力</span><span class="eq">=</span><span class="rhs-1">省下金额</span><span class="small"> ÷ 10</span><span class="plus">+</span><span class="rhs-2">品级</span><span class="small"> × 3</span>
+        <span class="lhs">战力</span><span class="eq">=</span><span class="rhs-1">折扣 %</span><span class="plus">×</span><span class="rhs-2">2</span>
       </div>
 
       <div class="formula-derive">
-        <span class="l"><b>省下金额</b> = 原价 × 折扣%　<i>· 主导项 10–250</i></span>
-        <span class="l"><b>品级权重</b> = 1（精选）… 5（典藏）　<i>· 微调 3–15</i></span>
+        <span class="l"><b>折扣力度</b>是战力的<i> 唯一来源</i>　·　范围 10% 到 50%</span>
+        <span class="l"><b>武器原价 / 品级 / 心愿值</b>　·　<i>均不影响战力</i></span>
       </div>
     </div>
 
     <!-- 枪 vs 刀 对比 -->
     <div class="compare-block">
-      <div class="section-lead">CASE · 枪 皮 与 刀 皮 对 比</div>
+      <div class="section-lead">PARITY · 枪 与 刀 · 完 全 平 等</div>
 
       <div class="compare-grid">
         <!-- 枪皮 -->
@@ -472,13 +472,13 @@ html,body{
           <div class="skin-meta">SOVEREIGN · PHANTOM</div>
           <dl class="compare-stat">
             <dt>原价</dt><dd>1,775 VP</dd>
-            <dt>折扣</dt><dd>50%</dd>
-            <dt>省下</dt><dd>888 VP</dd>
+            <dt>折扣</dt><dd>40%</dd>
+            <dt>折后价</dt><dd>1,065 VP</dd>
             <div class="power-row" style="display:contents;">
-              <dt>战力</dt><dd>97</dd>
+              <dt>战力</dt><dd>80</dd>
             </div>
           </dl>
-          <span class="verdict">折扣大，但原价低</span>
+          <span class="verdict">折扣 40%</span>
         </div>
 
         <!-- 刀皮 -->
@@ -488,13 +488,13 @@ html,body{
           <div class="skin-meta">REAVER · MELEE</div>
           <dl class="compare-stat">
             <dt>原价</dt><dd>4,950 VP</dd>
-            <dt>折扣</dt><dd>30%</dd>
-            <dt>省下</dt><dd>1,485 VP</dd>
+            <dt>折扣</dt><dd>40%</dd>
+            <dt>折后价</dt><dd>2,970 VP</dd>
             <div class="power-row" style="display:contents;">
-              <dt>战力</dt><dd>164</dd>
+              <dt>战力</dt><dd>80</dd>
             </div>
           </dl>
-          <span class="verdict">折扣中等，<b>省更多 → 反超</b></span>
+          <span class="verdict">折扣 40% · <b>战力相同</b></span>
         </div>
       </div>
     </div>
@@ -536,11 +536,11 @@ html,body{
     <!-- 设计意图 -->
     <div class="intent">
       <div class="lead">RATIONALE · 设 计 意 图</div>
-      <p class="pull">让<em>折扣</em>，而不是稀有度，决定胜负。</p>
+      <p class="pull">让<em>折扣力度</em>，成为战力的唯一来源。</p>
       <ol>
-        <li><b>夜市的本质是折扣狂欢。</b>战力锚定省下的 VP，强化"捡到大漏"的核心快感。</li>
-        <li><b>枪皮与刀皮天然平衡。</b>刀皮原价约枪皮 2 倍，同折扣下省得更多，战力更高。</li>
-        <li><b>策略大于运气。</b><s>典藏皮肤等于必胜</s>，高折扣枪皮也能反超低折扣刀皮。</li>
+        <li><b>夜市的本质是折扣狂欢。</b>战力锚定折扣百分比，强化"捡到大漏"的核心快感。</li>
+        <li><b>枪刀完全平等。</b>原价高的刀皮不再天然碾压枪皮，<s>典藏即必胜</s>不复存在。</li>
+        <li><b>策略 &gt; 池子。</b>抽到 6 件平价皮肤，靠折扣 + 田忌赛马，依然能打赢拥有典藏的对手。</li>
       </ol>
     </div>
 
