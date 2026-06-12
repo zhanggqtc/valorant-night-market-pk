@@ -19,7 +19,6 @@
   --ink-soft:#3d342a;
   --ink-mute:#8a7e6e;
   --val-red:#ff4655;
-  --val-red-deep:#c8323f;
 
   --serif:'DM Serif Display','Source Han Serif SC','Songti SC',serif;
   --sans:'Inter Tight','PingFang SC',-apple-system,sans-serif;
@@ -31,268 +30,159 @@ html,body{
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
 
+/* =========================================================
+   1600 × 1000 海报
+   ========================================================= */
 .slide{
-  width:1600px;height:900px;flex-shrink:0;
+  width:1600px;height:1000px;flex-shrink:0;
   background:var(--paper);
-  position:relative;
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  grid-template-rows:auto 1fr;
-  grid-template-areas:
-    "head head"
-    "left right";
+  position:relative;display:flex;flex-direction:column;
   overflow:hidden;
   box-shadow:0 80px 120px -40px rgba(0,0,0,0.6);
 }
 
 /* =========================================================
-   HEAD
+   HEAD：标题 + 公式
    ========================================================= */
 .head{
-  grid-area:head;
-  padding:32px 56px 22px;
+  padding:36px 64px 24px;
   border-bottom:1px solid var(--ink);
-  display:flex;align-items:end;justify-content:space-between;gap:32px;
+  display:flex;align-items:end;justify-content:space-between;gap:48px;
 }
-.head h1{
-  font-family:var(--serif);font-weight:400;font-size:52px;line-height:0.95;
+.head .title h1{
+  font-family:var(--serif);font-weight:400;font-size:54px;line-height:0.95;
   letter-spacing:-0.015em;
 }
-.head h1 em{font-style:italic;color:var(--val-red);}
-.head .formula-mini{
-  font-family:var(--serif);font-weight:400;font-size:28px;line-height:1;
-  color:var(--ink);white-space:nowrap;
-  padding:10px 18px;border:1px solid var(--ink);background:var(--paper);
+.head .title h1 em{font-style:italic;color:var(--val-red);}
+.head .title .lede{
+  font-family:var(--sans);font-size:14px;color:var(--ink-soft);
+  margin-top:10px;line-height:1.5;max-width:62ch;
 }
-.head .formula-mini em{font-style:italic;color:var(--val-red);}
-.head .formula-mini .lbl{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
-  color:var(--ink-mute);display:block;margin-bottom:4px;font-weight:700;
+.head .formula{
+  flex-shrink:0;
+  border:1px solid var(--ink);background:var(--paper);
+  padding:14px 22px 14px 22px;
+  position:relative;
 }
+.head .formula .lbl{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:6px;font-weight:700;
+}
+.head .formula .eq{
+  font-family:var(--serif);font-weight:400;font-size:34px;line-height:1;color:var(--ink);
+  white-space:nowrap;
+}
+.head .formula .eq em{font-style:italic;color:var(--val-red);}
+.head .formula .note{
+  font-family:var(--sans);font-size:11.5px;color:var(--ink-soft);margin-top:8px;
+  line-height:1.45;
+}
+.head .formula .note b{color:var(--val-red);font-weight:700;}
 
 /* =========================================================
-   LEFT：流程 4 步（横向时间轴）
+   MAIN：3 步流程，每步=截图+说明
    ========================================================= */
-.col-left{
-  grid-area:left;
-  padding:32px 32px 28px 56px;
-  border-right:1px solid var(--ink);
-  display:flex;flex-direction:column;
-}
-.section-lead{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;
-  color:var(--val-red);font-weight:700;margin-bottom:6px;
-}
-.section-h{
-  font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.05;
-  margin-bottom:18px;
-}
-.section-h em{font-style:italic;color:var(--val-red);}
-
-/* 流程：横向 4 列时间轴 */
-.flow{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  margin-bottom:24px;position:relative;
-}
-.flow::before{
-  content:"";position:absolute;top:42px;left:14px;right:14px;height:1px;
-  background:var(--paper-line);z-index:0;
-}
-.flow-step{
-  position:relative;z-index:1;padding-right:14px;
-}
-.flow-step:not(:last-child)::after{
-  content:"→";position:absolute;top:30px;right:0;
-  font-size:18px;color:var(--val-red);font-weight:700;
-}
-.flow-step .num{
-  font-family:var(--serif);font-style:italic;font-weight:400;
-  font-size:50px;line-height:1;color:var(--val-red);
-  letter-spacing:-0.04em;display:inline-block;
-  padding-bottom:4px;
-}
-.flow-step h3{
-  font-family:var(--sans);font-weight:900;font-size:15px;letter-spacing:-0.005em;
-  margin:6px 0 4px;color:var(--ink);
-}
-.flow-step p{
-  font-family:var(--sans);font-size:11.5px;line-height:1.5;color:var(--ink-soft);
-}
-
-/* 部署示意（流程下方） */
-.deploy{
+.steps{
   flex:1;
-  border:1px solid var(--ink);background:#fafaf6;
-  padding:18px 22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+}
+.step{
+  padding:24px 32px 22px;
   display:flex;flex-direction:column;
   position:relative;
 }
-.deploy .deploy-h{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;
-  color:var(--val-red);font-weight:700;margin-bottom:4px;
+.step + .step{border-left:1px solid var(--paper-line);}
+.step + .step::before{
+  content:"→";
+  position:absolute;left:-13px;top:62px;
+  font-family:var(--serif);font-style:italic;font-size:24px;font-weight:400;
+  color:var(--val-red);
+  background:var(--paper);width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;line-height:1;
 }
-.deploy .deploy-sub{
-  font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.15;
-  margin-bottom:14px;color:var(--ink);
-}
-.deploy .deploy-sub em{font-style:italic;color:var(--val-red);}
 
-/* 部署：6 张牌 + 选中 3 张 + 排序 */
-.pool-6{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:14px;
+.step-head{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:6px;
 }
-.pool-card{
-  height:56px;background:#fff;border:1px solid var(--paper-line);
-  padding:5px 7px;display:flex;flex-direction:column;justify-content:space-between;
-  position:relative;
+.step-head .num{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:46px;line-height:0.85;color:var(--val-red);
+  letter-spacing:-0.04em;
+  padding-bottom:3px;
 }
-.pool-card.picked{
-  border-color:var(--val-red);background:rgba(255,70,85,0.06);
-  box-shadow:0 4px 0 -1px var(--val-red);
+.step-head h3{
+  font-family:var(--sans);font-weight:900;font-size:22px;letter-spacing:-0.01em;
+  color:var(--ink);
 }
-.pool-card .pc-name{
-  font-family:var(--sans);font-size:10px;font-weight:700;color:var(--ink);
-  letter-spacing:-0.01em;line-height:1.1;
+.step .desc{
+  font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--ink-soft);
+  margin-bottom:14px;max-width:46ch;
 }
-.pool-card .pc-disc{
-  font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);
+.step .desc b{
+  color:var(--ink);font-weight:700;
+  background:linear-gradient(180deg,transparent 60%,rgba(255,70,85,0.18) 60%);
+  padding:0 2px;
 }
-.pool-card.picked .pc-disc{color:var(--val-red);}
-.pool-card .pc-power{
-  font-family:var(--mono);font-size:9px;color:var(--ink-mute);letter-spacing:0.05em;
+
+.step-shot{
+  flex:1;
+  background:#0a0e13;
+  border:1px solid var(--ink);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
 }
-.pool-card .pick-tag{
-  position:absolute;top:-7px;right:-4px;
-  font-family:var(--mono);font-size:9px;font-weight:700;
+.step-shot img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+}
+.step-shot .stamp{
+  position:absolute;top:8px;left:8px;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
   background:var(--val-red);color:var(--paper);
-  padding:1px 5px;letter-spacing:0.04em;
+  padding:3px 7px;font-weight:700;z-index:2;
 }
 
-/* 部署排序箭头 */
-.deploy-flow{
-  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;
-  font-family:var(--mono);font-size:10px;color:var(--ink-mute);
+/* 截图下方的输出小结 */
+.step-meta{
+  margin-top:10px;display:flex;flex-direction:column;gap:4px;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);letter-spacing:0.04em;
 }
-.deploy-flow .step{
-  text-align:center;padding:6px 4px;border:1px dashed var(--paper-line);
-  background:var(--paper);
-  font-family:var(--sans);font-size:10.5px;color:var(--ink-soft);line-height:1.3;
-}
-.deploy-flow .step b{display:block;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--val-red);font-weight:400;line-height:1;margin-bottom:2px;}
-.deploy-flow .arr{font-family:var(--serif);font-style:italic;color:var(--val-red);font-size:18px;}
+.step-meta .row{display:flex;gap:6px;align-items:baseline;}
+.step-meta .row .k{color:var(--ink-mute);min-width:60px;}
+.step-meta .row .v{color:var(--ink);font-weight:700;}
+.step-meta .row .v em{color:var(--val-red);font-style:normal;}
 
 /* =========================================================
-   RIGHT：实战对战推演
+   BOTTOM：设计意图
    ========================================================= */
-.col-right{
-  grid-area:right;
-  padding:32px 56px 28px 32px;
-  display:flex;flex-direction:column;
+.foot{
+  display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;
+  padding:18px 64px;
   background:var(--ink);color:var(--paper);
+  border-top:1px solid var(--ink);
 }
-.col-right .section-lead{color:var(--val-red);}
-.col-right .section-h{color:var(--paper);}
+.foot .pull{
+  font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.15;
+  color:var(--paper);max-width:30ch;
+}
+.foot .pull em{font-style:italic;color:var(--val-red);}
 
-.match{flex:1;display:flex;flex-direction:column;gap:0;}
-
-/* 双方头像条 */
-.match-headers{
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;
-  padding-bottom:14px;border-bottom:1px solid rgba(244,241,234,0.18);
-  margin-bottom:14px;
+.foot .reasons{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
 }
-.match-side-name{
-  font-family:var(--serif);font-weight:400;font-size:22px;line-height:1;
-  color:var(--paper);
+.foot .reason{
+  font-family:var(--sans);font-size:12.5px;line-height:1.5;color:rgba(244,241,234,0.82);
+  padding-left:20px;position:relative;
+  counter-increment:rcount;
 }
-.match-side-name em{font-style:italic;color:var(--val-red);}
-.match-side-name.right{text-align:right;}
-.match-vs{
-  font-family:var(--serif);font-style:italic;font-size:32px;color:var(--val-red);
-  line-height:1;font-weight:400;
+.foot .reasons{counter-reset:rcount;}
+.foot .reason::before{
+  content:counter(rcount,decimal-leading-zero);
+  position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;color:var(--val-red);font-weight:700;
 }
-
-/* 三回合对决 */
-.rounds{display:flex;flex-direction:column;gap:10px;}
-.round{
-  display:grid;
-  grid-template-columns:48px 1fr 70px 1fr;
-  gap:12px;align-items:stretch;
-}
-.round-no{
-  font-family:var(--serif);font-style:italic;font-weight:400;font-size:36px;
-  line-height:1;color:rgba(244,241,234,0.4);letter-spacing:-0.04em;
-  align-self:center;text-align:center;
-}
-.round.win .round-no{color:#7cff5c;}
-.round.lose .round-no{color:var(--val-red);}
-
-.combatant{
-  background:rgba(244,241,234,0.04);
-  border:1px solid rgba(244,241,234,0.12);
-  padding:8px 12px;
-  display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;
-  position:relative;
-}
-.combatant.right{text-align:right;}
-.combatant .role{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
-  color:rgba(244,241,234,0.5);font-weight:700;
-  grid-column:1/-1;
-}
-.combatant.right .role{justify-self:end;}
-.combatant .skin{
-  font-family:var(--sans);font-weight:700;font-size:13px;color:var(--paper);
-  letter-spacing:-0.01em;
-}
-.combatant .disc-and-power{
-  display:flex;align-items:baseline;gap:8px;
-  font-family:var(--mono);font-size:11px;
-}
-.combatant.right .disc-and-power{justify-content:flex-end;}
-.combatant .disc{color:rgba(244,241,234,0.55);}
-.combatant .power-num{
-  font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;line-height:0.9;
-  color:var(--paper);letter-spacing:-0.02em;
-}
-.round.win .combatant:not(.right) .power-num{color:#7cff5c;}
-.round.lose .combatant.right .power-num{color:#7cff5c;}
-.round.win .combatant.right{opacity:0.55;}
-.round.lose .combatant:not(.right){opacity:0.55;}
-
-.round-judge{
-  align-self:center;text-align:center;
-}
-.round-judge .vs-mark{
-  font-family:var(--serif);font-style:italic;font-size:14px;color:rgba(244,241,234,0.5);
-  display:block;margin-bottom:2px;
-}
-.round-judge .verdict{
-  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-  padding:2px 6px;display:inline-block;
-}
-.round.win .round-judge .verdict{background:#7cff5c;color:var(--ink);}
-.round.lose .round-judge .verdict{background:var(--val-red);color:var(--paper);}
-
-/* 总比分 */
-.match-final{
-  margin-top:auto;padding-top:14px;border-top:1px solid rgba(244,241,234,0.18);
-  display:flex;align-items:baseline;gap:14px;
-}
-.match-final .score-label{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
-  color:rgba(244,241,234,0.55);font-weight:700;
-}
-.match-final .score-num{
-  font-family:var(--serif);font-style:italic;font-weight:400;font-size:38px;line-height:0.9;
-  color:var(--paper);
-}
-.match-final .score-num em{color:#7cff5c;font-style:italic;}
-.match-final .read{
-  font-family:var(--sans);font-size:12px;color:rgba(244,241,234,0.7);
-  margin-left:auto;font-style:italic;line-height:1.4;text-align:right;
-  max-width:32ch;
-}
+.foot .reason b{color:var(--paper);font-weight:700;}
+.foot .reason s{color:rgba(244,241,234,0.4);text-decoration-color:var(--val-red);}
 
 @media print{
   body{background:#fff;padding:0;}
@@ -306,176 +196,82 @@ html,body{
 
   <!-- ========== HEAD ========== -->
   <header class="head">
-    <h1>Night Market <em>×</em> 田忌赛马</h1>
-    <div class="formula-mini">
-      <span class="lbl">战 力</span>
-      <em>折扣 %</em> × 2
+    <div class="title">
+      <h1>Night Market <em>×</em> 田忌赛马</h1>
+      <p class="lede">玩家在 VALORANT 夜市中获得 6 件折扣皮肤，挑出 3 件与对手进行三局两胜的策略对决。</p>
+    </div>
+    <div class="formula">
+      <span class="lbl">战 力 公 式</span>
+      <span class="eq"><em>折扣 %</em> × 2</span>
+      <p class="note">枪刀完全平等 · 品级 / 原价 / 心愿值 <b>均不影响战力</b></p>
     </div>
   </header>
 
-  <!-- ========== LEFT：4 步流程 + 部署示意 ========== -->
-  <section class="col-left">
-    <div class="section-lead">FLOW · 玩 家 路 径</div>
-    <h2 class="section-h">从开市到部署，<em>四步</em>完成</h2>
+  <!-- ========== 3 步流程 ========== -->
+  <section class="steps">
 
-    <div class="flow">
-      <div class="flow-step">
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-head">
         <span class="num">01</span>
-        <h3>开市</h3>
-        <p>系统随机生成 6 件皮肤，含原价、折扣、品级。</p>
+        <h3>开市抽 6 件</h3>
       </div>
-      <div class="flow-step">
+      <p class="desc">系统从全部武器皮肤池随机抽取 <b>6 件</b>，含原价、折扣力度（10%-50%）、品级标识。</p>
+      <div class="step-shot">
+        <span class="stamp">夜市页面</span>
+        <img src="shots/01-market.png" alt="夜市页面：随机抽取的 6 件皮肤" />
+      </div>
+      <div class="step-meta">
+        <div class="row"><span class="k">输出</span><span class="v">6 件待选皮肤</span></div>
+        <div class="row"><span class="k">关键字段</span><span class="v">原价 · 折扣 · <em>战力</em></span></div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-head">
         <span class="num">02</span>
-        <h3>选 3 件</h3>
-        <p>从 6 件中挑出 3 件，自动归类为上 / 中 / 下等马。</p>
+        <h3>选 3 件 · 编排顺序</h3>
       </div>
-      <div class="flow-step">
+      <p class="desc">挑出 <b>战力最高的 3 件</b>，系统按战力分上 / 中 / 下等马，玩家自由配置一二三号位的出场顺序。</p>
+      <div class="step-shot">
+        <span class="stamp">战术配置页</span>
+        <img src="shots/02-strategy.png" alt="战术配置页：选 3 件并编排出场顺序" />
+      </div>
+      <div class="step-meta">
+        <div class="row"><span class="k">玩家决策</span><span class="v">先出谁 · 后出谁</span></div>
+        <div class="row"><span class="k">策略空间</span><span class="v"><em>下中上 / 中下上</em>等 6 种排法</span></div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-head">
         <span class="num">03</span>
-        <h3>编排</h3>
-        <p>自由配置一 / 二 / 三号位的出场顺序。</p>
+        <h3>三局两胜 · 出战报</h3>
       </div>
-      <div class="flow-step">
-        <span class="num">04</span>
-        <h3>对战</h3>
-        <p>双方依次出战，三局两胜。</p>
+      <p class="desc">双方按出场顺序依次对决，<b>战力高者胜</b>，2 胜即赢得整场。系统返回完整战报与历史战绩。</p>
+      <div class="step-shot">
+        <span class="stamp">对战中心</span>
+        <img src="shots/04-battle-done.png" alt="对战中心：三回合战报与最终比分" />
+      </div>
+      <div class="step-meta">
+        <div class="row"><span class="k">返回</span><span class="v">每局战力对比 · 总比分</span></div>
+        <div class="row"><span class="k">奖励</span><span class="v">胜 5 场 → <em>限定喷漆</em></span></div>
       </div>
     </div>
 
-    <div class="deploy">
-      <div class="deploy-h">DEPLOY · 实 例 演 示</div>
-      <div class="deploy-sub">夜市抽到 6 件，<em>挑出战力最高的 3 件</em>，再决定出场顺序</div>
-
-      <!-- 6 件夜市皮肤 -->
-      <div class="pool-6">
-        <div class="pool-card">
-          <div class="pc-name">沙尘 · 经典</div>
-          <div class="pc-disc">-12%</div>
-          <div class="pc-power">战力 24</div>
-        </div>
-        <div class="pool-card picked">
-          <span class="pick-tag">↓ 下</span>
-          <div class="pc-name">炽天使 · 幻象</div>
-          <div class="pc-disc">-25%</div>
-          <div class="pc-power">战力 50</div>
-        </div>
-        <div class="pool-card">
-          <div class="pc-name">荣耀 · 守护者</div>
-          <div class="pc-disc">-18%</div>
-          <div class="pc-power">战力 36</div>
-        </div>
-        <div class="pool-card picked">
-          <span class="pick-tag">— 中</span>
-          <div class="pc-name">电浆 · 暴徒</div>
-          <div class="pc-disc">-38%</div>
-          <div class="pc-power">战力 76</div>
-        </div>
-        <div class="pool-card">
-          <div class="pc-name">霓虹 · 幽灵</div>
-          <div class="pc-disc">-10%</div>
-          <div class="pc-power">战力 20</div>
-        </div>
-        <div class="pool-card picked">
-          <span class="pick-tag">↑ 上</span>
-          <div class="pc-name">反应器 · 刀</div>
-          <div class="pc-disc">-48%</div>
-          <div class="pc-power">战力 96</div>
-        </div>
-      </div>
-
-      <!-- 出场顺序 -->
-      <div class="deploy-flow">
-        <div class="step"><b>1st</b>中等马<br>电浆暴徒 76</div>
-        <span class="arr">→</span>
-        <div class="step"><b>2nd</b>下等马<br>炽天使幻象 50</div>
-        <span class="arr">→</span>
-        <div class="step"><b>3rd</b>上等马<br>反应器刀 96</div>
-      </div>
-
-    </div>
   </section>
 
-  <!-- ========== RIGHT：实战对决 ========== -->
-  <section class="col-right">
-    <div class="section-lead">DUEL · 三 局 两 胜</div>
-    <h2 class="section-h">实战推演 · <em>2 比 1</em> 拿下对手</h2>
-
-    <div class="match">
-
-      <div class="match-headers">
-        <div class="match-side-name">我方<em>·</em>YOU</div>
-        <div class="match-vs">vs</div>
-        <div class="match-side-name right">RIVAL<em>·</em>对手</div>
-      </div>
-
-      <div class="rounds">
-
-        <!-- ROUND 1 -->
-        <div class="round lose">
-          <div class="round-no">01</div>
-          <div class="combatant">
-            <span class="role">中等马 · 一号位</span>
-            <span class="skin">电浆 · 暴徒</span>
-            <div class="disc-and-power"><span class="disc">折扣 38%</span><span class="power-num">76</span></div>
-          </div>
-          <div class="round-judge">
-            <span class="vs-mark">vs</span>
-            <span class="verdict">输</span>
-          </div>
-          <div class="combatant right">
-            <span class="role">上等马 · 一号位</span>
-            <span class="skin">索弗瑞克斯 · 暴徒</span>
-            <div class="disc-and-power"><span class="power-num">90</span><span class="disc">折扣 45%</span></div>
-          </div>
-        </div>
-
-        <!-- ROUND 2 -->
-        <div class="round win">
-          <div class="round-no">02</div>
-          <div class="combatant">
-            <span class="role">下等马 · 二号位</span>
-            <span class="skin">炽天使 · 幻象</span>
-            <div class="disc-and-power"><span class="disc">折扣 25%</span><span class="power-num">50</span></div>
-          </div>
-          <div class="round-judge">
-            <span class="vs-mark">vs</span>
-            <span class="verdict">赢</span>
-          </div>
-          <div class="combatant right">
-            <span class="role">中等马 · 二号位</span>
-            <span class="skin">辛迪加 · 守护者</span>
-            <div class="disc-and-power"><span class="power-num">42</span><span class="disc">折扣 21%</span></div>
-          </div>
-        </div>
-
-        <!-- ROUND 3 -->
-        <div class="round win">
-          <div class="round-no">03</div>
-          <div class="combatant">
-            <span class="role">上等马 · 三号位</span>
-            <span class="skin">反应器 · 刀</span>
-            <div class="disc-and-power"><span class="disc">折扣 48%</span><span class="power-num">96</span></div>
-          </div>
-          <div class="round-judge">
-            <span class="vs-mark">vs</span>
-            <span class="verdict">赢</span>
-          </div>
-          <div class="combatant right">
-            <span class="role">下等马 · 三号位</span>
-            <span class="skin">银翼 · 幽灵</span>
-            <div class="disc-and-power"><span class="power-num">28</span><span class="disc">折扣 14%</span></div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="match-final">
-        <span class="score-label">总 比 分</span>
-        <span class="score-num"><em>2</em> : 1</span>
-        <span class="read">下等马顶住对手中等马<br>上等马连下两城，反败为胜</span>
-      </div>
-
+  <!-- ========== FOOT ========== -->
+  <footer class="foot">
+    <p class="pull">让<em>折扣力度</em>，<br>成为战力的唯一来源。</p>
+    <div class="reasons">
+      <p class="reason"><b>夜市 = 折扣狂欢。</b>战力锚定折扣百分比，强化"捡到大漏"的核心快感。</p>
+      <p class="reason"><b>枪刀完全平等。</b>原价高的刀皮不再天然碾压，<s>典藏即必胜</s>不复存在。</p>
+      <p class="reason"><b>策略 &gt; 池子。</b>抽到一手平价皮肤，靠田忌赛马依然能反败为胜。</p>
     </div>
-  </section>
+  </footer>
 
 </article>
 
