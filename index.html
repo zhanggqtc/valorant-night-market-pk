@@ -1465,23 +1465,23 @@ body { position: relative; }
                         <p>玩家进入夜市后，系统会从全部武器皮肤池中随机生成 <b>6 件</b>皮肤，每件皮肤包含：</p>
                         <ul>
                             <li><b>名称</b>（武器系列名）</li>
+                            <li><b>武器类型</b>（枪皮 / 刀皮 — 刀皮原价约为枪皮 2 倍）</li>
                             <li><b>品级</b>（精选 / 豪华 / 高级 / 至尊 / 典藏）</li>
                             <li><b>原价</b> 与 <b>折扣力度</b>（10%-50%）</li>
-                            <li><b>心愿值</b>（玩家个人喜爱度 0-100）</li>
                         </ul>
                     </div>
 
                     <div class="rule-card">
                         <div class="rule-icon"><i class="ri-medal-fill"></i></div>
-                        <h3>2. 战力公式（折扣驱动）</h3>
-                        <p>核心理念：<b style="color:#ff4655">弱化"热门皮肤 = 强战力"</b>，让冷门皮肤也有翻盘空间。</p>
+                        <h3>2. 战力公式（省 VP 驱动）</h3>
+                        <p>核心理念：<b style="color:#ff4655">省下的 VP 越多，战力越高</b>。刀皮原价高，同折扣下省得更多，战力天然占优；但枪皮拿到大折扣同样能反超。</p>
                         <div class="formula">
-                            战力 = 折扣 × 2 + 心愿值 ÷ 2 + 品级权重 × 5
+                            战力 = 省下金额 ÷ 10 + 品级 × 3
                         </div>
                         <ul>
-                            <li><b>折扣（主导）</b>：10-50% → 战力 20-100</li>
-                            <li><b>心愿值</b>：0-100 → 战力 0-50</li>
-                            <li><b>品级权重</b>：仅微调 5-25（精选 1 ~ 典藏 5）</li>
+                            <li><b>省下金额</b>（主导）= 原价 × 折扣%</li>
+                            <li><b>品级权重</b>：仅微调 3-15（精选 1 ~ 典藏 5）</li>
+                            <li><b>已移除</b>：心愿值不再影响战力，仅做收藏标识</li>
                         </ul>
                     </div>
 
@@ -1673,7 +1673,7 @@ const WEAPONS = [
     { name: '短管', en: 'Bulldog', type: 'bulldog', basePrice: 1275 },
     { name: '经典款', en: 'Classic', type: 'classic', basePrice: 875 },
     { name: '燃烧者', en: 'Judge', type: 'judge', basePrice: 1275 },
-    { name: '近战', en: 'Melee', type: 'melee', basePrice: 1775 }
+    { name: '近战', en: 'Melee', type: 'melee', basePrice: 4950 }
 ];
 
 // 品级配置
@@ -1713,12 +1713,14 @@ function generateSkin(forceTier) {
     // 折扣力度：10%-50%（夜市机制）
     const discount = randInt(10, 50);
     const finalPrice = Math.round(basePrice * (100 - discount) / 100 / 5) * 5;
-    // 心愿值（玩家个人喜爱度）
+    // 心愿值（仅 UI 装饰用，不参与战力计算）
     const wish = randInt(20, 100);
 
-    // 综合战力：折扣力度为核心（弱化热门皮肤=强战力的关联）
-    // 折扣 10-50 → 20-100，占主导；心愿值 20-100 → 10-50；品级权重 1-5 → 5-25 仅微调
-    const power = Math.round(discount * 2 + wish / 2 + tier.weight * 5);
+    // 综合战力：以"省下的 VP 金额"为核心（刀皮原价高，省得多 → 战力天然更高）
+    // 省下金额 = 原价 × 折扣%；÷10 收敛到 0~250 区间
+    // 品级 × 3 仅作微调（5-15 分）
+    const savedVP = basePrice * discount / 100;
+    const power = Math.round(savedVP / 10 + tier.weight * 3);
 
     return {
         id: 'sk_' + (skinIdSeed++) + '_' + Date.now().toString(36),
