@@ -19,6 +19,7 @@
   --ink-soft:#3d342a;
   --ink-mute:#8a7e6e;
   --val-red:#ff4655;
+  --val-red-deep:#c8323f;
 
   --serif:'DM Serif Display','Source Han Serif SC','Songti SC',serif;
   --sans:'Inter Tight','PingFang SC',-apple-system,sans-serif;
@@ -31,7 +32,7 @@ html,body{
 }
 
 /* =========================================================
-   1600 × 1000 海报
+   1600 × 1000 画布
    ========================================================= */
 .slide{
   width:1600px;height:1000px;flex-shrink:0;
@@ -45,144 +46,251 @@ html,body{
    HEAD：标题 + 公式
    ========================================================= */
 .head{
-  padding:36px 64px 24px;
+  padding:32px 56px 22px;
   border-bottom:1px solid var(--ink);
   display:flex;align-items:end;justify-content:space-between;gap:48px;
+  flex-shrink:0;
 }
 .head .title h1{
-  font-family:var(--serif);font-weight:400;font-size:54px;line-height:0.95;
+  font-family:var(--serif);font-weight:400;font-size:48px;line-height:0.95;
   letter-spacing:-0.015em;
 }
 .head .title h1 em{font-style:italic;color:var(--val-red);}
 .head .title .lede{
-  font-family:var(--sans);font-size:14px;color:var(--ink-soft);
-  margin-top:10px;line-height:1.5;max-width:62ch;
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-soft);
+  margin-top:8px;line-height:1.5;max-width:64ch;
 }
 .head .formula{
-  flex-shrink:0;
-  border:1px solid var(--ink);background:var(--paper);
-  padding:14px 22px 14px 22px;
-  position:relative;
+  flex-shrink:0;border:1px solid var(--ink);background:var(--paper);
+  padding:12px 18px;
 }
 .head .formula .lbl{
-  font-family:var(--mono);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;
-  color:var(--ink-mute);margin-bottom:6px;font-weight:700;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:4px;font-weight:700;
 }
 .head .formula .eq{
-  font-family:var(--serif);font-weight:400;font-size:34px;line-height:1;color:var(--ink);
+  font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;color:var(--ink);
   white-space:nowrap;
 }
 .head .formula .eq em{font-style:italic;color:var(--val-red);}
-.head .formula .note{
-  font-family:var(--sans);font-size:11.5px;color:var(--ink-soft);margin-top:8px;
-  line-height:1.45;
-}
-.head .formula .note b{color:var(--val-red);font-weight:700;}
 
 /* =========================================================
-   MAIN：3 步流程，每步=截图+说明
+   BODY：左 = PK 示意图 / 右 = 规则细节
    ========================================================= */
-.steps{
-  flex:1;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+.body{
+  flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;
+  min-height:0;
 }
-.step{
-  padding:24px 32px 22px;
+
+/* ============= 左半边：PK 对决图 ============= */
+.duel{
+  padding:24px 28px 24px 56px;
+  border-right:1px solid var(--ink);
   display:flex;flex-direction:column;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 50%,rgba(255,70,85,0.06),transparent 70%),
+    var(--paper);
   position:relative;
 }
-.step + .step{border-left:1px solid var(--paper-line);}
-.step + .step::before{
-  content:"→";
-  position:absolute;left:-13px;top:62px;
-  font-family:var(--serif);font-style:italic;font-size:24px;font-weight:400;
-  color:var(--val-red);
-  background:var(--paper);width:26px;height:26px;
+.section-lead{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--val-red);font-weight:700;margin-bottom:6px;
+}
+.section-h{
+  font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.05;
+  margin-bottom:18px;
+}
+.section-h em{font-style:italic;color:var(--val-red);}
+
+/* 玩家头像条 */
+.duel-headers{
+  display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;
+  margin-bottom:14px;
+}
+.player{
+  display:flex;align-items:center;gap:10px;
+}
+.player.right{justify-content:flex-end;flex-direction:row-reverse;}
+.player .avatar{
+  width:42px;height:42px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  border-radius:50%;line-height:1;
+  font-family:var(--serif);font-style:italic;font-size:22px;
+  background:var(--ink);color:var(--paper);font-weight:400;
+  letter-spacing:-0.02em;flex-shrink:0;
+}
+.player.right .avatar{background:var(--val-red);}
+.player .meta{display:flex;flex-direction:column;gap:1px;}
+.player.right .meta{align-items:flex-end;}
+.player .name{
+  font-family:var(--sans);font-size:14px;font-weight:900;color:var(--ink);letter-spacing:-0.005em;
+}
+.player .rank{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:700;
 }
 
-.step-head{
-  display:flex;align-items:baseline;gap:14px;margin-bottom:6px;
-}
-.step-head .num{
-  font-family:var(--serif);font-style:italic;font-weight:400;
-  font-size:46px;line-height:0.85;color:var(--val-red);
-  letter-spacing:-0.04em;
-  padding-bottom:3px;
-}
-.step-head h3{
-  font-family:var(--sans);font-weight:900;font-size:22px;letter-spacing:-0.01em;
-  color:var(--ink);
-}
-.step .desc{
-  font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--ink-soft);
-  margin-bottom:14px;max-width:46ch;
-}
-.step .desc b{
-  color:var(--ink);font-weight:700;
-  background:linear-gradient(180deg,transparent 60%,rgba(255,70,85,0.18) 60%);
-  padding:0 2px;
+.duel-vs{
+  font-family:var(--serif);font-style:italic;font-size:42px;color:var(--val-red);
+  font-weight:400;line-height:0.85;letter-spacing:-0.04em;
 }
 
-.step-shot{
-  flex:1;
-  background:#0a0e13;
-  border:1px solid var(--ink);
-  position:relative;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
+/* 三回合对决 */
+.duel-rounds{
+  flex:1;display:flex;flex-direction:column;gap:10px;
+  min-height:0;
 }
-.step-shot img{
-  width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+.round{
+  display:grid;
+  grid-template-columns:1fr 78px 1fr;
+  gap:8px;align-items:stretch;
+  position:relative;
 }
-.step-shot .stamp{
-  position:absolute;top:8px;left:8px;
+
+/* 皮肤牌 */
+.card{
+  background:#fff;border:1px solid var(--paper-line);
+  padding:10px 12px;
+  display:grid;grid-template-rows:auto 1fr auto;gap:4px;
+  position:relative;
+  transition:none;
+}
+.card .role{
   font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
-  background:var(--val-red);color:var(--paper);
-  padding:3px 7px;font-weight:700;z-index:2;
+  color:var(--ink-mute);font-weight:700;
+}
+.card .skin-name{
+  font-family:var(--sans);font-weight:900;font-size:14px;color:var(--ink);
+  line-height:1.2;letter-spacing:-0.005em;
+}
+.card .skin-name em{font-style:italic;color:var(--val-red);font-family:var(--serif);font-weight:400;font-size:1.05em;}
+.card .stat-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);font-weight:700;
+}
+.card .stat-row .disc{color:var(--ink-mute);}
+.card .stat-row .power{
+  font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;
+  color:var(--ink);line-height:0.85;letter-spacing:-0.02em;
+}
+.card.right{text-align:right;}
+.card.right .stat-row{flex-direction:row-reverse;}
+
+/* 武器 SVG 缩略图 */
+.card .weapon-art{
+  width:100%;height:32px;display:flex;align-items:center;justify-content:flex-start;
+  margin:2px 0;
+}
+.card.right .weapon-art{justify-content:flex-end;}
+.card .weapon-art svg{
+  width:auto;height:24px;max-width:90%;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,0.05));
 }
 
-/* 截图下方的输出小结 */
-.step-meta{
-  margin-top:10px;display:flex;flex-direction:column;gap:4px;
-  font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);letter-spacing:0.04em;
+/* 红色徽章：win/lose */
+.card.win::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--val-red);
 }
-.step-meta .row{display:flex;gap:6px;align-items:baseline;}
-.step-meta .row .k{color:var(--ink-mute);min-width:60px;}
-.step-meta .row .v{color:var(--ink);font-weight:700;}
-.step-meta .row .v em{color:var(--val-red);font-style:normal;}
+.card.right.win::before{left:auto;right:0;}
+.card.lose{opacity:0.5;}
+.card.lose::after{
+  content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0,transparent 6px,rgba(21,17,13,0.04) 6px,rgba(21,17,13,0.04) 7px);pointer-events:none;
+}
 
-/* =========================================================
-   BOTTOM：设计意图
-   ========================================================= */
-.foot{
-  display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;
-  padding:18px 64px;
+/* 中间裁判 */
+.judge{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  text-align:center;
+}
+.judge .rno{
+  font-family:var(--serif);font-style:italic;font-weight:400;font-size:32px;line-height:0.85;
+  color:var(--val-red);letter-spacing:-0.04em;
+}
+.judge .arrow{
+  font-family:var(--mono);font-size:11px;color:var(--ink-mute);font-weight:700;
+  letter-spacing:0.05em;
+}
+.judge .verdict{
+  font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  padding:1px 6px;background:var(--ink);color:var(--paper);
+  margin-top:2px;
+}
+.judge .verdict.you-win{background:var(--val-red);color:var(--paper);}
+
+/* 底部总比分 */
+.duel-final{
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--paper-line);
+  display:flex;align-items:baseline;gap:14px;
+}
+.duel-final .lab{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--ink-mute);font-weight:700;
+}
+.duel-final .score{
+  font-family:var(--serif);font-style:italic;font-weight:400;font-size:34px;line-height:0.85;
+  color:var(--ink);letter-spacing:-0.02em;
+}
+.duel-final .score em{color:var(--val-red);font-style:italic;}
+.duel-final .read{
+  font-family:var(--sans);font-size:12px;color:var(--ink-soft);
+  margin-left:auto;font-style:italic;line-height:1.4;text-align:right;
+  max-width:30ch;
+}
+
+/* ============= 右半边：规则细节 ============= */
+.rules{
+  padding:24px 56px 24px 32px;
+  display:flex;flex-direction:column;
   background:var(--ink);color:var(--paper);
-  border-top:1px solid var(--ink);
 }
-.foot .pull{
-  font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.15;
-  color:var(--paper);max-width:30ch;
-}
-.foot .pull em{font-style:italic;color:var(--val-red);}
+.rules .section-lead{color:var(--val-red);}
+.rules .section-h{color:var(--paper);}
 
-.foot .reasons{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+.rules-list{
+  display:flex;flex-direction:column;gap:0;
+  flex:1;min-height:0;
 }
-.foot .reason{
-  font-family:var(--sans);font-size:12.5px;line-height:1.5;color:rgba(244,241,234,0.82);
-  padding-left:20px;position:relative;
-  counter-increment:rcount;
+.rule-row{
+  display:grid;grid-template-columns:48px 1fr;gap:18px;align-items:start;
+  padding:14px 0;
+  border-bottom:1px dashed rgba(244,241,234,0.16);
 }
-.foot .reasons{counter-reset:rcount;}
-.foot .reason::before{
-  content:counter(rcount,decimal-leading-zero);
-  position:absolute;left:0;top:1px;
-  font-family:var(--mono);font-size:9.5px;letter-spacing:0.12em;color:var(--val-red);font-weight:700;
+.rule-row:last-of-type{border-bottom:none;}
+
+.rule-row .num{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:34px;line-height:0.85;color:var(--val-red);
+  letter-spacing:-0.04em;padding-top:2px;
 }
-.foot .reason b{color:var(--paper);font-weight:700;}
-.foot .reason s{color:rgba(244,241,234,0.4);text-decoration-color:var(--val-red);}
+.rule-row .body h3{
+  font-family:var(--sans);font-weight:900;font-size:15px;color:var(--paper);
+  margin-bottom:4px;letter-spacing:-0.005em;line-height:1.3;
+}
+.rule-row .body h3 em{font-style:italic;color:var(--val-red);font-family:var(--serif);font-weight:400;font-size:1.08em;}
+.rule-row .body p{
+  font-family:var(--sans);font-size:12.5px;line-height:1.55;color:rgba(244,241,234,0.78);
+  max-width:48ch;
+}
+.rule-row .body p b{color:var(--paper);font-weight:700;}
+.rule-row .body p s{color:rgba(244,241,234,0.4);text-decoration-color:var(--val-red);}
+
+/* 底部传播意图 */
+.intent{
+  margin-top:14px;padding:14px 18px;
+  background:rgba(255,70,85,0.1);
+  border-left:3px solid var(--val-red);
+}
+.intent .lead{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--val-red);font-weight:700;margin-bottom:6px;
+}
+.intent .pull{
+  font-family:var(--serif);font-weight:400;font-size:18px;line-height:1.3;color:var(--paper);
+  margin-bottom:6px;
+}
+.intent .pull em{font-style:italic;color:var(--val-red);}
+.intent .body-text{
+  font-family:var(--sans);font-size:11.5px;line-height:1.55;color:rgba(244,241,234,0.78);
+}
 
 @media print{
   body{background:#fff;padding:0;}
@@ -192,86 +300,244 @@ html,body{
 </head>
 <body>
 
+<!-- 通用武器 SVG，使用 symbol 共享 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 步枪：幻象 / 暴徒 -->
+    <symbol id="w-rifle" viewBox="0 0 200 36">
+      <path d="M6,18 L34,14 L52,11 L160,12 L184,16 L184,22 L52,26 L34,24 L6,22 Z" fill="#15110d"/>
+      <rect x="34" y="22" width="20" height="12" fill="#15110d"/>
+      <rect x="56" y="24" width="38" height="4" fill="#15110d"/>
+      <circle cx="170" cy="19" r="2" fill="#ff4655"/>
+    </symbol>
+    <!-- 手枪：幽灵 / 法警 -->
+    <symbol id="w-pistol" viewBox="0 0 200 36">
+      <path d="M82,8 L150,8 L158,12 L158,18 L96,19 L96,30 L88,34 L72,34 L72,19 L78,12 Z" fill="#15110d"/>
+      <rect x="155" y="12" width="20" height="5" fill="#15110d"/>
+      <circle cx="115" cy="14" r="1.6" fill="#ff4655"/>
+    </symbol>
+    <!-- 狙击：守望者 -->
+    <symbol id="w-sniper" viewBox="0 0 200 36">
+      <path d="M2,18 L30,15 L60,9 L168,11 L195,17 L195,21 L60,26 L30,22 L2,21 Z" fill="#15110d"/>
+      <circle cx="78" cy="6" r="4" fill="#15110d"/>
+      <rect x="72" y="6" width="12" height="3" fill="#15110d"/>
+      <rect x="30" y="20" width="18" height="11" fill="#15110d"/>
+    </symbol>
+    <!-- 近战刀 -->
+    <symbol id="w-knife" viewBox="0 0 200 36">
+      <path d="M30,18 L150,12 L168,18 L150,24 L30,21 Z" fill="#15110d"/>
+      <rect x="14" y="16" width="18" height="8" fill="#15110d"/>
+      <rect x="8" y="17" width="6" height="6" fill="#15110d"/>
+    </symbol>
+    <!-- 霰弹 -->
+    <symbol id="w-shotgun" viewBox="0 0 200 36">
+      <path d="M14,18 L40,15 L58,13 L160,13 L184,18 L184,22 L58,25 L40,23 L14,22 Z" fill="#15110d"/>
+      <rect x="40" y="22" width="22" height="12" fill="#15110d"/>
+      <circle cx="172" cy="19" r="4" fill="none" stroke="#15110d" stroke-width="1.5"/>
+    </symbol>
+    <!-- 冲锋枪 -->
+    <symbol id="w-smg" viewBox="0 0 200 36">
+      <path d="M44,17 L158,14 L172,18 L172,22 L44,25 L30,22 L30,18 Z" fill="#15110d"/>
+      <rect x="50" y="24" width="18" height="11" fill="#15110d"/>
+      <rect x="68" y="22" width="26" height="4" fill="#15110d"/>
+    </symbol>
+  </defs>
+</svg>
+
 <article class="slide">
 
   <!-- ========== HEAD ========== -->
   <header class="head">
     <div class="title">
       <h1>Night Market <em>×</em> 田忌赛马</h1>
-      <p class="lede">玩家在 VALORANT 夜市中获得 6 件折扣皮肤，挑出 3 件与对手进行三局两胜的策略对决。</p>
+      <p class="lede">玩家在 VALORANT 夜市中获得 6 件折扣皮肤，挑出 3 件与朋友进行三局两胜的策略对决，晒出折扣，赢得专属奖励。</p>
     </div>
     <div class="formula">
       <span class="lbl">战 力 公 式</span>
       <span class="eq"><em>折扣 %</em> × 2</span>
-      <p class="note">枪刀完全平等 · 品级 / 原价 / 心愿值 <b>均不影响战力</b></p>
     </div>
   </header>
 
-  <!-- ========== 3 步流程 ========== -->
-  <section class="steps">
+  <!-- ========== BODY ========== -->
+  <section class="body">
 
-    <!-- STEP 1 -->
-    <div class="step">
-      <div class="step-head">
-        <span class="num">01</span>
-        <h3>开市抽 6 件</h3>
+    <!-- ========== 左：PK 对决示意图 ========== -->
+    <div class="duel">
+      <div class="section-lead">DUEL · 两 人 皮 肤 对 决</div>
+      <h2 class="section-h">三局两胜，<em>战力高者胜</em></h2>
+
+      <!-- 玩家头条 -->
+      <div class="duel-headers">
+        <div class="player">
+          <div class="avatar">A</div>
+          <div class="meta">
+            <span class="name">特工 · 你</span>
+            <span class="rank">RADIANT 辉煌</span>
+          </div>
+        </div>
+        <div class="duel-vs">vs</div>
+        <div class="player right">
+          <div class="avatar">B</div>
+          <div class="meta">
+            <span class="name">反应器王</span>
+            <span class="rank">DIAMOND 钻石</span>
+          </div>
+        </div>
       </div>
-      <p class="desc">系统从全部武器皮肤池随机抽取 <b>6 件</b>，含原价、折扣力度（10%-50%）、品级标识。</p>
-      <div class="step-shot">
-        <span class="stamp">夜市页面</span>
-        <img src="shots/01-market.png" alt="夜市页面：随机抽取的 6 件皮肤" />
+
+      <!-- 三回合 -->
+      <div class="duel-rounds">
+
+        <!-- ROUND 01 -->
+        <div class="round">
+          <div class="card lose">
+            <span class="role">中等马 · 一号位</span>
+            <span class="skin-name">电浆 <em>·</em> 暴徒</span>
+            <div class="weapon-art"><svg><use href="#w-rifle"/></svg></div>
+            <div class="stat-row">
+              <span class="disc">折扣 38%</span>
+              <span class="power">76</span>
+            </div>
+          </div>
+          <div class="judge">
+            <span class="rno">01</span>
+            <span class="arrow">VS</span>
+            <span class="verdict">输</span>
+          </div>
+          <div class="card win right">
+            <span class="role">上等马 · 一号位</span>
+            <span class="skin-name">索弗瑞克斯 <em>·</em> 暴徒</span>
+            <div class="weapon-art"><svg><use href="#w-rifle"/></svg></div>
+            <div class="stat-row">
+              <span class="power">90</span>
+              <span class="disc">折扣 45%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROUND 02 -->
+        <div class="round">
+          <div class="card win">
+            <span class="role">下等马 · 二号位</span>
+            <span class="skin-name">炽天使 <em>·</em> 幻象</span>
+            <div class="weapon-art"><svg><use href="#w-rifle"/></svg></div>
+            <div class="stat-row">
+              <span class="disc">折扣 25%</span>
+              <span class="power">50</span>
+            </div>
+          </div>
+          <div class="judge">
+            <span class="rno">02</span>
+            <span class="arrow">VS</span>
+            <span class="verdict you-win">赢</span>
+          </div>
+          <div class="card lose right">
+            <span class="role">中等马 · 二号位</span>
+            <span class="skin-name">辛迪加 <em>·</em> 守护者</span>
+            <div class="weapon-art"><svg><use href="#w-sniper"/></svg></div>
+            <div class="stat-row">
+              <span class="power">42</span>
+              <span class="disc">折扣 21%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROUND 03 -->
+        <div class="round">
+          <div class="card win">
+            <span class="role">上等马 · 三号位</span>
+            <span class="skin-name">反应器 <em>·</em> 近战</span>
+            <div class="weapon-art"><svg><use href="#w-knife"/></svg></div>
+            <div class="stat-row">
+              <span class="disc">折扣 48%</span>
+              <span class="power">96</span>
+            </div>
+          </div>
+          <div class="judge">
+            <span class="rno">03</span>
+            <span class="arrow">VS</span>
+            <span class="verdict you-win">赢</span>
+          </div>
+          <div class="card lose right">
+            <span class="role">下等马 · 三号位</span>
+            <span class="skin-name">银翼 <em>·</em> 幽灵</span>
+            <div class="weapon-art"><svg><use href="#w-pistol"/></svg></div>
+            <div class="stat-row">
+              <span class="power">28</span>
+              <span class="disc">折扣 14%</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="step-meta">
-        <div class="row"><span class="k">输出</span><span class="v">6 件待选皮肤</span></div>
-        <div class="row"><span class="k">关键字段</span><span class="v">原价 · 折扣 · <em>战力</em></span></div>
+
+      <!-- 总比分 -->
+      <div class="duel-final">
+        <span class="lab">总 比 分</span>
+        <span class="score"><em>2</em> : 1</span>
+        <span class="read">下等马顶住对手中等马，<br>上等马连下两城反败为胜</span>
       </div>
+
     </div>
 
-    <!-- STEP 2 -->
-    <div class="step">
-      <div class="step-head">
-        <span class="num">02</span>
-        <h3>选 3 件 · 编排顺序</h3>
-      </div>
-      <p class="desc">挑出 <b>战力最高的 3 件</b>，系统按战力分上 / 中 / 下等马，玩家自由配置一二三号位的出场顺序。</p>
-      <div class="step-shot">
-        <span class="stamp">战术配置页</span>
-        <img src="shots/02-strategy.png" alt="战术配置页：选 3 件并编排出场顺序" />
-      </div>
-      <div class="step-meta">
-        <div class="row"><span class="k">玩家决策</span><span class="v">先出谁 · 后出谁</span></div>
-        <div class="row"><span class="k">策略空间</span><span class="v"><em>下中上 / 中下上</em>等 6 种排法</span></div>
-      </div>
-    </div>
+    <!-- ========== 右：5 条规则 + 设计意图 ========== -->
+    <div class="rules">
+      <div class="section-lead">RULES · 关 键 规 则</div>
+      <h2 class="section-h">五条要点，<em>讲清玩法</em></h2>
 
-    <!-- STEP 3 -->
-    <div class="step">
-      <div class="step-head">
-        <span class="num">03</span>
-        <h3>三局两胜 · 出战报</h3>
+      <div class="rules-list">
+
+        <div class="rule-row">
+          <span class="num">01</span>
+          <div class="body">
+            <h3>战力 = <em>折扣%</em> × 2</h3>
+            <p>战力<b>只取决于折扣比例</b>。武器原价、品级、心愿值均不参与计算 —— 一把 50% 折扣的精选幻象，与 50% 折扣的典藏刀，<b>战力完全相等</b>。</p>
+          </div>
+        </div>
+
+        <div class="rule-row">
+          <span class="num">02</span>
+          <div class="body">
+            <h3>必须 <em>翻完所有夜市卡</em> 才能参与</h3>
+            <p>玩家需先在游戏内打开夜市，<b>翻开全部 6 张折扣卡牌</b>，活动入口才会解锁。让夜市开卡的兴奋点直接驱动活动参与。</p>
+          </div>
+        </div>
+
+        <div class="rule-row">
+          <span class="num">03</span>
+          <div class="body">
+            <h3>分享阵容卡 · <em>异步对战</em></h3>
+            <p>编排好 3 件出战皮肤后，可生成阵容卡片分享给好友。好友点击即用自己的夜市进行 PK，<b>无需双方同时在线</b>。</p>
+          </div>
+        </div>
+
+        <div class="rule-row">
+          <span class="num">04</span>
+          <div class="body">
+            <h3>累计胜 <em>3 场</em> · 解锁专属奖励</h3>
+            <p>每赢一局计入累计胜场，达到 <b>3 胜</b> 即可领取限定喷漆 / 印记。胜场可跨日累积，鼓励持续参与而非一次通关。</p>
+          </div>
+        </div>
+
+        <div class="rule-row">
+          <span class="num">05</span>
+          <div class="body">
+            <h3>晒出 <em>折扣最大</em> 的皮肤</h3>
+            <p>由于战力 = 折扣%，<b>晒折扣 = 晒强度</b>。50% 折扣的稀有皮肤兼具数值优势与社交炫耀价值，天然形成传播噱头。</p>
+          </div>
+        </div>
+
       </div>
-      <p class="desc">双方按出场顺序依次对决，<b>战力高者胜</b>，2 胜即赢得整场。系统返回完整战报与历史战绩。</p>
-      <div class="step-shot">
-        <span class="stamp">对战中心</span>
-        <img src="shots/04-battle-done.png" alt="对战中心：三回合战报与最终比分" />
+
+      <div class="intent">
+        <div class="lead">RATIONALE · 传 播 设 计 意 图</div>
+        <p class="pull">让玩家把<em>「我夜市的最大折扣」</em>，变成可炫耀的对外名片。</p>
+        <p class="body-text">折扣是夜市的核心快感锚点。当折扣同时决定战斗力与社交话语权，<br>"今天我有一把 -50% 的反应器"就成了既能赢又能秀的双重资本。</p>
       </div>
-      <div class="step-meta">
-        <div class="row"><span class="k">返回</span><span class="v">每局战力对比 · 总比分</span></div>
-        <div class="row"><span class="k">奖励</span><span class="v">胜 5 场 → <em>限定喷漆</em></span></div>
-      </div>
+
     </div>
 
   </section>
-
-  <!-- ========== FOOT ========== -->
-  <footer class="foot">
-    <p class="pull">让<em>折扣力度</em>，<br>成为战力的唯一来源。</p>
-    <div class="reasons">
-      <p class="reason"><b>夜市 = 折扣狂欢。</b>战力锚定折扣百分比，强化"捡到大漏"的核心快感。</p>
-      <p class="reason"><b>枪刀完全平等。</b>原价高的刀皮不再天然碾压，<s>典藏即必胜</s>不复存在。</p>
-      <p class="reason"><b>策略 &gt; 池子。</b>抽到一手平价皮肤，靠田忌赛马依然能反败为胜。</p>
-    </div>
-  </footer>
 
 </article>
 
